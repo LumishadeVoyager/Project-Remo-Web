@@ -57,6 +57,12 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* subtle film grain across the whole page */
 body::before {
   content: "";
@@ -1700,21 +1706,26 @@ section + section::before {
   }
   /* mobile: show product as a centered block under title, no absolute positioning */
   .hero-product {
-    display: block;
-    position: relative;
-    right: auto;
-    top: auto;
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    transform: none;
-    opacity: 1;
-    animation: none;
+    display: block !important;
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 420px;
+    margin: 8px auto 0 auto;
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
     filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
     z-index: 1;
   }
   .hero-product img {
-    transform: none;
+    transform: none !important;
+    width: 100%;
+    height: auto;
+    display: block;
   }
   .hero-bottom {
     margin-top: 32px;
@@ -1739,6 +1750,10 @@ section + section::before {
   .color-frame {
     aspect-ratio: 3 / 4;
     margin-top: 32px;
+    border-radius: 16px;
+  }
+  .color-handle {
+    width: 4px;
   }
   .color-handle::after {
     width: 64px;
@@ -1768,9 +1783,12 @@ section + section::before {
 
   /* Compare visual / acoustic bracelet — make sure they're not too small */
   .acoustic-diagram { aspect-ratio: 4 / 3; }
-  .acoustic-bracelet { margin-top: 24px; }
+  .acoustic-diagram img { width: 100%; height: 100%; object-fit: cover; }
+  .acoustic-bracelet { margin-top: 24px; max-width: 100%; }
+  .acoustic-bracelet img { width: 100%; height: auto; display: block; }
   .acoustic-bracelet figcaption { font-size: 9px; letter-spacing: 0.14em; padding: 10px 12px; }
   .compare-visual { margin-bottom: 24px; }
+  .compare-visual img { width: 100%; height: auto; display: block; }
 
   /* Section-head h2 — keep readable */
   .section-head h2 { font-size: clamp(32px, 9vw, 56px); }
@@ -1780,6 +1798,26 @@ section + section::before {
 
   /* Disable scanning beam on mobile — noisy overlay */
   .hero-stage::after { display: none; }
+}
+
+/* ─── Extra small phones (< 400px) ──────────────────────────────── */
+@media (max-width: 400px) {
+  .hero { padding-top: 80px; padding-bottom: 32px; }
+  .hero-title { font-size: clamp(28px, 8.5vw, 40px); }
+  .hero-product { max-width: 100%; }
+  .hero-summary { font-size: 14px; }
+  .hero-keyspecs .ks { padding: 14px 10px 14px 0; }
+  .hero-keyspecs .ks-val { font-size: clamp(22px, 8vw, 32px); }
+  .hero-keyspecs .ks-note { font-size: 8px; }
+
+  .color-frame { aspect-ratio: 2 / 3; }
+  .color-frame .tag { font-size: 8px; padding: 4px 6px; }
+  .color-handle::after { width: 48px; height: 48px; }
+  .color-handle::before { font-size: 18px; }
+
+  .section-head h2 { font-size: clamp(26px, 8vw, 40px); }
+  .outro h2 { font-size: clamp(32px, 10vw, 48px); }
+  .manifesto p { font-size: clamp(20px, 7vw, 28px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
