@@ -308,7 +308,12 @@ section + section::before {
   font-size: 10px;
   letter-spacing: 0.24em;
   color: var(--mute);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
 }
+.lang:hover { color: var(--light); }
+.lang.is-en { color: var(--accent); }
 
 @keyframes dotPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.5); }
