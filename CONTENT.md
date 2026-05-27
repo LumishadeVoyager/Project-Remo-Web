@@ -72,9 +72,9 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 ```
 
 ### 概要段落
-**ZH：** Project Remo 是一款**无线、掌上起降**的水下智能跟随相机。它填补了消费级运动相机与传统有线 ROV 之间的市场空白——让每一位潜水员重新拥有自由的双手与完整的注意力。
+**ZH：** Project Remo 是一款无线、掌上起降的水下跟随相机，位于运动相机与传统 ROV 之间的空白地带。入水自动唤醒，声学定位跟随，出水自动归仓。让潜水员专注于潜水本身。
 
-**EN：** Project Remo is a **wireless, palm-sized underwater follow-cam**. It fills the gap between consumer action cameras and tethered ROVs — freeing every diver's hands and full attention for the dive itself.
+**EN：** Project Remo is a wireless, palm-deployable underwater follow-cam that sits between action cameras and tethered ROVs. Auto-wake on entry, acoustic positioning, auto-dock on surfacing. It handles the shot so the diver doesn't have to.
 
 ### 主要按钮（2 个）
 | 类型 | ZH | EN | 链接 |
@@ -103,8 +103,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `01 Manifesto`
 
 **主文案（HTML，含 `<br>` 和 `<em>`）：**
-- **ZH：** 水下摄影的难点，<br>不是"能不能拍"，<br>而是潜水员，<br>*是否还有余力拍好*。
-- **EN：** The hard part of underwater photography<br>isn't "can you shoot it?" —<br>it's whether the diver<br>*still has the bandwidth to shoot it well*.
+- **ZH：** 水下摄影的真正门槛，<br>不是设备不够好，<br>而是潜水员的注意力<br>*已经被太多事情分走了*。
+- **EN：** The real bottleneck in underwater photography<br>isn't the gear —<br>it's that the diver's attention<br>*is already split across too many tasks*.
 
 **签名：** 
 - ZH：Project Remo · 创始团队
@@ -119,26 +119,26 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `02 The Pain`
 
 **大标题：**
-- ZH：三条*水下摄影者*必须独自承担的负担。
-- EN：Three burdens every *underwater photographer* carries alone.
+- ZH：潜水拍摄时，* hands 和注意力*同时被占用。
+- EN：When you dive with a camera, *both hands and attention* are tied up.
 
 ### 痛点 01
 - **ZH 标题：** 双手被占用
 - **EN 标题：** Both Hands Occupied
-- **ZH 描述（HTML）：** 水下摄影者必须同时管理浮力、呼吸节奏、深度计、构图与跟焦——注意力的"工作记忆"被瓜分到 5 件事以上。最终结果通常不是没拍到，而是*拍废与隐患同时发生*。
-- **EN 描述：** Underwater photographers juggle buoyancy, breathing rhythm, depth gauge, composition, and focus tracking — working memory split across 5+ tasks. The result is usually *not "didn't shoot" — it's "ruined the shot while compromising safety"*.
+- **ZH 描述（HTML）：** 潜水员在水下需要同时管理浮力、呼吸、深度、构图与跟焦——五件事抢占同一份注意力。结果往往不是没拍到，*而是拍到了但拍废了，同时安全冗余在下降*。
+- **EN 描述：** A diver underwater manages buoyancy, breathing, depth, composition, and focus — five tasks competing for one attention budget. The outcome is rarely "didn't get the shot." *It's "got the shot but it's unusable, and safety margins are shrinking."*
 
 ### 痛点 02
 - **ZH 标题：** ROV 不属于消费者
 - **EN 标题：** ROVs Aren't for Consumers
-- **ZH 描述：** 传统水下 ROV 是工业巡检工具——脐带线缆、地面控制器、上岸部署流程，让它从未真正属于一次说走就走的旅行潜。重 7–15 kg、起步价 ¥15,000+，"自由"和"ROV"在产品语言上从未相遇。
-- **EN 描述：** Traditional underwater ROVs are industrial inspection tools — tethers, ground controllers, and shore-deployment workflows mean they've never belonged in a spontaneous dive trip. At 7–15 kg and ¥15,000+ starting price, "freedom" and "ROV" have never met in product language.
+- **ZH 描述：** 传统水下 ROV 面向工业巡检设计——脐带缆、地面站、岸上部署流程，不属于休闲潜水场景。7–15 kg 自重、¥15,000+ 起步，"消费级"三个字在 ROV 品类中从未成立。
+- **EN 描述：** Traditional ROVs are built for industrial inspection — tethers, ground control stations, shore-deployment workflows. They were never designed for recreational diving. At 7–15 kg and ¥15,000+ entry price, "consumer-grade" has never described this category.
 
 ### 痛点 03
 - **ZH 标题：** 视觉会失效
 - **EN 标题：** Vision Fails Underwater
-- **ZH 描述：** 气泡群、悬浮颗粒、逆光、低照度——任何一种都足以让单纯视觉跟踪丢失目标。水下交互必须尊重"水"这件事本身，*而不是把陆地上的视觉假设原样搬下水*。
-- **EN 描述：** Bubble clouds, suspended particles, backlight, low visibility — any one is enough to break a pure visual tracker. Underwater interaction must respect the water itself, *not blindly transplant land-based vision assumptions beneath the surface*.
+- **ZH 描述：** 气泡群、悬浮颗粒、逆光、低能见度——任一条件都足以让纯视觉跟踪失效。水下定位必须基于"水"的物理特性设计，*不能把陆地视觉方案直接搬到水下*。
+- **EN 描述：** Bubbles, suspended particles, backlight, low visibility — any one of these breaks a pure visual tracking system. Underwater positioning must be designed for the physics of water, *not adapted from land-based vision assumptions*.
 
 ---
 
@@ -185,7 +185,7 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `04 Hardware Architecture`
 
 **大标题：**
-- ZH：不追求矢量，*追求*稳定。
+- ZH：不追矢量方案，*追*稳定性。
 - EN：Not chasing vectored thrust.<br>*Chasing* stability.
 
 **副标题（H3）：**
@@ -193,8 +193,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - EN：2 Horizontal + 2 Vertical + 1 Lateral.
 
 **主段落：**
-- **ZH：** Remo 摒弃矢量推进（vectored thruster）方案的复杂调参，采用经过 ROV 工业验证的 5 推进器布局——更易于水动力学建模、控制器收敛与外壳工程化。我们并行验证*两套动力路线*：策海科技无刷推进器主打海水可靠性，自研有刷方案主打成本可控；二者共享同一套飞控、声学与传感平台。
-- **EN：** Remo rejects the complex tuning of vectored-thruster approaches, adopting an industry-validated 5-thruster layout from the ROV world — easier to model hydrodynamically, more convergent for the controller, and simpler to package. We validate *two parallel powertrain routes*: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control — both sharing the same flight controller, acoustics, and sensor platform.
+- **ZH：** Remo 采用 5 推进器固定布局（2 水平 + 2 垂直 + 1 横向），避开矢量推进的复杂调参，选择 ROV 行业成熟验证过的方案——水动力学建模更简单，控制器更易收敛，外壳工程化难度更低。当前并行验证*两套动力方案*：策海科技无刷推进器面向海水可靠性，自研有刷方案面向成本控制；两套方案共用同一飞控、声学与传感平台。
+- **EN：** Remo uses a fixed 5-thruster layout (2H + 2V + 1L), avoiding the tuning complexity of vectored thrust in favor of an ROV-industry-validated approach — simpler hydrodynamic modeling, easier controller convergence, lower packaging complexity. Two powertrain routes are being validated in parallel: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control. Both share the same flight controller, acoustics, and sensor platform.
 
 ### 规格列表（14 项 · 项目 · 值 · 状态）
 
@@ -243,20 +243,20 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `06 Acoustic Intelligence`
 
 **大标题：**
-- ZH：当水变浑浊，*声*不会。
-- EN：When the water turns murky,<br>*sound* doesn't.
+- ZH：水变浑，*声学定位*不停。
+- EN：When visibility drops,<br>*acoustic positioning* holds.
 
 **副标题：**
-- ZH：专业声学通信，<br>不是简单水听器。
-- EN：Professional acoustic comms —<br>not a simple hydrophone.
+- ZH：水下声学通信模块，<br>非消费级水听器。
+- EN：Underwater acoustic communication —<br>not a consumer-grade hydrophone.
 
 **段落 1（HTML）：**
-- ZH：Remo 摒弃简单水听器（hydrophone），采用 DYP-C01B 水下声学通信模块——系统部署三个模块，相机端 2 个、潜水员手环端 1 个，两个及以上模块同时在水下即可建立低速率声学链路，进行**纠偏定位**。当视觉被气泡或悬浮颗粒遮蔽时，声学链路仍然稳定——这是 ROV 工业领域成熟二十年的技术，我们做的，是把它装进掌心，并让它和视觉算法手拉手。
-- EN：Remo replaces simple hydrophones with DYP-C01B underwater acoustic communication modules — three modules deployed system-wide: two on the camera and one on the diver's bracelet. Any two modules submerged can establish a low-rate acoustic link for **corrective positioning**. When vision is obscured by bubbles or suspended particles, the acoustic link stays stable — this is technology proven over two decades in the ROV industry. What we've done is shrink it to palm-size and make it work hand-in-hand with vision algorithms.
+- ZH：Remo 系统部署三枚 DYP-C01B 水下声学通信模块——相机端 2 枚、手环端 1 枚。任意两枚入水即可建立低速率声学链路，实现**纠偏定位**。声学定位在气泡、悬浮颗粒等视觉失效场景下保持稳定——这项技术在 ROV 工业领域已成熟应用超过二十年。我们将它缩至掌上尺寸，并与视觉算法进行融合。
+- EN：Remo deploys three DYP-C01B underwater acoustic communication modules — two on the camera, one on the bracelet. Any two submerged modules establish a low-rate acoustic link for **corrective positioning**. The acoustic link remains stable when vision fails due to bubbles or suspended particles — technology proven over two decades in the ROV industry, now shrunk to palm size and fused with vision algorithms.
 
 **段落 2：**
-- ZH：潜水员佩戴的声学手环通过**敲击**产生特定超声特征，被相机端读取识别，构成低带宽、高鲁棒的指令通道——专为"戴着面镜、戴着手套、说不出话"的环境而生。
-- EN：The diver's acoustic bracelet generates distinct ultrasonic signatures via **tapping**, which the camera reads and interprets — forming a low-bandwidth, high-robustness command channel purpose-built for an environment where you're "wearing a mask, wearing gloves, and can't speak."
+- ZH：声学手环通过**敲击**产生超声特征信号，由相机端接收并识别，构成低带宽、高鲁棒的水下指令通道——面向戴面镜、戴手套、无法语音通信的真实潜水环境。
+- EN：The acoustic bracelet generates ultrasonic signatures via **tapping**, received and decoded by the camera — a low-bandwidth, high-robustness underwater command channel designed for real dive conditions: mask on, gloves on, no voice comms.
 
 ### 能力 badge（8 项 · 含三种状态：LIVE / IN-DEV / PLANNED）
 
@@ -286,12 +286,12 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `07 Image Pipeline`
 
 **大标题：**
-- ZH：不只是*拍到*，<br>而是变成可分享的成片。
-- EN：Not just *capturing* —<br>turning it into shareable footage.
+- ZH：不只是*拍下来*，<br>而是直接出片。
+- EN：Not just *recording* —<br>delivering a finished shot.
 
 **Lead 文案：**
-- ZH：水下色彩失真不是滤镜问题——红光在 5 m 几乎完全衰减，绿光在 15 m 大幅衰减，传统白平衡无能为力。Remo 引入基于**生成对抗网络（GAN）**的水下色彩还原算法，结合 MS5837 深度计与声学距离数据，进行物理级别的色彩校正，并通过云端 AI 剪辑订阅形成持续服务能力——*HaaS: Hardware as a Service*。
-- EN：Underwater color distortion isn't a filter problem — red light is nearly gone at 5 m, green heavily attenuated at 15 m, and traditional white balance can't compensate. Remo introduces a **Generative Adversarial Network (GAN)** underwater color restoration algorithm, combining the MS5837 depth sensor with acoustic distance data for physics-level color correction — and wrapping it into a cloud AI editing subscription for ongoing service: *HaaS: Hardware as a Service*.
+- ZH：水下色彩失真不是滤镜能解决的——红光在 5 m 深度衰减殆尽，绿光在 15 m 大幅衰减，白平衡校正有其物理极限。Remo 采用**生成对抗网络（GAN）**进行水下色彩还原，结合 MS5837 深度计与声学距离数据做物理级色彩校正。工程化后将以云端 AI 剪辑订阅形式提供服务——*HaaS: Hardware as a Service*。
+- EN：Underwater color distortion can't be fixed with filters — red light is effectively gone at 5 m, green heavily attenuated at 15 m, and white balance has physical limits. Remo uses a **Generative Adversarial Network (GAN)** for underwater color restoration, combining MS5837 depth sensor and acoustic distance data for physics-level correction. The engineered version will ship as a cloud AI editing subscription — *HaaS: Hardware as a Service*.
 
 **对比图标签：**
 - 左：RAW · 18.6 M · 浑浊　/　RAW · 18.6 M · Murky
@@ -345,15 +345,15 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `09 Product Lineup`
 
 **大标题：**
-- ZH：一台样机，<br>*两个市场愿景*。
-- EN：One prototype,<br>*two market visions*.
+- ZH：一台原型，<br>*两套产品规划*。
+- EN：One prototype,<br>*two product roadmaps*.
 
 ### Lite 卡片
 - **Tag：** `01 · 大众与租赁` / `01 · Mass Market & Rental` + `VISION`
 - **名字：** Remo *Lite*
 - **描述：**
-  - ZH：为每一位会浮潜、会自由潜的人而生。更轻的出行负担、更简单的拍摄流程，让"从潜店借一台 Remo"成为标准动作。
-  - EN：Built for everyone who snorkels or freedives. Lighter travel footprint, simpler shooting workflow — making "grab a Remo from the dive shop" the standard move.
+  - ZH：面向浮潜与自由潜用户，以及潜店租赁场景。轻量化出行、一键拍摄、自动归仓——把操作复杂度降到最低。
+  - EN：For snorkelers, freedivers, and dive shop rentals. Lightweight travel, one-tap shooting, auto-dock recovery — minimal operational complexity.
 - **4 项规格：**
   | ZH | EN |
   |---|---|
@@ -367,8 +367,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - **Tag：** `02 · 硬核与创作者` / `02 · Enthusiast & Creator` + `VISION`
 - **名字：** Remo *Pro*
 - **描述：**
-  - ZH：给愿意为画质付费的人准备的水下创作工具。围绕定制影像系统、更长续航与更深潜域，服务专业拍摄与高级潜点。
-  - EN：A creative tool for people willing to pay for image quality. Built around a custom imaging system, extended endurance, and deeper depth rating — serving professional shoots and advanced dive sites.
+  - ZH：面向愿意为画质付费的专业用户。定制影像系统、更长续航、更深潜深——服务内容创作者与高级潜点拍摄需求。
+  - EN：For professionals willing to pay for image quality. Custom imaging system, extended endurance, deeper depth rating — built for content creators and advanced dive sites.
 - **4 项规格：**
   | ZH | EN |
   |---|---|
@@ -379,8 +379,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - **When：** 产品愿景 / EP 后规划　|　Vision / Post-EP Planning
 
 **底部说明：**
-- ZH：Lite / Pro 为未来产品线愿景。当前 POC 阶段为单一样机，并行验证有刷与无刷两套动力路线，最终归并为统一产品形态。
-- EN：Lite / Pro are future product-line visions. The current POC stage is a single prototype validating both brushed and brushless powertrain routes in parallel, ultimately converging into a unified product form.
+- ZH：Lite / Pro 为未来产品线规划。当前 POC 阶段为单一样机，同步验证有刷与无刷两套动力方案，最终合并为统一产品平台。
+- EN：Lite / Pro are future product-line plans. The current POC stage uses a single prototype to validate both brushed and brushless powertrain routes in parallel, converging into one unified product platform.
 
 ---
 
@@ -516,19 +516,19 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `12 Business Model`
 
 **大标题：**
-- ZH：硬件是入口，*HaaS* 是长期价值。
-- EN：Hardware is the entry point.<br>*HaaS* is the long-term value.
+- ZH：硬件获客，*HaaS* 创造长期价值。
+- EN：Hardware acquires users.<br>*HaaS* builds long-term value.
 
 ### 三个卡片
 1. **消费硬件 / Consumer Hardware**
-   - ZH：以掌上起降、无线跟随和一键成片建立差异化，而不是单纯拼相机参数。让设计与体验成为护城河的第一层。
-   - EN：Differentiate on palm-sized deployment, wireless following, and one-tap edit — not on raw camera specs alone. Let design and experience be the first layer of the moat.
+   - ZH：以无线跟随、掌上起降、一键成片建立差异化优势。不靠堆相机参数竞争，让产品定义与整机体验成为第一层壁垒。
+   - EN：Differentiate on wireless following, palm deployment, and one-tap editing — not on camera specs. Product definition and end-to-end experience form the first competitive layer.
 2. **潜店租赁 / Dive Shop Rental**
-   - ZH：面向潜店和旅行场景的更低门槛体验入口。对潜店而言，Remo 提高设备周转率与内容转化率；对用户而言，"出国前不必先买相机"。租赁是消费者教育的最佳渠道。
-   - EN：A lower-barrier entry point for dive shops and travel scenarios. For dive shops, Remo improves gear turnover and content conversion rates. For users, "you don't need to buy a camera before your trip." Rental is the best consumer education channel.
+   - ZH：面向潜店与旅行场景的低门槛入口。对潜店：提高设备周转率与内容产出；对用户：出行前不必购买水下相机。租赁本身是最有效的消费者教育。
+   - EN：Low-barrier entry for dive shops and travel. For shops: higher gear turnover and content output. For divers: no need to buy an underwater camera before the trip. Rental is the most effective form of consumer education.
 3. **云端 AI 订阅 / Cloud AI Subscription**
-   - ZH：GAN 色彩还原、智能剪辑、潜水日志、成片模板——所有需要算力与素材库的部分都放在云端，形成持续订阅收入。硬件单价波动，HaaS 收入稳定。
-   - EN：GAN color restoration, smart editing, dive logs, production templates — everything requiring compute power and asset libraries lives in the cloud, generating recurring subscription revenue. Hardware ASP fluctuates; HaaS revenue is steady.
+   - ZH：GAN 色彩还原、智能剪辑、潜水日志、成片模板——所有依赖算力与素材库的功能部署在云端，形成持续订阅收入。硬件 ASP 波动，HaaS 提供稳定的经常性收入。
+   - EN：GAN color restoration, smart editing, dive logs, production templates — everything requiring compute and asset libraries lives in the cloud, generating recurring subscription revenue. Hardware ASP fluctuates; HaaS delivers steady recurring revenue.
 
 ---
 
@@ -586,12 +586,12 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **Eyebrow：** `15 For Investors`
 
 **大标题：**
-- ZH：实物证据，*分层表达*。
-- EN：Physical evidence,<br>*layered communication*.
+- ZH：已验证的，*分层呈现*。
+- EN：Verified claims,<br>*clearly layered*.
 
 **Lead：**
-- ZH：我们对外只承诺"已验证"，路线则用"进行中 / 规划中"分层标注。以下是面向天使阶段投资人的核心信息。完整 Deck 与 Tech Snapshot 请联系创始团队。
-- EN：We only claim what's been "verified" externally, and mark roadmap items as "in development" or "planned" with clear layering. Below is the core information for angel-stage investors. For the full Deck and Tech Snapshot, please contact the founding team.
+- ZH：我们对外仅承诺已通过实测验证的能力，路线图项目以"进行中 / 规划中"清晰标注。以下为面向天使轮投资人的关键信息。完整 Deck 与 Tech Snapshot 请联系创始团队。
+- EN：We only claim what has been verified through testing. Roadmap items are clearly marked "in development" or "planned." Below is key information for angel-stage investors. For the full Deck and Tech Snapshot, contact the founding team.
 
 ### 3 列卡片
 
@@ -612,8 +612,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 **排版：** 大字号居中标题。下方两个按钮。底部 3 项 meta 信息。
 
 **主标题：**
-- ZH：让*水下*，<br>只剩下*呼吸*。
-- EN：*Under* the water,<br>nothing left<br>but *your breath*.
+- ZH：放开双手，<br>*把镜头交给 Remo*。
+- EN：Let go,<br>*let Remo take the shot*.
 
 **按钮：**
 - primary：与创始团队对话 / Talk to the Founding Team

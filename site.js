@@ -21,7 +21,7 @@ const I18N = {
     "hero.meta.depth": "Underwater · 40 m",
     "hero.meta.phase": "POC → EP → Kickstarter",
     "hero.title": "<span class=\"word\">放开</span><span class=\"word\">双手，</span><span class=\"word\">把镜头</span><span class=\"word\">交给</span><span class=\"word\"><em>水下</em></span><span class=\"word\"><em>智能体</em>。</span>",
-    "hero.summary": "Project Remo 是一款<strong style=\"color:var(--light);font-weight:500\">无线、掌上起降</strong>的水下智能跟随相机。它填补了消费级运动相机与传统有线 ROV 之间的市场空白——让每一位潜水员重新拥有自由的双手与完整的注意力。",
+    "hero.summary": "Project Remo 是一款无线、掌上起降的水下跟随相机，位于运动相机与传统 ROV 之间的空白地带。入水自动唤醒，声学定位跟随，出水自动归仓。让潜水员专注于潜水本身。",
     "hero.btn.primary": "探索 Remo",
     "hero.btn.secondary": "观看水测实录",
     "hero.ks.1.note": "设计目标深潜",
@@ -34,18 +34,18 @@ const I18N = {
 
     /* Manifesto */
     "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
-    "manifesto.text": "水下摄影的难点，<br>不是\"能不能拍\"，<br>而是潜水员，<br><em>是否还有余力拍好</em>。",
+    "manifesto.text": "水下摄影的真正门槛，<br>不是设备不够好，<br>而是潜水员的注意力<br><em>已经被太多事情分走了</em>。",
     "manifesto.sig": "Project Remo · 创始团队",
 
     /* Pain */
     "pain.eyebrow": "<span class=\"index\">02</span> The Pain",
-    "pain.heading": "三条<em style=\"font-style:italic;color:var(--accent)\">水下摄影者</em>必须独自承担的负担。",
+    "pain.heading": "潜水拍摄时，<em style=\"font-style:italic;color:var(--accent)\">双手和注意力</em>同时被占用。",
     "pain.1.title": "双手被占用",
-    "pain.1.desc": "水下摄影者必须同时管理浮力、呼吸节奏、深度计、构图与跟焦——注意力的\"工作记忆\"被瓜分到 5 件事以上。最终结果通常不是没拍到，而是<em style=\"font-style:normal;color:var(--accent)\">拍废与隐患同时发生</em>。",
+    "pain.1.desc": "潜水员在水下需要同时管理浮力、呼吸、深度、构图与跟焦——五件事抢占同一份注意力。结果往往不是没拍到，<em style=\"font-style:normal;color:var(--accent)\">而是拍到了但拍废了，同时安全冗余在下降</em>。",
     "pain.2.title": "ROV 不属于消费者",
-    "pain.2.desc": "传统水下 ROV 是工业巡检工具——脐带线缆、地面控制器、上岸部署流程，让它从未真正属于一次说走就走的旅行潜。重 7–15 kg、起步价 ¥15,000+，\"自由\"和\"ROV\"在产品语言上从未相遇。",
+    "pain.2.desc": "传统水下 ROV 面向工业巡检设计——脐带缆、地面站、岸上部署流程，不属于休闲潜水场景。7–15 kg 自重、¥15,000+ 起步，\"消费级\"三个字在 ROV 品类中从未成立。",
     "pain.3.title": "视觉会失效",
-    "pain.3.desc": "气泡群、悬浮颗粒、逆光、低照度——任何一种都足以让单纯视觉跟踪丢失目标。水下交互必须尊重\"水\"这件事本身，<em style=\"font-style:normal;color:var(--accent)\">而不是把陆地上的视觉假设原样搬下水</em>。",
+    "pain.3.desc": "气泡群、悬浮颗粒、逆光、低能见度——任一条件都足以让纯视觉跟踪失效。水下定位必须基于\"水\"的物理特性设计，<em style=\"font-style:normal;color:var(--accent)\">不能把陆地视觉方案直接搬到水下</em>。",
 
     /* Flow */
     "flow.eyebrow": "<span class=\"index\">03</span> How It Works",
@@ -61,9 +61,9 @@ const I18N = {
 
     /* Architecture */
     "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
-    "arch.heading": "不追求矢量，<em>追求</em>稳定。",
+    "arch.heading": "不追矢量方案，<em>追</em>稳定性。",
     "arch.title": "2 水平 + 2 垂直 + 1 横向。",
-    "arch.desc": "Remo 摒弃矢量推进（vectored thruster）方案的复杂调参，采用经过 ROV 工业验证的 5 推进器布局——更易于水动力学建模、控制器收敛与外壳工程化。我们并行验证<em style=\"font-style:normal;color:var(--accent)\">两套动力路线</em>：策海科技无刷推进器主打海水可靠性，自研有刷方案主打成本可控；二者共享同一套飞控、声学与传感平台。",
+    "arch.desc": "Remo 采用 5 推进器固定布局（2 水平 + 2 垂直 + 1 横向），避开矢量推进的复杂调参，选择 ROV 行业成熟验证过的方案——水动力学建模更简单，控制器更易收敛，外壳工程化难度更低。当前并行验证<em style=\"font-style:normal;color:var(--accent)\">两套动力方案</em>：策海科技无刷推进器面向海水可靠性，自研有刷方案面向成本控制；两套方案共用同一飞控、声学与传感平台。",
     "arch.spec.1": "推进器架构",
     "arch.spec.1.val": "2H + 2V + 1L",
     "arch.spec.2": "动力 A · 无刷",
@@ -108,10 +108,10 @@ const I18N = {
 
     /* Acoustic */
     "acoustic.eyebrow": "<span class=\"index\">06</span> Acoustic Intelligence",
-    "acoustic.heading": "当水变浑浊，<em>声</em>不会。",
-    "acoustic.title": "专业声学通信，<br>不是简单水听器。",
-    "acoustic.desc.1": "Remo 摒弃简单水听器（hydrophone），采用 DYP-C01B 水下声学通信模块——系统部署三个模块，相机端 2 个、潜水员手环端 1 个，两个及以上模块同时在水下即可建立低速率声学链路，进行<strong style=\"color:var(--light);font-weight:500\">纠偏定位</strong>。当视觉被气泡或悬浮颗粒遮蔽时，声学链路仍然稳定——这是 ROV 工业领域成熟二十年的技术，我们做的，是把它装进掌心，并让它和视觉算法手拉手。",
-    "acoustic.desc.2": "潜水员佩戴的声学手环通过<strong style=\"color:var(--light);font-weight:500\">敲击</strong>产生特定超声特征，被相机端读取识别，构成低带宽、高鲁棒的指令通道——专为\"戴着面镜、戴着手套、说不出话\"的环境而生。",
+    "acoustic.heading": "水变浑，<em>声学定位</em>不停。",
+    "acoustic.title": "水下声学通信模块，<br>非消费级水听器。",
+    "acoustic.desc.1": "Remo 系统部署三枚 DYP-C01B 水下声学通信模块——相机端 2 枚、手环端 1 枚。任意两枚入水即可建立低速率声学链路，实现<strong style=\"color:var(--light);font-weight:500\">纠偏定位</strong>。声学定位在气泡、悬浮颗粒等视觉失效场景下保持稳定——这项技术在 ROV 工业领域已成熟应用超过二十年。我们将它缩至掌上尺寸，并与视觉算法进行融合。",
+    "acoustic.desc.2": "声学手环通过<strong style=\"color:var(--light);font-weight:500\">敲击</strong>产生超声特征信号，由相机端接收并识别，构成低带宽、高鲁棒的水下指令通道——面向戴面镜、戴手套、无法语音通信的真实潜水环境。",
     "acoustic.badge.1": "DYP-C01B 声学模块 ×3",
     "acoustic.badge.2": "自动巡航 / 避障",
     "acoustic.badge.3": "入水唤醒 / 出水上锁",
@@ -124,8 +124,8 @@ const I18N = {
 
     /* Color */
     "color.eyebrow": "<span class=\"index\">07</span> Image Pipeline",
-    "color.heading": "不只是<em>拍到</em>，<br>而是变成可分享的成片。",
-    "color.lead": "水下色彩失真不是滤镜问题——红光在 5 m 几乎完全衰减，绿光在 15 m 大幅衰减，传统白平衡无能为力。Remo 引入基于<strong style=\"color:var(--light);font-weight:500\">生成对抗网络（GAN）</strong>的水下色彩还原算法，结合 MS5837 深度计与声学距离数据，进行物理级别的色彩校正，并通过云端 AI 剪辑订阅形成持续服务能力——<em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>。",
+    "color.heading": "不只是<em>拍下来</em>，<br>而是直接出片。",
+    "color.lead": "水下色彩失真不是滤镜能解决的——红光在 5 m 深度衰减殆尽，绿光在 15 m 大幅衰减，白平衡校正有其物理极限。Remo 采用<strong style=\"color:var(--light);font-weight:500\">生成对抗网络（GAN）</strong>进行水下色彩还原，结合 MS5837 深度计与声学距离数据做物理级色彩校正。工程化后将以云端 AI 剪辑订阅形式提供服务——<em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>。",
     "color.tag.left": "RAW · 18.6 M · 浑浊",
     "color.tag.right": "GAN RESTORED · v0.4",
     "color.disclaimer": "本图为算法 v0.4 离线推理结果。工程化版本计划于 EP 阶段验证，于 Kickstarter 阶段开放云端服务。",
@@ -179,9 +179,9 @@ const I18N = {
 
     /* Lineup */
     "lineup.eyebrow": "<span class=\"index\">09</span> Product Lineup",
-    "lineup.heading": "一台样机，<br><em>两个市场愿景</em>。",
+    "lineup.heading": "一台原型，<br><em>两套产品规划</em>。",
     "lineup.lite.tag": "01 · 大众与租赁",
-    "lineup.lite.desc": "为每一位会浮潜、会自由潜的人而生。更轻的出行负担、更简单的拍摄流程，让\"从潜店借一台 Remo\"成为标准动作。",
+    "lineup.lite.desc": "面向浮潜与自由潜用户，以及潜店租赁场景。轻量化出行、一键拍摄、自动归仓——把操作复杂度降到最低。",
     "lineup.lite.spec.1": "定位",
     "lineup.lite.spec.1.val": "大众消费 · 租赁",
     "lineup.lite.spec.2": "体验",
@@ -193,7 +193,7 @@ const I18N = {
     "lineup.lite.when.label": "产品愿景",
     "lineup.lite.when.val": "面向上市",
     "lineup.pro.tag": "02 · 硬核与创作者",
-    "lineup.pro.desc": "给愿意为画质付费的人准备的水下创作工具。围绕定制影像系统、更长续航与更深潜域，服务专业拍摄与高级潜点。",
+    "lineup.pro.desc": "面向愿意为画质付费的专业用户。定制影像系统、更长续航、更深潜深——服务内容创作者与高级潜点拍摄需求。",
     "lineup.pro.spec.1": "定位",
     "lineup.pro.spec.1.val": "专业创作",
     "lineup.pro.spec.2": "影像",
@@ -204,7 +204,7 @@ const I18N = {
     "lineup.pro.spec.4.val": "内容创作 · 高级潜点",
     "lineup.pro.when.label": "产品愿景",
     "lineup.pro.when.val": "EP 后规划",
-    "lineup.note": "Lite / Pro 为未来产品线愿景。当前 POC 阶段为单一样机，并行验证有刷与无刷两套动力路线，最终归并为统一产品形态。",
+    "lineup.note": "Lite / Pro 为未来产品线规划。当前 POC 阶段为单一样机，同步验证有刷与无刷两套动力方案，最终合并为统一产品平台。",
 
     /* Specs */
     "specs.eyebrow": "<span class=\"index\">10</span> Tech Specs",
@@ -368,13 +368,13 @@ const I18N = {
 
     /* Business */
     "business.eyebrow": "<span class=\"index\">12</span> Business Model",
-    "business.heading": "硬件是入口，<em>HaaS</em> 是长期价值。",
+    "business.heading": "硬件获客，<em>HaaS</em> 创造长期价值。",
     "business.1.title": "消费硬件",
-    "business.1.desc": "以掌上起降、无线跟随和一键成片建立差异化，而不是单纯拼相机参数。让设计与体验成为护城河的第一层。",
+    "business.1.desc": "以无线跟随、掌上起降、一键成片建立差异化优势。不靠堆相机参数竞争，让产品定义与整机体验成为第一层壁垒。",
     "business.2.title": "潜店租赁",
-    "business.2.desc": "面向潜店和旅行场景的更低门槛体验入口。对潜店而言，Remo 提高设备周转率与内容转化率；对用户而言，\"出国前不必先买相机\"。租赁是消费者教育的最佳渠道。",
+    "business.2.desc": "面向潜店与旅行场景的低门槛入口。对潜店：提高设备周转率与内容产出；对用户：出行前不必购买水下相机。租赁本身是最有效的消费者教育。",
     "business.3.title": "云端 AI 订阅",
-    "business.3.desc": "GAN 色彩还原、智能剪辑、潜水日志、成片模板——所有需要算力与素材库的部分都放在云端，形成持续订阅收入。硬件单价波动，HaaS 收入稳定。",
+    "business.3.desc": "GAN 色彩还原、智能剪辑、潜水日志、成片模板——所有依赖算力与素材库的功能部署在云端，形成持续订阅收入。硬件 ASP 波动，HaaS 提供稳定的经常性收入。",
 
     /* Roadmap */
     "roadmap.eyebrow": "<span class=\"index\">13</span> Milestones",
@@ -403,8 +403,8 @@ const I18N = {
 
     /* Investors */
     "investors.eyebrow": "<span class=\"index\">15</span> For Investors",
-    "investors.heading": "实物证据，<em>分层表达</em>。",
-    "investors.lead": "我们对外只承诺\"已验证\"，路线则用\"进行中 / 规划中\"分层标注。以下是面向天使阶段投资人的核心信息。完整 Deck 与 Tech Snapshot 请联系创始团队。",
+    "investors.heading": "已验证的，<em>分层呈现</em>。",
+    "investors.lead": "我们对外仅承诺已通过实测验证的能力，路线图项目以\"进行中 / 规划中\"清晰标注。以下为面向天使轮投资人的关键信息。完整 Deck 与 Tech Snapshot 请联系创始团队。",
     "investors.1.num": "— 01 · 阶段",
     "investors.1.title": "POC · 原理样机已跑通",
     "investors.1.desc": "机械、PCB、控制脚本、用户访谈、水测视频均已沉淀。可演示链路：入水自动解锁 → 自动巡航 → 近障避让 → 出水自动上锁。",
@@ -418,7 +418,7 @@ const I18N = {
     "investors.btn.2": "查看 90 秒实证素材",
 
     /* Outro */
-    "outro.heading": "让<em>水下</em>，<br>只剩下<em>呼吸</em>。",
+    "outro.heading": "放开双手，<br><em>把镜头交给 Remo</em>。",
     "outro.btn.1": "与创始团队对话",
     "outro.btn.2": "回到顶部",
     "outro.meta.1.label": "阶段",
@@ -438,7 +438,7 @@ const I18N = {
 
     /* Misc */
     "meta.title": "Project Remo — 水下智能跟随相机",
-    "meta.desc": "Project Remo 是一款无线、掌上起降的水下智能跟随相机。填补消费级运动相机与传统有线 ROV 之间的空白，让潜水员只剩下呼吸。",
+    "meta.desc": "Project Remo 是一款无线、掌上起降的水下跟随相机。入水唤醒，声学定位跟随，出水归仓。让潜水员专注于潜水本身。",
     "hero.product.alt": "Project Remo 水下智能跟随相机",
     "acoustic.img.alt": "声学链路水下场景 · 潜水员与 Remo 声学通信",
     "compare.img.alt": "对比：运动相机 · 有线 ROV · Project Remo",
@@ -461,7 +461,7 @@ const I18N = {
     "hero.meta.depth": "Underwater · 40 m",
     "hero.meta.phase": "POC → EP → Kickstarter",
     "hero.title": "<span class=\"word\">Let Go</span><span class=\"word\">of Your</span><span class=\"word\">Hands.</span><span class=\"word\">Hand the</span><span class=\"word\">Shot to an</span><span class=\"word\"><em>Underwater</em></span><span class=\"word\"><em>Agent</em>.</span>",
-    "hero.summary": "Project Remo is a <strong style=\"color:var(--light);font-weight:500\">wireless, palm-sized underwater follow-cam</strong>. It fills the gap between consumer action cameras and tethered ROVs — freeing every diver's hands and full attention for the dive itself.",
+    "hero.summary": "Project Remo is a wireless, palm-deployable underwater follow-cam that sits between action cameras and tethered ROVs. Auto-wake on entry, acoustic positioning, auto-dock on surfacing. It handles the shot so the diver doesn't have to.",
     "hero.btn.primary": "Explore Remo",
     "hero.btn.secondary": "Watch Water Tests",
     "hero.ks.1.note": "Target Depth Rating",
@@ -473,17 +473,17 @@ const I18N = {
     "hero.scroll": "Scroll Down",
 
     "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
-    "manifesto.text": "The hard part of underwater photography<br>isn't \"can you shoot it?\" —<br>it's whether the diver<br><em>still has the bandwidth to shoot it well</em>.",
+    "manifesto.text": "The real bottleneck in underwater photography<br>isn't the gear —<br>it's that the diver's attention<br><em>is already split across too many tasks</em>.",
     "manifesto.sig": "Project Remo · Founding Team",
 
     "pain.eyebrow": "<span class=\"index\">02</span> The Pain",
-    "pain.heading": "Three burdens every <em style=\"font-style:italic;color:var(--accent)\">underwater photographer</em> carries alone.",
+    "pain.heading": "When you dive with a camera, <em style=\"font-style:italic;color:var(--accent)\">both hands and attention</em> are tied up.",
     "pain.1.title": "Both Hands Occupied",
-    "pain.1.desc": "Underwater photographers juggle buoyancy, breathing rhythm, depth gauge, composition, and focus tracking — working memory split across 5+ tasks. The result is usually <em style=\"font-style:normal;color:var(--accent)\">not \"didn't shoot\" — it's \"ruined the shot while compromising safety\"</em>.",
+    "pain.1.desc": "A diver underwater manages buoyancy, breathing, depth, composition, and focus — five tasks competing for one attention budget. The outcome is rarely \"didn't get the shot.\" <em style=\"font-style:normal;color:var(--accent)\">It's \"got the shot but it's unusable, and safety margins are shrinking.\"</em>",
     "pain.2.title": "ROVs Aren't for Consumers",
-    "pain.2.desc": "Traditional underwater ROVs are industrial inspection tools — tethers, ground controllers, and shore-deployment workflows mean they've never belonged in a spontaneous dive trip. At 7–15 kg and ¥15,000+ starting price, \"freedom\" and \"ROV\" have never met in product language.",
+    "pain.2.desc": "Traditional ROVs are built for industrial inspection — tethers, ground control stations, shore-deployment workflows. They were never designed for recreational diving. At 7–15 kg and ¥15,000+ entry price, \"consumer-grade\" has never described this category.",
     "pain.3.title": "Vision Fails Underwater",
-    "pain.3.desc": "Bubble clouds, suspended particles, backlight, low visibility — any one is enough to break a pure visual tracker. Underwater interaction must respect the water itself, <em style=\"font-style:normal;color:var(--accent)\">not blindly transplant land-based vision assumptions beneath the surface</em>.",
+    "pain.3.desc": "Bubbles, suspended particles, backlight, low visibility — any one of these breaks a pure visual tracking system. Underwater positioning must be designed for the physics of water, <em style=\"font-style:normal;color:var(--accent)\">not adapted from land-based vision assumptions</em>.",
 
     "flow.eyebrow": "<span class=\"index\">03</span> How It Works",
     "flow.heading": "60 seconds to<br>understand an <em>underwater follow-shot</em>.",
@@ -499,7 +499,7 @@ const I18N = {
     "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
     "arch.heading": "Not chasing vectored thrust.<br><em>Chasing</em> stability.",
     "arch.title": "2 Horizontal + 2 Vertical + 1 Lateral.",
-    "arch.desc": "Remo rejects the complex tuning of vectored-thruster approaches, adopting an industry-validated 5-thruster layout from the ROV world — easier to model hydrodynamically, more convergent for the controller, and simpler to package. We validate <em style=\"font-style:normal;color:var(--accent)\">two parallel powertrain routes</em>: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control — both sharing the same flight controller, acoustics, and sensor platform.",
+    "arch.desc": "Remo uses a fixed 5-thruster layout (2H + 2V + 1L), avoiding the tuning complexity of vectored thrust in favor of an ROV-industry-validated approach — simpler hydrodynamic modeling, easier controller convergence, lower packaging complexity. Two powertrain routes are being validated in parallel: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control. Both share the same flight controller, acoustics, and sensor platform.",
     "arch.spec.1": "Thruster Layout",
     "arch.spec.1.val": "2H + 2V + 1L",
     "arch.spec.2": "Route A · Brushless",
@@ -542,10 +542,10 @@ const I18N = {
     "stats.4.note": "Acoustic-assisted vision, multimodal interaction, hydrostatic seal.",
 
     "acoustic.eyebrow": "<span class=\"index\">06</span> Acoustic Intelligence",
-    "acoustic.heading": "When the water turns murky,<br><em>sound</em> doesn't.",
-    "acoustic.title": "Professional acoustic comms —<br>not a simple hydrophone.",
-    "acoustic.desc.1": "Remo replaces simple hydrophones with DYP-C01B underwater acoustic communication modules — three modules deployed system-wide: two on the camera and one on the diver's bracelet. Any two modules submerged can establish a low-rate acoustic link for <strong style=\"color:var(--light);font-weight:500\">corrective positioning</strong>. When vision is obscured by bubbles or suspended particles, the acoustic link stays stable — this is technology proven over two decades in the ROV industry. What we've done is shrink it to palm-size and make it work hand-in-hand with vision algorithms.",
-    "acoustic.desc.2": "The diver's acoustic bracelet generates distinct ultrasonic signatures via <strong style=\"color:var(--light);font-weight:500\">tapping</strong>, which the camera reads and interprets — forming a low-bandwidth, high-robustness command channel purpose-built for an environment where you're \"wearing a mask, wearing gloves, and can't speak.\"",
+    "acoustic.heading": "When visibility drops,<br><em>acoustic positioning</em> holds.",
+    "acoustic.title": "Underwater acoustic communication —<br>not a consumer-grade hydrophone.",
+    "acoustic.desc.1": "Remo deploys three DYP-C01B underwater acoustic communication modules — two on the camera, one on the bracelet. Any two submerged modules establish a low-rate acoustic link for <strong style=\"color:var(--light);font-weight:500\">corrective positioning</strong>. The acoustic link remains stable when vision fails due to bubbles or suspended particles — technology proven over two decades in the ROV industry, now shrunk to palm size and fused with vision algorithms.",
+    "acoustic.desc.2": "The acoustic bracelet generates ultrasonic signatures via <strong style=\"color:var(--light);font-weight:500\">tapping</strong>, received and decoded by the camera — a low-bandwidth, high-robustness underwater command channel designed for real dive conditions: mask on, gloves on, no voice comms.",
     "acoustic.badge.1": "DYP-C01B Module ×3",
     "acoustic.badge.2": "Auto-Cruise / Obstacle Avoid",
     "acoustic.badge.3": "Immersion Wake / Surface Lock",
@@ -557,8 +557,8 @@ const I18N = {
     "acoustic.bracelet": "Acoustic Bracelet · ESP32-S3 · DYP-C01B · IMU Gesture + Tap",
 
     "color.eyebrow": "<span class=\"index\">07</span> Image Pipeline",
-    "color.heading": "Not just <em>capturing</em> —<br>turning it into shareable footage.",
-    "color.lead": "Underwater color distortion isn't a filter problem — red light is nearly gone at 5 m, green heavily attenuated at 15 m, and traditional white balance can't compensate. Remo introduces a <strong style=\"color:var(--light);font-weight:500\">Generative Adversarial Network (GAN)</strong> underwater color restoration algorithm, combining the MS5837 depth sensor with acoustic distance data for physics-level color correction — and wrapping it into a cloud AI editing subscription for ongoing service: <em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>.",
+    "color.heading": "Not just <em>recording</em> —<br>delivering a finished shot.",
+    "color.lead": "Underwater color distortion can't be fixed with filters — red light is effectively gone at 5 m, green heavily attenuated at 15 m, and white balance has physical limits. Remo uses a <strong style=\"color:var(--light);font-weight:500\">Generative Adversarial Network (GAN)</strong> for underwater color restoration, combining MS5837 depth sensor and acoustic distance data for physics-level correction. The engineered version will ship as a cloud AI editing subscription — <em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>.",
     "color.tag.left": "RAW · 18.6 M · Murky",
     "color.tag.right": "GAN RESTORED · v0.4",
     "color.disclaimer": "This image is an offline inference result from algorithm v0.4. The engineered version is planned for EP-stage validation and cloud service launch at Kickstarter.",
@@ -610,9 +610,9 @@ const I18N = {
     "compare.note": "Comparison data based on publicly available consumer product specs. Remo data based on current POC prototype measurements and structural design targets.",
 
     "lineup.eyebrow": "<span class=\"index\">09</span> Product Lineup",
-    "lineup.heading": "One prototype,<br><em>two market visions</em>.",
+    "lineup.heading": "One prototype,<br><em>two product roadmaps</em>.",
     "lineup.lite.tag": "01 · Mass Market & Rental",
-    "lineup.lite.desc": "Built for everyone who snorkels or freedives. Lighter travel footprint, simpler shooting workflow — making \"grab a Remo from the dive shop\" the standard move.",
+    "lineup.lite.desc": "For snorkelers, freedivers, and dive shop rentals. Lightweight travel, one-tap shooting, auto-dock recovery — minimal operational complexity.",
     "lineup.lite.spec.1": "Positioning",
     "lineup.lite.spec.1.val": "Consumer · Rental",
     "lineup.lite.spec.2": "Experience",
@@ -624,7 +624,7 @@ const I18N = {
     "lineup.lite.when.label": "Vision",
     "lineup.lite.when.val": "Toward Launch",
     "lineup.pro.tag": "02 · Enthusiast & Creator",
-    "lineup.pro.desc": "A creative tool for people willing to pay for image quality. Built around a custom imaging system, extended endurance, and deeper depth rating — serving professional shoots and advanced dive sites.",
+    "lineup.pro.desc": "For professionals willing to pay for image quality. Custom imaging system, extended endurance, deeper depth rating — built for content creators and advanced dive sites.",
     "lineup.pro.spec.1": "Positioning",
     "lineup.pro.spec.1.val": "Professional Creation",
     "lineup.pro.spec.2": "Imaging",
@@ -635,7 +635,7 @@ const I18N = {
     "lineup.pro.spec.4.val": "Content Creation · Advanced Sites",
     "lineup.pro.when.label": "Vision",
     "lineup.pro.when.val": "Post-EP Planning",
-    "lineup.note": "Lite / Pro are future product-line visions. The current POC stage is a single prototype validating both brushed and brushless powertrain routes in parallel, ultimately converging into a unified product form.",
+    "lineup.note": "Lite / Pro are future product-line plans. The current POC stage uses a single prototype to validate both brushed and brushless powertrain routes in parallel, converging into one unified product platform.",
 
     "specs.eyebrow": "<span class=\"index\">10</span> Tech Specs",
     "specs.heading": "Engineering details<br>you can <em>actually see</em>.",
@@ -790,13 +790,13 @@ const I18N = {
     "gallery.shot.5.desc": "Freedive photography · consumer-facing product imagination",
 
     "business.eyebrow": "<span class=\"index\">12</span> Business Model",
-    "business.heading": "Hardware is the entry point.<br><em>HaaS</em> is the long-term value.",
+    "business.heading": "Hardware acquires users.<br><em>HaaS</em> builds long-term value.",
     "business.1.title": "Consumer Hardware",
-    "business.1.desc": "Differentiate on palm-sized deployment, wireless following, and one-tap edit — not on raw camera specs alone. Let design and experience be the first layer of the moat.",
+    "business.1.desc": "Differentiate on wireless following, palm deployment, and one-tap editing — not on camera specs. Product definition and end-to-end experience form the first competitive layer.",
     "business.2.title": "Dive Shop Rental",
-    "business.2.desc": "A lower-barrier entry point for dive shops and travel scenarios. For dive shops, Remo improves gear turnover and content conversion rates. For users, \"you don't need to buy a camera before your trip.\" Rental is the best consumer education channel.",
+    "business.2.desc": "Low-barrier entry for dive shops and travel. For shops: higher gear turnover and content output. For divers: no need to buy an underwater camera before the trip. Rental is the most effective form of consumer education.",
     "business.3.title": "Cloud AI Subscription",
-    "business.3.desc": "GAN color restoration, smart editing, dive logs, production templates — everything requiring compute power and asset libraries lives in the cloud, generating recurring subscription revenue. Hardware ASP fluctuates; HaaS revenue is steady.",
+    "business.3.desc": "GAN color restoration, smart editing, dive logs, production templates — everything requiring compute and asset libraries lives in the cloud, generating recurring subscription revenue. Hardware ASP fluctuates; HaaS delivers steady recurring revenue.",
 
     "roadmap.eyebrow": "<span class=\"index\">13</span> Milestones",
     "roadmap.heading": "Three steps<br>to Kickstarter.",
@@ -822,8 +822,8 @@ const I18N = {
     "moat.3.desc": "Mechanical design that leverages ambient water pressure to enhance seal conformity — optimized for consumer depth ratings and field serviceability.",
 
     "investors.eyebrow": "<span class=\"index\">15</span> For Investors",
-    "investors.heading": "Physical evidence,<br><em>layered communication</em>.",
-    "investors.lead": "We only claim what's been \"verified\" externally, and mark roadmap items as \"in development\" or \"planned\" with clear layering. Below is the core information for angel-stage investors. For the full Deck and Tech Snapshot, please contact the founding team.",
+    "investors.heading": "Verified claims,<br><em>clearly layered</em>.",
+    "investors.lead": "We only claim what has been verified through testing. Roadmap items are clearly marked \"in development\" or \"planned.\" Below is key information for angel-stage investors. For the full Deck and Tech Snapshot, contact the founding team.",
     "investors.1.num": "— 01 · Stage",
     "investors.1.title": "POC · Working Prototype Proven",
     "investors.1.desc": "Mechanical, PCB, control scripts, user interviews, and water-test footage are all archived. Demonstrable pipeline: immersion auto-unlock → auto-cruise → proximity obstacle avoidance → surface auto-lock.",
@@ -836,7 +836,7 @@ const I18N = {
     "investors.btn.1": "Request Tech Snapshot",
     "investors.btn.2": "View 90s Evidence Reel",
 
-    "outro.heading": "<em>Under</em> the water,<br>nothing left<br>but <em>your breath</em>.",
+    "outro.heading": "Let go,<br><em>let Remo take the shot</em>.",
     "outro.btn.1": "Talk to the Founding Team",
     "outro.btn.2": "Back to Top",
     "outro.meta.1.label": "Stage",
@@ -853,7 +853,7 @@ const I18N = {
     "footer.copyright": "© Project Remo · All rights reserved",
 
     "meta.title": "Project Remo — Wireless Underwater Follow-Cam",
-    "meta.desc": "Project Remo is a wireless, palm-sized underwater intelligent follow-camera. It fills the gap between consumer action cameras and traditional tethered ROVs — leaving the diver with nothing but their breath.",
+    "meta.desc": "Project Remo is a wireless, palm-deployable underwater follow-cam. Auto-wake on entry, acoustic positioning, auto-dock on surfacing. It handles the shot so the diver doesn't have to.",
     "hero.product.alt": "Project Remo Underwater Intelligent Follow-Camera",
     "acoustic.img.alt": "Acoustic Link Underwater Scene · Diver and Remo Acoustic Communication",
     "compare.img.alt": "Comparison: Action Cam · Tethered ROV · Project Remo",
