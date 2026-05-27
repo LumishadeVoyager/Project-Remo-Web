@@ -438,6 +438,68 @@ section + section::before {
   transform: rotate(-6deg);
 }
 
+/* Hero wordmark — large "PROJECT REMO" lockup behind the product image,
+   creating depth and brand presence. Sits between background and product
+   (z-index 1, vs hero-title z-3 and hero-product z-2). */
+.hero-wordmark {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  line-height: 0.78;
+  letter-spacing: -0.05em;
+  font-family: var(--display);
+  font-weight: 200;
+  font-variation-settings: "opsz" 144;
+  font-size: clamp(110px, 18vw, 280px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
+  text-stroke: 1px rgba(255, 255, 255, 0.07);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.025) 60%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+  white-space: nowrap;
+  width: clamp(380px, 50vw, 820px);
+  text-align: right;
+  opacity: 0;
+  animation: heroWordmarkIn 1.8s 0.6s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+}
+
+.hero-wordmark-line {
+  display: block;
+}
+
+.hero-wordmark-line:nth-child(2) {
+  /* Slight inset on second line + accent tint to subtly mark the brand */
+  margin-right: -0.04em;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 217, 255, 0.10) 0%,
+    rgba(0, 217, 255, 0.02) 60%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes heroWordmarkIn {
+  0%   { opacity: 0; transform: translate(20px, -50%); }
+  100% { opacity: 1; transform: translate(0, -50%); }
+}
+
 /* Hero video — replaces the static product image when available.
    Source videos are pre-processed by Video/process_videos.py to remove
    watermarks, so no browser-side cropping is needed. */
@@ -1881,6 +1943,10 @@ section + section::before {
     max-width: 100%;
     line-height: 1.0;
   }
+  /* Mobile: hide the large background wordmark — the layout switches to a
+     stacked single column where there's no negative space for it to live in
+     without colliding with content. The brand is already in the topbar. */
+  .hero-wordmark { display: none !important; }
   /* mobile: show product as a centered block under title, no absolute positioning */
   .hero-product {
     display: block !important;
@@ -2008,6 +2074,7 @@ section + section::before {
   }
   .reveal, .hero-title .word { opacity: 1 !important; transform: none !important; }
   .hero-product { opacity: 1 !important; transform: translateY(-50%) !important; }
+  .hero-wordmark { opacity: 1 !important; transform: translateY(-50%) !important; animation: none !important; }
 }
 
 /* Override: mobile hero-product is position:relative, don't translateY */

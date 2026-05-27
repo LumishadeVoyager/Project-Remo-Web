@@ -1121,19 +1121,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
      For flow steps that have a `data-video-slot="VNN"` attribute, attempt
-     to load the video. Tries CDN first (faster in mainland China), then
-     falls back to local repo path. If neither exists, keep SVG fallback. */
+     to load the video. Tries local repo path first (works on GitHub Pages
+     same-origin, no CDN), then jsDelivr CDN as fallback. WeChat browsers
+     are unreliable with jsDelivr in mainland China, so local is primary. */
   const CDN_BASE = "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main";
   document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
     const slot = step.getAttribute("data-video-slot");
     if (!slot) return;
-    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
     const localUrl = `./Video/${slot}.mp4`;
+    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
     const probe = document.createElement("video");
     probe.preload = "metadata";
     probe.muted = true;
     probe.playsInline = true;
-    let triedLocal = false;
+    let triedCdn = false;
     const onSuccess = (workingUrl) => {
       const media = step.querySelector(".flow-media");
       if (!media) return;
@@ -1144,7 +1145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       video.muted = true;
       video.loop = true;
       video.playsInline = true;
-      video.preload = "metadata";
+      video.preload = "auto";
       video.className = "flow-video";
       // WeChat / X5 compatibility — without these, Android WeChat hijacks
       // the <video> into a fullscreen player and iOS WeChat refuses inline.
@@ -1152,22 +1153,23 @@ document.addEventListener("DOMContentLoaded", () => {
       video.setAttribute("x5-playsinline", "true");
       video.setAttribute("x5-video-player-type", "h5");
       video.setAttribute("x5-video-player-fullscreen", "false");
-      // Provide CDN first, then local — browser uses whichever works.
-      [cdnUrl, localUrl].forEach((u) => {
-        const source = document.createElement("source");
-        source.src = u;
-        source.type = "video/mp4";
-        video.appendChild(source);
+      // Use the URL that actually worked in the probe.
+      video.src = workingUrl;
+      // If even this URL fails on the real <video>, swap to the other one.
+      const otherUrl = workingUrl === localUrl ? cdnUrl : localUrl;
+      let swapped = false;
+      video.addEventListener("error", () => {
+        if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
       });
       media.insertBefore(video, media.firstChild);
       step.classList.add("has-video");
     };
     probe.onloadedmetadata = () => onSuccess(probe.src);
     probe.onerror = () => {
-      if (!triedLocal) { triedLocal = true; probe.src = localUrl; }
+      if (!triedCdn) { triedCdn = true; probe.src = cdnUrl; }
       /* else: keep SVG fallback */
     };
-    probe.src = cdnUrl;
+    probe.src = localUrl;
   });
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
@@ -1193,14 +1195,39 @@ document.addEventListener("DOMContentLoaded", () => {
      WeChat (X5/WKWebView) and iOS Safari ignore autoplay even when muted
      until the user interacts with the page once. We listen for the first
      touch/click and call .play() on every <video> in the document. Once
-     fired, we remove the listeners. */
+     fired, we remove the listeners.
+     Also handles per-video CDN fallback: if a <video data-video-fallback>
+     errors out (its <source> couldn't load — common in WeChat with jsDelivr),
+     swap to the fallback URL once. */
   const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+
+  // Per-video fallback: if the in-document source fails (e.g. ./Video/X.mp4
+  // 404s for any reason), swap in the data-video-fallback URL once.
+  document.querySelectorAll("video[data-video-fallback]").forEach((v) => {
+    let swapped = false;
+    const onErr = () => {
+      if (swapped) return;
+      swapped = true;
+      const url = v.getAttribute("data-video-fallback");
+      if (!url) return;
+      // Replace all sources with the fallback URL and reload.
+      v.querySelectorAll("source").forEach((s) => s.remove());
+      v.src = url;
+      v.load();
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+    v.addEventListener("error", onErr, true);
+    // <source> errors don't bubble to <video> in some browsers; listen on each.
+    v.querySelectorAll("source").forEach((s) => s.addEventListener("error", onErr));
+  });
+
   const wakeUpAllVideos = () => {
     document.querySelectorAll("video").forEach((v) => {
-      if (v.paused) {
-        const p = v.play();
-        if (p && typeof p.catch === "function") p.catch(() => {});
-      }
+      // Force a load attempt — WeChat sometimes ignores preload entirely.
+      try { v.load(); } catch (_) {}
+      const p = v.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
     });
   };
   const wakeOnce = () => {
@@ -1215,5 +1242,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Also try after WeChat's WeixinJSBridge is ready (Android WeChat).
   if (isWeChat) {
     document.addEventListener("WeixinJSBridgeReady", wakeUpAllVideos);
+    // WeChat typically dispatches WeixinJSBridgeReady before this script
+    // listens, so also try on visibility change and a short delay.
+    setTimeout(wakeUpAllVideos, 600);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) wakeUpAllVideos();
+    });
   }
 })();
