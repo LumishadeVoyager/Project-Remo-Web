@@ -451,6 +451,73 @@ section + section::before {
   object-fit: cover;
 }
 
+/* =========================================================================
+   SHOWCASE — full-bleed cinematic video between Hero and Features
+   ========================================================================= */
+
+.showcase {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.showcase-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  max-height: 90vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.showcase-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.showcase-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: clamp(32px, 6vw, 80px);
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 10, 20, 0.7) 80%, rgba(5, 10, 20, 0.95) 100%);
+  pointer-events: none;
+}
+
+.showcase-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.showcase-title {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(36px, 5.4vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--light);
+  margin: 0;
+  max-width: 16ch;
+}
+
+.showcase-title em {
+  font-style: italic;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
+}
+
 @keyframes heroProductIn {
   from { opacity: 0; transform: translateY(-50%) translateX(80px) scale(1.05); }
   to   { opacity: 1; transform: translateY(-50%) translateX(0) scale(1); }
@@ -2169,6 +2236,7 @@ section + section::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 2;
 }
 
 .flow-media .flow-icon {
@@ -2180,6 +2248,7 @@ section + section::before {
 }
 
 /* When a real video is present, hide the fallback SVG icon */
+.flow-step.has-video .flow-media .flow-icon,
 .flow-step.has-video .flow-media .flow-icon.fallback {
   display: none;
 }
@@ -2819,6 +2888,13 @@ section + section::before {
     margin-left: auto;
     margin-right: auto;
   }
+
+  /* Showcase video: switch to portrait-friendly aspect ratio on phones */
+  .showcase-frame {
+    aspect-ratio: 4 / 5;
+    max-height: 80vh;
+  }
+  .showcase-title { font-size: clamp(28px, 8vw, 44px); }
 
   .sticky-bar {
     grid-template-columns: 1fr auto;

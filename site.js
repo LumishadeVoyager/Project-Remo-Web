@@ -32,6 +32,10 @@ const I18N = {
     "hero.ks.5.unit": "海思",
     "hero.scroll": "向下滚动",
 
+    /* Showcase (cinematic V01 between Hero and Features) */
+    "showcase.meta": "水测实录 · 2026·04",
+    "showcase.title": "无线，<em>自由</em>。",
+
     /* Manifesto */
     "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
     "manifesto.text": "水下摄影的真正门槛，<br>不是设备不够好，<br>而是潜水员的注意力<br><em>已经被太多事情分走了</em>。",
@@ -487,6 +491,9 @@ const I18N = {
     "hero.ks.5.note": "Imaging · MVP",
     "hero.ks.5.unit": "HiSilicon",
     "hero.scroll": "Scroll Down",
+
+    "showcase.meta": "Water Test · Apr 2026",
+    "showcase.title": "Wireless.<br><em>Free</em>.",
 
     "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
     "manifesto.text": "The real bottleneck in underwater photography<br>isn't the gear —<br>it's that the diver's attention<br><em>is already split across too many tasks</em>.",
@@ -1130,6 +1137,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const onSuccess = (workingUrl) => {
       const media = step.querySelector(".flow-media");
       if (!media) return;
+      // Tag any existing icon as fallback so it gets hidden by .has-video rule.
+      media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
       const video = document.createElement("video");
       video.autoplay = true;
       video.muted = true;
