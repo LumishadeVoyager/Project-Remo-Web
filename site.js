@@ -6,858 +6,251 @@
 const I18N = {
   zh: {
     /* Nav */
-    "nav.flow": "工作流",
-    "nav.architecture": "架构",
-    "nav.acoustic": "声学",
-    "nav.color": "影像",
+    "nav.meet": "产品",
+    "nav.acoustic": "声学跟随",
+    "nav.color": "色彩还原",
+    "nav.flow": "使用方式",
     "nav.compare": "对比",
-    "nav.lineup": "产品线",
-    "nav.specs": "参数",
     "nav.investors": "投资人",
 
     /* Hero */
     "hero.meta.issue": "Issue 02 · 2026",
-    "hero.meta.status": "POC LIVE · 声学定位已验证",
+    "hero.meta.tag": "水下智能跟随相机",
     "hero.meta.depth": "Underwater · 40 m",
-    "hero.meta.phase": "POC → EP → Kickstarter",
+    "hero.meta.launch": "2027 · 全球首发",
     "hero.title": "<span class=\"word\">放开</span><span class=\"word\">双手，</span><span class=\"word\">把镜头</span><span class=\"word\">交给</span><span class=\"word\"><em>水下</em></span><span class=\"word\"><em>智能体</em>。</span>",
-    "hero.summary": "Project Remo 是一款<strong style=\"color:var(--light);font-weight:500\">无线、掌上起降</strong>的水下智能跟随相机。它填补了消费级运动相机与传统有线 ROV 之间的市场空白——让每一位潜水员重新拥有自由的双手与完整的注意力。",
-    "hero.btn.primary": "探索 Remo",
-    "hero.btn.secondary": "观看水测实录",
-    "hero.ks.1.note": "设计目标深潜",
-    "hero.ks.2.note": "推进器 2H+2V+1L",
-    "hero.ks.3.note": "声学通信 DYP-C01B",
-    "hero.ks.4.note": "巡航续航 · 实测",
-    "hero.ks.5.note": "影像方案 · MVP",
-    "hero.ks.5.unit": "海思",
+    "hero.summary": "无线。掌上起降。自主跟拍。<br>潜下水时，只剩下你和海。",
+    "hero.btn.primary": "了解 Remo",
+    "hero.btn.secondary": "看它怎么工作",
     "hero.scroll": "向下滚动",
+    "hero.product.alt": "Project Remo 水下智能跟随相机",
+
+    /* Marquee */
+    "marquee.text": "无线  ·  自主跟随  ·  掌上起降  ·  4K 影像  ·  AI 色彩还原  ·  声学纠偏定位  ·  自动归仓  ·  旅行潜友好  ·  ",
 
     /* Manifesto */
-    "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
-    "manifesto.text": "水下摄影的难点，<br>不是\"能不能拍\"，<br>而是潜水员，<br><em>是否还有余力拍好</em>。",
-    "manifesto.sig": "Project Remo · 创始团队",
+    "manifesto.label": "Manifesto",
+    "manifesto.text": "潜下水的那一刻，<br>你只想<em>专心呼吸</em>。",
+    "manifesto.sig": "Project Remo",
 
     /* Pain */
-    "pain.eyebrow": "<span class=\"index\">02</span> The Pain",
-    "pain.heading": "三条<em style=\"font-style:italic;color:var(--accent)\">水下摄影者</em>必须独自承担的负担。",
-    "pain.1.title": "双手被占用",
-    "pain.1.desc": "水下摄影者必须同时管理浮力、呼吸节奏、深度计、构图与跟焦——注意力的\"工作记忆\"被瓜分到 5 件事以上。最终结果通常不是没拍到，而是<em style=\"font-style:normal;color:var(--accent)\">拍废与隐患同时发生</em>。",
-    "pain.2.title": "ROV 不属于消费者",
-    "pain.2.desc": "传统水下 ROV 是工业巡检工具——脐带线缆、地面控制器、上岸部署流程，让它从未真正属于一次说走就走的旅行潜。重 7–15 kg、起步价 ¥15,000+，\"自由\"和\"ROV\"在产品语言上从未相遇。",
-    "pain.3.title": "视觉会失效",
-    "pain.3.desc": "气泡群、悬浮颗粒、逆光、低照度——任何一种都足以让单纯视觉跟踪丢失目标。水下交互必须尊重\"水\"这件事本身，<em style=\"font-style:normal;color:var(--accent)\">而不是把陆地上的视觉假设原样搬下水</em>。",
+    "pain.label": "The Burden",
+    "pain.heading": "水下摄影<br>从来不只是<em>按下快门</em>。",
+    "pain.1.title": "双手没了。",
+    "pain.1.desc": "浮力、呼吸、深度、构图、跟焦——五件事抢你两只手。",
+    "pain.2.title": "ROV 不是装备包。",
+    "pain.2.desc": "7 公斤、脐带线缆、上岸操控——它没办法跟你去旅行。",
+    "pain.3.title": "颜色全部跑掉了。",
+    "pain.3.desc": "5 米红光消失，15 米绿光衰减。视觉跟踪和白平衡都失效。",
 
-    /* Flow */
-    "flow.eyebrow": "<span class=\"index\">03</span> How It Works",
-    "flow.heading": "60 秒，<br>看懂<em>一次水下跟拍</em>。",
-    "flow.1.title": "下水自动唤醒",
-    "flow.1.desc": "设备入水即解锁，无需按键。基于水压与导通双重判定，避免误启动。",
-    "flow.2.title": "声学锁定潜水员",
-    "flow.2.desc": "潜水员佩戴的声学手环通过 DYP-C01B 建立声学链路，Remo 即使在浑浊水域也能保持稳定定位。",
-    "flow.3.title": "智能跟随构图",
-    "flow.3.desc": "声学定位提供位置先验，视觉追踪进行精构图。当视觉丢失时，声学权重立即接管。",
-    "flow.4.title": "上水自动归仓",
-    "flow.4.desc": "出水自动上锁，磁吸接触式充电，无 USB 接口意味着无密封风险。",
+    /* Product Reveal */
+    "reveal.label": "Meet Remo",
+    "reveal.alt": "Project Remo · 实物",
+    "reveal.heading": "掌上起降。<br>无线<em>跟随</em>。<br>一键成片。",
+    "reveal.desc": "塞进你的潜水包，扔进海里，然后忘记它。它会自己跟着你。",
 
-    /* Architecture */
-    "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
-    "arch.heading": "不追求矢量，<em>追求</em>稳定。",
-    "arch.title": "2 水平 + 2 垂直 + 1 横向。",
-    "arch.desc": "Remo 摒弃矢量推进（vectored thruster）方案的复杂调参，采用经过 ROV 工业验证的 5 推进器布局——更易于水动力学建模、控制器收敛与外壳工程化。我们并行验证<em style=\"font-style:normal;color:var(--accent)\">两套动力路线</em>：策海科技无刷推进器主打海水可靠性，自研有刷方案主打成本可控；二者共享同一套飞控、声学与传感平台。",
-    "arch.spec.1": "推进器架构",
-    "arch.spec.1.val": "2H + 2V + 1L",
-    "arch.spec.2": "动力 A · 无刷",
-    "arch.spec.2.val": "策海 T60-edu-se",
-    "arch.spec.2.sub": "推力 3 kgf · 功率 150 W",
-    "arch.spec.3": "动力 B · 有刷",
-    "arch.spec.3.val": "自研双向电调",
-    "arch.spec.4": "飞控平台",
-    "arch.spec.4.val": "FlyingRC H7Wlite",
-    "arch.spec.4.sub": "MCU STM32H743VIH6 · 双 IMU + DPS368",
-    "arch.spec.5": "固件",
-    "arch.spec.5.val": "ArduSub 4.1.2",
-    "arch.spec.6": "无刷电调",
-    "arch.spec.6.val": "AM32 Mini ESC",
-    "arch.spec.7": "深度传感",
-    "arch.spec.7.val": "MS5837-30BA",
-    "arch.spec.8": "避障声呐",
-    "arch.spec.8.val": "DYP-L08",
-    "arch.spec.9": "声学模块",
-    "arch.spec.9.val": "DYP-C01B ×3",
-    "arch.spec.10": "补光系统",
-    "arch.spec.10.val": "12V LED · 环境光平衡",
-    "arch.spec.11": "防水开关",
-    "arch.spec.11.val": "舱外物理通断",
-    "arch.spec.12": "漏水检测",
-    "arch.spec.12.val": "I2C 传感器",
-    "arch.spec.13": "水压辅助密封",
-    "arch.spec.13.val": "自研结构",
-    "arch.spec.14": "原型工艺",
-    "arch.spec.14.val": "Bambu Lab P1S",
+    /* Capability 1 — Acoustic */
+    "cap1.label": "Acoustic Following",
+    "cap1.heading": "水变浑，<br><em>声音</em>不会。",
+    "cap1.desc": "佩戴一只声学手环——Remo 像潜水搭档一样跟着你。在颗粒、气泡、低照度里，它都不会丢。",
+    "cap1.img.alt": "声学链路 · 潜水员与 Remo",
+    "cap1.bracelet.alt": "Remo 声学手环",
+    "cap1.bracelet.tag": "ACOUSTIC BRACELET",
+    "cap1.bracelet.title": "戴上即配对",
+    "cap1.bracelet.desc": "翻腕唤醒，敲击拍照，振动反馈。",
 
-    /* Stats */
-    "stats.eyebrow": "<span class=\"index\">05</span> By the Numbers",
-    "stats.1.label": "设计目标深潜",
-    "stats.1.note": "结构设计目标，当前于泳池 / 浅水验证。",
-    "stats.2.label": "推进器架构",
-    "stats.2.note": "2 水平 + 2 垂直 + 1 横向，稳定优先。",
-    "stats.3.label": "声学通信模块",
-    "stats.3.note": "DYP-C01B，相机端 2 + 手环端 1，纠偏定位。",
-    "stats.4.label": "核心专利布局",
-    "stats.4.note": "声学辅助视觉、多模态交互、水压辅助密封。",
+    /* Capability 2 — Color */
+    "cap2.label": "Color Pipeline",
+    "cap2.heading": "红色<em>没有消失</em>，<br>是水把它藏起来了。",
+    "cap2.desc": "我们用 AI 把水夺走的颜色还回去。拖一拖，看看真实拍摄素材的前后。",
+    "cap2.tag.left": "RAW",
+    "cap2.tag.right": "RESTORED",
 
-    /* Acoustic */
-    "acoustic.eyebrow": "<span class=\"index\">06</span> Acoustic Intelligence",
-    "acoustic.heading": "当水变浑浊，<em>声</em>不会。",
-    "acoustic.title": "专业声学通信，<br>不是简单水听器。",
-    "acoustic.desc.1": "Remo 摒弃简单水听器（hydrophone），采用 DYP-C01B 水下声学通信模块——系统部署三个模块，相机端 2 个、潜水员手环端 1 个，两个及以上模块同时在水下即可建立低速率声学链路，进行<strong style=\"color:var(--light);font-weight:500\">纠偏定位</strong>。当视觉被气泡或悬浮颗粒遮蔽时，声学链路仍然稳定——这是 ROV 工业领域成熟二十年的技术，我们做的，是把它装进掌心，并让它和视觉算法手拉手。",
-    "acoustic.desc.2": "潜水员佩戴的声学手环通过<strong style=\"color:var(--light);font-weight:500\">敲击</strong>产生特定超声特征，被相机端读取识别，构成低带宽、高鲁棒的指令通道——专为\"戴着面镜、戴着手套、说不出话\"的环境而生。",
-    "acoustic.badge.1": "DYP-C01B 声学模块 ×3",
-    "acoustic.badge.2": "自动巡航 / 避障",
-    "acoustic.badge.3": "入水唤醒 / 出水上锁",
-    "acoustic.badge.4": "声学纠偏定位",
-    "acoustic.badge.5": "敲击超声指令识别",
-    "acoustic.badge.6": "声学-视觉融合",
-    "acoustic.badge.7": "震动反馈闭环",
-    "acoustic.badge.8": "多机声学组网",
-    "acoustic.bracelet": "声学手环 · ESP32-S3 · DYP-C01B · IMU 翻腕+敲击",
-
-    /* Color */
-    "color.eyebrow": "<span class=\"index\">07</span> Image Pipeline",
-    "color.heading": "不只是<em>拍到</em>，<br>而是变成可分享的成片。",
-    "color.lead": "水下色彩失真不是滤镜问题——红光在 5 m 几乎完全衰减，绿光在 15 m 大幅衰减，传统白平衡无能为力。Remo 引入基于<strong style=\"color:var(--light);font-weight:500\">生成对抗网络（GAN）</strong>的水下色彩还原算法，结合 MS5837 深度计与声学距离数据，进行物理级别的色彩校正，并通过云端 AI 剪辑订阅形成持续服务能力——<em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>。",
-    "color.tag.left": "RAW · 18.6 M · 浑浊",
-    "color.tag.right": "GAN RESTORED · v0.4",
-    "color.disclaimer": "本图为算法 v0.4 离线推理结果。工程化版本计划于 EP 阶段验证，于 Kickstarter 阶段开放云端服务。",
+    /* Capability 3 — Flow */
+    "cap3.label": "The Flow",
+    "cap3.heading": "下水，松手，<br>它<em>自己</em>开始工作。",
+    "cap3.1.title": "入水唤醒",
+    "cap3.1.desc": "扔进水里就开机，不用按任何按键。",
+    "cap3.2.title": "自动跟拍",
+    "cap3.2.desc": "声学锁定 + 视觉构图，全程不用看屏幕。",
+    "cap3.3.title": "归仓充电",
+    "cap3.3.desc": "出水自动上锁，磁吸接触式充电，没有任何可漏水的接口。",
 
     /* Compare */
-    "compare.eyebrow": "<span class=\"index\">08</span> vs Traditional",
-    "compare.heading": "填补<em>市场空白</em>，<br>不是再造一台运动相机。",
-    "compare.col.1": "手持运动相机",
-    "compare.col.2": "有线消费 ROV",
-    "compare.row.1.axis": "典型重量",
-    "compare.row.1.c1": "150–250 g",
-    "compare.row.1.c2": "4–8 kg",
-    "compare.row.1.c3": "掌上级",
-    "compare.row.2.axis": "占用双手",
-    "compare.row.2.c1": "完全占用",
-    "compare.row.2.c2": "部分（操控杆）",
-    "compare.row.2.c3": "0",
+    "compare.label": "The Difference",
+    "compare.heading": "它<em>不是</em><br>又一台运动相机。",
+    "compare.img.alt": "三机对比 · 运动相机 / 有线 ROV / Remo",
+    "compare.col.1": "运动相机",
+    "compare.col.2": "有线 ROV",
+    "compare.row.1.axis": "占用双手",
+    "compare.row.1.a": "完全占用",
+    "compare.row.1.b": "需要操控",
+    "compare.row.1.c": "完全解放",
+    "compare.row.2.axis": "体积重量",
+    "compare.row.2.a": "200 g 装兜",
+    "compare.row.2.b": "7 kg+ 装箱",
+    "compare.row.2.c": "掌上级",
     "compare.row.3.axis": "脐带线缆",
-    "compare.row.3.c1": "无",
-    "compare.row.3.c2": "50–100 m",
-    "compare.row.3.c3": "无",
-    "compare.row.4.axis": "携带形态",
-    "compare.row.4.c1": "装兜",
-    "compare.row.4.c2": "大箱",
-    "compare.row.4.c3": "掌上",
-    "compare.row.5.axis": "典型续航",
-    "compare.row.5.c1": "60–120 min",
-    "compare.row.5.c2": "2–4 h（带电池组）",
-    "compare.row.5.c3": "40–60 min（实测）",
-    "compare.row.6.axis": "跟随能力",
-    "compare.row.6.c1": "无 / 限于水面",
-    "compare.row.6.c2": "手动操控",
-    "compare.row.6.c3": "自主声学+视觉",
-    "compare.row.7.axis": "目标用户",
-    "compare.row.7.c1": "自拍 / 第一人称",
-    "compare.row.7.c2": "工业 / 玩家",
-    "compare.row.7.c3": "旅行潜 / 自由潜",
-    "compare.row.8.axis": "典型价格带",
-    "compare.row.8.c1": "¥2–4k",
-    "compare.row.8.c2": "¥15–60k",
-    "compare.row.8.c3": "消费级目标",
-    "compare.row.9.axis": "学习曲线",
-    "compare.row.9.c1": "极低",
-    "compare.row.9.c2": "高",
-    "compare.row.9.c3": "极低（一键投放）",
-    "compare.row.10.axis": "失败成本",
-    "compare.row.10.c1": "拍废",
-    "compare.row.10.c2": "拍废 + 设备风险",
-    "compare.row.10.c3": "拍废（自动归仓）",
-    "compare.note": "对比数据基于公开消费类产品参数。Remo 数据基于当前 POC 样机实测与结构设计目标。",
-
-    /* Lineup */
-    "lineup.eyebrow": "<span class=\"index\">09</span> Product Lineup",
-    "lineup.heading": "一台样机，<br><em>两个市场愿景</em>。",
-    "lineup.lite.tag": "01 · 大众与租赁",
-    "lineup.lite.desc": "为每一位会浮潜、会自由潜的人而生。更轻的出行负担、更简单的拍摄流程，让\"从潜店借一台 Remo\"成为标准动作。",
-    "lineup.lite.spec.1": "定位",
-    "lineup.lite.spec.1.val": "大众消费 · 租赁",
-    "lineup.lite.spec.2": "体验",
-    "lineup.lite.spec.2.val": "一键投放即拍",
-    "lineup.lite.spec.3": "价格策略",
-    "lineup.lite.spec.3.val": "消费级入门",
-    "lineup.lite.spec.4": "核心场景",
-    "lineup.lite.spec.4.val": "旅行潜 · 课程",
-    "lineup.lite.when.label": "产品愿景",
-    "lineup.lite.when.val": "面向上市",
-    "lineup.pro.tag": "02 · 硬核与创作者",
-    "lineup.pro.desc": "给愿意为画质付费的人准备的水下创作工具。围绕定制影像系统、更长续航与更深潜域，服务专业拍摄与高级潜点。",
-    "lineup.pro.spec.1": "定位",
-    "lineup.pro.spec.1.val": "专业创作",
-    "lineup.pro.spec.2": "影像",
-    "lineup.pro.spec.2.val": "定制影像系统（规划）",
-    "lineup.pro.spec.3": "潜域",
-    "lineup.pro.spec.3.val": "更深潜深（规划）",
-    "lineup.pro.spec.4": "核心场景",
-    "lineup.pro.spec.4.val": "内容创作 · 高级潜点",
-    "lineup.pro.when.label": "产品愿景",
-    "lineup.pro.when.val": "EP 后规划",
-    "lineup.note": "Lite / Pro 为未来产品线愿景。当前 POC 阶段为单一样机，并行验证有刷与无刷两套动力路线，最终归并为统一产品形态。",
-
-    /* Specs */
-    "specs.eyebrow": "<span class=\"index\">10</span> Tech Specs",
-    "specs.heading": "看得见的<em>工程细节</em>。",
-    "specs.tab.imaging": "影像 IMAGING",
-    "specs.tab.underwater": "水下 UNDERWATER",
-    "specs.tab.intelligence": "智能 INTELLIGENCE",
-    "specs.tab.powertrain": "动力 POWERTRAIN",
-    "specs.tab.physical": "物理 PHYSICAL",
-    "specs.tab.bracelet": "声学手环 BRACELET",
-    "specs.col.item": "项目",
-    "specs.col.value": "规格",
-    "specs.col.status": "状态",
-    "specs.col.value.a": "当前 POC 规格",
-    "specs.col.value.b": "动力 A · 无刷",
-    "specs.col.value.c": "动力 B · 有刷",
-    /* Imaging */
-    "specs.img.1": "相机方案",
-    "specs.img.1v": "4K 海思（HiSilicon）摄像头 + 主板模组",
-    "specs.img.2": "拍摄控制",
-    "specs.img.2v": "开机自动拍摄，启停由飞控控制电路通断",
-    "specs.img.3": "配套软件",
-    "specs.img.3v": "模组自带 Wi-Fi 与记录仪软件，可导入素材",
-    "specs.img.4": "监看",
-    "specs.img.4v": "水面可简单监看，水下暂不可实时监看",
-    "specs.img.5": "激光对焦",
-    "specs.img.5v": "摄像头 + 激光对焦模块（原理图集成）",
-    "specs.img.6": "补光系统",
-    "specs.img.6v": "12 V LED 舱内补光灯 + 环境光传感器自动平衡亮度",
-    "specs.img.7": "定制影像系统",
-    "specs.img.7v": "传感器选型、码率与色彩管线专项研发",
-    "specs.img.8": "GAN 色彩还原",
-    "specs.img.8v": "云端水下色彩还原管线",
-    /* Underwater */
-    "specs.uw.1": "设计目标深度",
-    "specs.uw.1v": "40 m（结构目标）",
-    "specs.uw.2": "当前验证环境",
-    "specs.uw.2v": "泳池 / 浅水，未做专项深水水压测试",
-    "specs.uw.3": "推进器布局",
-    "specs.uw.3v": "2 水平 + 2 垂直 + 1 横向 · 共 5 个",
-    "specs.uw.4": "巡航速度",
-    "specs.uw.4v": "约 1.5 m/s",
-    "specs.uw.5": "海水稳定运行",
-    "specs.uw.5v": "无刷动力方案已验证",
-    "specs.uw.6": "密封方案",
-    "specs.uw.6v": "O-Ring + 水压辅助密封结构",
-    "specs.uw.7": "防水物理开关",
-    "specs.uw.7v": "舱外物理开关控制主电源通断",
-    "specs.uw.8": "漏水检测",
-    "specs.uw.8v": "I2C 通用接口漏水传感器",
-    "specs.uw.9": "外壳工艺",
-    "specs.uw.9v": "Bambu Lab P1S 高精度打印迭代",
-    /* Intelligence */
-    "specs.int.1": "声学通信模块",
-    "specs.int.1v": "DYP-C01B ×3（相机端 2 + 手环端 1）· 360° · ≤120 m",
-    "specs.int.2": "声学纠偏定位",
-    "specs.int.2v": "多模块声学解算手环相对位置",
-    "specs.int.3": "敲击指令识别",
-    "specs.int.3v": "手环敲击超声特征被相机端读取",
-    "specs.int.4": "避障声呐",
-    "specs.int.4v": "DYP-L08 水下超声波 · 5 cm–8 m",
-    "specs.int.5": "自动避障",
-    "specs.int.5v": "近障触发推进倒车",
-    "specs.int.6": "深度传感",
-    "specs.int.6v": "MS5837-30BA · ±0.2 m",
-    "specs.int.7": "惯性导航 IMU",
-    "specs.int.7v": "ICM-42688-P + ICM-42605（飞控内置双 IMU）",
-    "specs.int.8": "气压计",
-    "specs.int.8v": "DPS368（飞控内置，IPx8 防护）",
-    "specs.int.9": "磁力计",
-    "specs.int.9v": "QMC5883L（外接 I2C）",
-    "specs.int.10": "入水唤醒 / 出水上锁",
-    "specs.int.10v": "水压 + 导通双判定",
-    "specs.int.11": "自动巡航",
-    "specs.int.11v": "推进器 PWM 自动巡航",
-    "specs.int.12": "视觉追踪",
-    "specs.int.12v": "视觉精构图 + 声学权重修正",
-    /* Powertrain */
-    "specs.pt.1": "路线定位",
-    "specs.pt.1a": "海水可靠性优先",
-    "specs.pt.1b": "成本可控优先",
-    "specs.pt.2": "推进器",
-    "specs.pt.2a": "策海科技 T60-edu-se · 推力 3 kgf · 功率 150 W",
-    "specs.pt.2b": "有刷直流电机",
-    "specs.pt.3": "电调",
-    "specs.pt.3a": "flyingRC AM32 Mini ESC",
-    "specs.pt.3b": "自研双路双向有刷电调 1–3S",
-    "specs.pt.4": "海水验证",
-    "specs.pt.4a": "已验证稳定可靠",
-    "specs.pt.4b": "研发中",
-    "specs.pt.5": "电池（共用）",
-    "specs.pt.5a": "Boston Power 三元锂 3S 12.4 V · 5300 mAh",
-    "specs.pt.5b": "同左",
-    "specs.pt.6": "放电能力（共用）",
-    "specs.pt.6a": "持续 8 A · 峰值 10 A",
-    "specs.pt.6b": "同左",
-    "specs.pt.7": "巡航续航",
-    "specs.pt.7a": "40–60 min（实测）",
-    "specs.pt.7b": "40–60 min（实测）",
-    "specs.pt.8": "充电（共用）",
-    "specs.pt.8a": "XL2326 充电管理 · 4P 磁吸接触式",
-    "specs.pt.8b": "同左",
-    "specs.pt.9": "飞控（共用）",
-    "specs.pt.9a": "FlyingRC H7Wlite MK1 · ArduSub 4.1.2",
-    "specs.pt.9b": "同左",
-    /* Physical */
-    "specs.ph.1": "形态",
-    "specs.ph.1v": "掌上级，5 推进器集成机身",
-    "specs.ph.2": "外壳材料",
-    "specs.ph.2v": "PC 透明件 + 工程塑料（3D 打印迭代）",
-    "specs.ph.3": "整机尺寸",
-    "specs.ph.3v": "样机定型中，以实测为准",
-    "specs.ph.4": "整机净重",
-    "specs.ph.4v": "样机定型中，以实测为准",
-    "specs.ph.5": "充电接口",
-    "specs.ph.5v": "4P 磁吸数据线 2.5PH，无开放式 USB",
-    "specs.ph.6": "防水物理开关",
-    "specs.ph.6v": "舱外物理开关控制主电源通断",
-    /* Bracelet */
-    "specs.br.1": "主控",
-    "specs.br.1v": "ESP32-S3-WROOM",
-    "specs.br.2": "声学模块",
-    "specs.br.2v": "DYP-C01B ×1（与相机端组网）",
-    "specs.br.3": "屏幕",
-    "specs.br.3v": "1.8 寸 TFT-LCD · 180 × 128 px（后续升级）",
-    "specs.br.4": "IMU",
-    "specs.br.4v": "QMI8658A（6 轴），翻腕 + 敲击控制",
-    "specs.br.5": "按键",
-    "specs.br.5v": "无物理按键，IMU 手势 + 震动反馈",
-    "specs.br.6": "振动反馈",
-    "specs.br.6v": "线性 / 转子马达（MOTOR_PWM 通道）",
-    "specs.br.7": "电池",
-    "specs.br.7v": "800 mAh 1S 锂电池",
-    "specs.br.8": "充电",
-    "specs.br.8v": "4P 磁吸数据线 2.5PH",
-    "specs.br.9": "外壳",
-    "specs.br.9v": "3D 打印迭代，多款表带可选（通用接口）",
-    "specs.br.10": "防水",
-    "specs.br.10v": "尚未进行防水测试",
-    "specs.br.11": "续航 / 待机",
-    "specs.br.11v": "实测数据待确认",
+    "compare.row.3.a": "无",
+    "compare.row.3.b": "50–100 m",
+    "compare.row.3.c": "完全无线",
+    "compare.row.4.axis": "跟随能力",
+    "compare.row.4.a": "无",
+    "compare.row.4.b": "手动操控",
+    "compare.row.4.c": "自主跟随",
 
     /* Gallery */
-    "gallery.eyebrow": "<span class=\"index\">11</span> Prototype Evidence",
-    "gallery.heading": "不停留<br>在概念图。",
-    "gallery.shot.1.cap": "2026·04 · 实验室装配",
-    "gallery.shot.1.title": "实物原型",
-    "gallery.shot.1.desc": "掌上级水下相机 · 推进器结构装配",
-    "gallery.shot.2.cap": "ID PROPOSAL · v2.1 · 2026·03",
-    "gallery.shot.2.title": "工业设计 ID",
-    "gallery.shot.2.desc": "表面语言 · 色彩与体量",
-    "gallery.shot.3.cap": "HARDWARE · PCB1 · REV 3 · 2026·03·17",
-    "gallery.shot.3.title": "PCB · 主控板",
-    "gallery.shot.3.desc": "相机端硬件 · 第 3 轮迭代",
-    "gallery.shot.4.cap": "WATCH SCH · 2026·03",
-    "gallery.shot.4.title": "原理图 · 声学手环",
-    "gallery.shot.4.desc": "水下多模态交互入口",
-    "gallery.shot.5.cap": "WATER TEST · 2026·04·28 · NO CUT · 11 段连续记录",
-    "gallery.shot.5.title": "场景表达",
-    "gallery.shot.5.desc": "自由潜拍 · 面向消费者的产品想象",
+    "gallery.label": "Behind the Scenes",
+    "gallery.heading": "我们不停在<br><em>渲染图</em>。",
+    "gallery.1.cap": "2026·04 · LAB ASSEMBLY",
+    "gallery.1.title": "实物原型",
+    "gallery.2.cap": "ID v2.1 · 2026·03",
+    "gallery.2.title": "工业设计",
+    "gallery.3.cap": "PCB · REV 3",
+    "gallery.3.title": "硬件迭代",
+    "gallery.4.cap": "WATER TEST · 2026·04·28",
+    "gallery.4.title": "真实水测",
 
-    /* Business */
-    "business.eyebrow": "<span class=\"index\">12</span> Business Model",
-    "business.heading": "硬件是入口，<em>HaaS</em> 是长期价值。",
-    "business.1.title": "消费硬件",
-    "business.1.desc": "以掌上起降、无线跟随和一键成片建立差异化，而不是单纯拼相机参数。让设计与体验成为护城河的第一层。",
-    "business.2.title": "潜店租赁",
-    "business.2.desc": "面向潜店和旅行场景的更低门槛体验入口。对潜店而言，Remo 提高设备周转率与内容转化率；对用户而言，\"出国前不必先买相机\"。租赁是消费者教育的最佳渠道。",
-    "business.3.title": "云端 AI 订阅",
-    "business.3.desc": "GAN 色彩还原、智能剪辑、潜水日志、成片模板——所有需要算力与素材库的部分都放在云端，形成持续订阅收入。硬件单价波动，HaaS 收入稳定。",
-
-    /* Roadmap */
-    "roadmap.eyebrow": "<span class=\"index\">13</span> Milestones",
-    "roadmap.heading": "三步走，<br>到达 Kickstarter。",
-    "roadmap.1.when": "Now · 2026",
-    "roadmap.1.title": "POC 原理样机",
-    "roadmap.1.desc": "声学定位 + 自动巡航 + 避障状态机已跑通；PCB 第 3 轮迭代；正在补齐核心团队。",
-    "roadmap.2.when": "Next · 2026 Q4",
-    "roadmap.2.title": "EP 工程验证",
-    "roadmap.2.desc": "重点验证稳定跟随、水压辅助密封一致性、可靠起降、续航与可维护性。",
-    "roadmap.3.when": "Launch · 2027 夏",
-    "roadmap.3.title": "Kickstarter 爆发",
-    "roadmap.3.desc": "用真实水测素材、可量化指标与双产品线叙事启动全球早期用户转化。",
-
-    /* Moat */
-    "moat.kicker": "14 · IP &amp; Patent Defense",
-    "moat.heading": "专利防御<em>正在构筑</em>。",
-    "moat.desc": "围绕产品最难复现的技术节点，进行严密的 FTO 与专利布局，为 EP 与 Kickstarter 阶段建立竞争壁垒。",
-    "moat.note": "专利交底书已起草 · FTO 检索 · IN-DEV",
-    "moat.1.title": "声学辅助视觉跟随算法",
-    "moat.1.desc": "气泡 / 浑浊场景下，声学信号平滑修正视觉 ROI 权重，保持稳定锁定与跟随。",
-    "moat.2.title": "水下多模态交互控制",
-    "moat.2.desc": "声学手环敲击编码 + 震动反馈，构成水下与设备之间的低带宽、高鲁棒交互通道。",
-    "moat.3.title": "水压辅助密封结构",
-    "moat.3.desc": "利用环境水压增强密封贴合度的机械结构设计，专为消费级潜深与维护性优化。",
-
-    /* Investors */
-    "investors.eyebrow": "<span class=\"index\">15</span> For Investors",
-    "investors.heading": "实物证据，<em>分层表达</em>。",
-    "investors.lead": "我们对外只承诺\"已验证\"，路线则用\"进行中 / 规划中\"分层标注。以下是面向天使阶段投资人的核心信息。完整 Deck 与 Tech Snapshot 请联系创始团队。",
-    "investors.1.num": "— 01 · 阶段",
-    "investors.1.title": "POC · 原理样机已跑通",
-    "investors.1.desc": "机械、PCB、控制脚本、用户访谈、水测视频均已沉淀。可演示链路：入水自动解锁 → 自动巡航 → 近障避让 → 出水自动上锁。",
-    "investors.2.num": "— 02 · 即将",
-    "investors.2.title": "2026 Q4 进入 EP · 工程验证",
-    "investors.2.desc": "聚焦稳定跟随闭环、水压辅助密封一致性、连续运行可靠性、续航与可维护性。每一项都有可量化的目标指标。",
-    "investors.3.num": "— 03 · 用途",
-    "investors.3.title": "天使轮资金分配",
-    "investors.3.desc": "核心团队补位（嵌入式 / 控制算法 / 结构）、EP 阶段供应链与小批量水测、Kickstarter 视频与传播。每一笔资金对应一个可验证的里程碑。",
-    "investors.btn.1": "索取 Tech Snapshot",
-    "investors.btn.2": "查看 90 秒实证素材",
+    /* Investor */
+    "investor.label": "For Investors",
+    "investor.heading": "天使轮，<br><em>开放中</em>。",
+    "investor.desc": "完整 Deck、原型演示、水测视频、专利布局——按需提供。",
+    "investor.cta": "索取投资 Deck",
 
     /* Outro */
-    "outro.heading": "让<em>水下</em>，<br>只剩下<em>呼吸</em>。",
-    "outro.btn.1": "与创始团队对话",
-    "outro.btn.2": "回到顶部",
-    "outro.meta.1.label": "阶段",
-    "outro.meta.1.val": "POC · 原理样机",
-    "outro.meta.2.label": "下一站",
-    "outro.meta.2.val": "EP · 工程验证 · 2026 Q4",
-    "outro.meta.3.label": "面市",
-    "outro.meta.3.val": "Lite · 2027 夏",
+    "outro.heading": "水面之下，<br>是<em>另一种自由</em>。",
+    "outro.tag": "Remo · 2027 全球首发 · 邮件订阅早鸟",
+    "outro.cta": "提前通知我",
+    "outro.cta2": "回到顶部",
 
     /* Sticky */
-    "sticky.specs": "5 推进器 · 声学纠偏定位 · 巡航 40–60 min · 4K 海思",
-    "sticky.cta": "加入 Kickstarter 早鸟",
+    "sticky.specs": "无线水下跟拍 · 2027 全球首发",
+    "sticky.cta": "提前通知我",
 
     /* Footer */
-    "footer.tagline": "Wireless Underwater Follow-Cam · POC 2026",
-    "footer.copyright": "© Project Remo · All rights reserved",
+    "footer.tagline": "Wireless Underwater Follow-Cam · 2027",
+    "footer.copyright": "© Project Remo",
 
-    /* Misc */
+    /* Meta */
     "meta.title": "Project Remo — 水下智能跟随相机",
-    "meta.desc": "Project Remo 是一款无线、掌上起降的水下智能跟随相机。填补消费级运动相机与传统有线 ROV 之间的空白，让潜水员只剩下呼吸。",
-    "hero.product.alt": "Project Remo 水下智能跟随相机",
-    "acoustic.img.alt": "声学链路水下场景 · 潜水员与 Remo 声学通信",
-    "compare.img.alt": "对比：运动相机 · 有线 ROV · Project Remo",
-    "bracelet.img.alt": "Project Remo 声学手环 · DYP-C01B + ESP32-S3",
+    "meta.desc": "Project Remo · 无线、掌上起降的水下智能跟随相机。让潜水时只剩下你和海。",
   },
 
-  /* ─── ENGLISH ─────────────────────────────────────────────────────── */
+  /* ─── ENGLISH ─────────────────────────────────────────────── */
   en: {
-    "nav.flow": "How It Works",
-    "nav.architecture": "Architecture",
+    "nav.meet": "Product",
     "nav.acoustic": "Acoustic",
-    "nav.color": "Imaging",
+    "nav.color": "Color",
+    "nav.flow": "How It Works",
     "nav.compare": "Compare",
-    "nav.lineup": "Lineup",
-    "nav.specs": "Specs",
     "nav.investors": "Investors",
 
     "hero.meta.issue": "Issue 02 · 2026",
-    "hero.meta.status": "POC LIVE · Acoustic Positioning Verified",
+    "hero.meta.tag": "Wireless Underwater Follow-Cam",
     "hero.meta.depth": "Underwater · 40 m",
-    "hero.meta.phase": "POC → EP → Kickstarter",
-    "hero.title": "<span class=\"word\">Let Go</span><span class=\"word\">of Your</span><span class=\"word\">Hands.</span><span class=\"word\">Hand the</span><span class=\"word\">Shot to an</span><span class=\"word\"><em>Underwater</em></span><span class=\"word\"><em>Agent</em>.</span>",
-    "hero.summary": "Project Remo is a <strong style=\"color:var(--light);font-weight:500\">wireless, palm-sized underwater follow-cam</strong>. It fills the gap between consumer action cameras and tethered ROVs — freeing every diver's hands and full attention for the dive itself.",
-    "hero.btn.primary": "Explore Remo",
-    "hero.btn.secondary": "Watch Water Tests",
-    "hero.ks.1.note": "Target Depth Rating",
-    "hero.ks.2.note": "Thrusters 2H+2V+1L",
-    "hero.ks.3.note": "Acoustic Link DYP-C01B",
-    "hero.ks.4.note": "Cruise Endurance · Measured",
-    "hero.ks.5.note": "Imaging · MVP",
-    "hero.ks.5.unit": "HiSilicon",
-    "hero.scroll": "Scroll Down",
+    "hero.meta.launch": "2027 · Global Launch",
+    "hero.title": "<span class=\"word\">Let go</span><span class=\"word\">of your</span><span class=\"word\">hands.</span><span class=\"word\">Hand the shot</span><span class=\"word\">to an</span><span class=\"word\"><em>underwater</em></span><span class=\"word\"><em>agent</em>.</span>",
+    "hero.summary": "Wireless. Palm-launched. Self-following.<br>Just you and the ocean. Nothing else.",
+    "hero.btn.primary": "Discover Remo",
+    "hero.btn.secondary": "See it in action",
+    "hero.scroll": "Scroll",
+    "hero.product.alt": "Project Remo wireless underwater follow-cam",
 
-    "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
-    "manifesto.text": "The hard part of underwater photography<br>isn't \"can you shoot it?\" —<br>it's whether the diver<br><em>still has the bandwidth to shoot it well</em>.",
-    "manifesto.sig": "Project Remo · Founding Team",
+    "marquee.text": "Wireless  ·  Self-Following  ·  Palm-Launched  ·  4K  ·  AI Color Restoration  ·  Acoustic Tracking  ·  Auto-Dock  ·  Travel-Ready  ·  ",
 
-    "pain.eyebrow": "<span class=\"index\">02</span> The Pain",
-    "pain.heading": "Three burdens every <em style=\"font-style:italic;color:var(--accent)\">underwater photographer</em> carries alone.",
-    "pain.1.title": "Both Hands Occupied",
-    "pain.1.desc": "Underwater photographers juggle buoyancy, breathing rhythm, depth gauge, composition, and focus tracking — working memory split across 5+ tasks. The result is usually <em style=\"font-style:normal;color:var(--accent)\">not \"didn't shoot\" — it's \"ruined the shot while compromising safety\"</em>.",
-    "pain.2.title": "ROVs Aren't for Consumers",
-    "pain.2.desc": "Traditional underwater ROVs are industrial inspection tools — tethers, ground controllers, and shore-deployment workflows mean they've never belonged in a spontaneous dive trip. At 7–15 kg and ¥15,000+ starting price, \"freedom\" and \"ROV\" have never met in product language.",
-    "pain.3.title": "Vision Fails Underwater",
-    "pain.3.desc": "Bubble clouds, suspended particles, backlight, low visibility — any one is enough to break a pure visual tracker. Underwater interaction must respect the water itself, <em style=\"font-style:normal;color:var(--accent)\">not blindly transplant land-based vision assumptions beneath the surface</em>.",
+    "manifesto.label": "Manifesto",
+    "manifesto.text": "The moment you go under,<br>you just want to <em>breathe</em>.",
+    "manifesto.sig": "Project Remo",
 
-    "flow.eyebrow": "<span class=\"index\">03</span> How It Works",
-    "flow.heading": "60 seconds to<br>understand an <em>underwater follow-shot</em>.",
-    "flow.1.title": "Auto-Wake on Entry",
-    "flow.1.desc": "The device unlocks the moment it enters the water. No buttons needed. Dual water-pressure and conductivity detection prevents false triggers.",
-    "flow.2.title": "Acoustic Diver Lock",
-    "flow.2.desc": "The diver's acoustic bracelet establishes an acoustic link via DYP-C01B, allowing Remo to maintain stable positioning even in murky water.",
-    "flow.3.title": "Intelligent Follow-Framing",
-    "flow.3.desc": "Acoustic positioning provides positional priors; visual tracking handles fine composition. When vision drops, acoustic weighting takes over instantly.",
-    "flow.4.title": "Auto-Dock on Surfacing",
-    "flow.4.desc": "Auto-locks upon surfacing. Magnetic contact charging — no USB port means no sealing risk.",
+    "pain.label": "The Burden",
+    "pain.heading": "Underwater photography<br>was never about <em>the shutter</em>.",
+    "pain.1.title": "Both hands, gone.",
+    "pain.1.desc": "Buoyancy, breath, depth, framing, focus — five things fighting for two hands.",
+    "pain.2.title": "ROVs don't travel.",
+    "pain.2.desc": "7 kg, tethers, shore-side controllers — they're not coming on your trip.",
+    "pain.3.title": "Colors disappear.",
+    "pain.3.desc": "Red gone by 5 m, green fading by 15. Vision tracking and white balance both give up.",
 
-    "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
-    "arch.heading": "Not chasing vectored thrust.<br><em>Chasing</em> stability.",
-    "arch.title": "2 Horizontal + 2 Vertical + 1 Lateral.",
-    "arch.desc": "Remo rejects the complex tuning of vectored-thruster approaches, adopting an industry-validated 5-thruster layout from the ROV world — easier to model hydrodynamically, more convergent for the controller, and simpler to package. We validate <em style=\"font-style:normal;color:var(--accent)\">two parallel powertrain routes</em>: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control — both sharing the same flight controller, acoustics, and sensor platform.",
-    "arch.spec.1": "Thruster Layout",
-    "arch.spec.1.val": "2H + 2V + 1L",
-    "arch.spec.2": "Route A · Brushless",
-    "arch.spec.2.val": "Cehai T60-edu-se",
-    "arch.spec.2.sub": "Thrust 3 kgf · Power 150 W",
-    "arch.spec.3": "Route B · Brushed",
-    "arch.spec.3.val": "In-House Bi-Dir ESC",
-    "arch.spec.4": "Flight Controller",
-    "arch.spec.4.val": "FlyingRC H7Wlite",
-    "arch.spec.4.sub": "MCU STM32H743VIH6 · Dual IMU + DPS368",
-    "arch.spec.5": "Firmware",
-    "arch.spec.5.val": "ArduSub 4.1.2",
-    "arch.spec.6": "BLDC ESC",
-    "arch.spec.6.val": "AM32 Mini ESC",
-    "arch.spec.7": "Depth Sensor",
-    "arch.spec.7.val": "MS5837-30BA",
-    "arch.spec.8": "Obstacle Sonar",
-    "arch.spec.8.val": "DYP-L08",
-    "arch.spec.9": "Acoustic Module",
-    "arch.spec.9.val": "DYP-C01B ×3",
-    "arch.spec.10": "Fill Light",
-    "arch.spec.10.val": "12V LED · Ambient-Light Balanced",
-    "arch.spec.11": "Waterproof Switch",
-    "arch.spec.11.val": "External Physical Cutoff",
-    "arch.spec.12": "Leak Detection",
-    "arch.spec.12.val": "I2C Sensor",
-    "arch.spec.13": "Hydrostatic Seal",
-    "arch.spec.13.val": "In-House Structure",
-    "arch.spec.14": "Prototyping",
-    "arch.spec.14.val": "Bambu Lab P1S",
+    "reveal.label": "Meet Remo",
+    "reveal.alt": "Project Remo · Hero",
+    "reveal.heading": "Palm-launched.<br>Wireless <em>follow</em>.<br>One-tap edits.",
+    "reveal.desc": "Pack it. Drop it in. Forget it. It follows you on its own.",
 
-    "stats.eyebrow": "<span class=\"index\">05</span> By the Numbers",
-    "stats.1.label": "Target Depth Rating",
-    "stats.1.note": "Structural design target. Currently validated in pool / shallow water only.",
-    "stats.2.label": "Thruster Layout",
-    "stats.2.note": "2 horizontal + 2 vertical + 1 lateral. Stability-first philosophy.",
-    "stats.3.label": "Acoustic Comms Modules",
-    "stats.3.note": "DYP-C01B ×3: 2 on camera + 1 on bracelet. Relative-position correction.",
-    "stats.4.label": "Core Patent Portfolio",
-    "stats.4.note": "Acoustic-assisted vision, multimodal interaction, hydrostatic seal.",
+    "cap1.label": "Acoustic Following",
+    "cap1.heading": "When water gets murky,<br><em>sound</em> doesn't.",
+    "cap1.desc": "Wear the acoustic bracelet. Remo follows you like a dive buddy — through bubbles, particles, and low light.",
+    "cap1.img.alt": "Acoustic link · diver and Remo",
+    "cap1.bracelet.alt": "Remo acoustic bracelet",
+    "cap1.bracelet.tag": "ACOUSTIC BRACELET",
+    "cap1.bracelet.title": "Wrist · paired.",
+    "cap1.bracelet.desc": "Flick to wake, tap to shoot, haptic to confirm.",
 
-    "acoustic.eyebrow": "<span class=\"index\">06</span> Acoustic Intelligence",
-    "acoustic.heading": "When the water turns murky,<br><em>sound</em> doesn't.",
-    "acoustic.title": "Professional acoustic comms —<br>not a simple hydrophone.",
-    "acoustic.desc.1": "Remo replaces simple hydrophones with DYP-C01B underwater acoustic communication modules — three modules deployed system-wide: two on the camera and one on the diver's bracelet. Any two modules submerged can establish a low-rate acoustic link for <strong style=\"color:var(--light);font-weight:500\">corrective positioning</strong>. When vision is obscured by bubbles or suspended particles, the acoustic link stays stable — this is technology proven over two decades in the ROV industry. What we've done is shrink it to palm-size and make it work hand-in-hand with vision algorithms.",
-    "acoustic.desc.2": "The diver's acoustic bracelet generates distinct ultrasonic signatures via <strong style=\"color:var(--light);font-weight:500\">tapping</strong>, which the camera reads and interprets — forming a low-bandwidth, high-robustness command channel purpose-built for an environment where you're \"wearing a mask, wearing gloves, and can't speak.\"",
-    "acoustic.badge.1": "DYP-C01B Module ×3",
-    "acoustic.badge.2": "Auto-Cruise / Obstacle Avoid",
-    "acoustic.badge.3": "Immersion Wake / Surface Lock",
-    "acoustic.badge.4": "Acoustic Correction Positioning",
-    "acoustic.badge.5": "Tap Ultrasonic Recognition",
-    "acoustic.badge.6": "Acoustic-Visual Fusion",
-    "acoustic.badge.7": "Haptic Feedback Loop",
-    "acoustic.badge.8": "Multi-Unit Acoustic Mesh",
-    "acoustic.bracelet": "Acoustic Bracelet · ESP32-S3 · DYP-C01B · IMU Gesture + Tap",
+    "cap2.label": "Color Pipeline",
+    "cap2.heading": "Red <em>isn't gone</em>.<br>The water just hides it.",
+    "cap2.desc": "AI puts back the colors the water takes. Drag to compare — real footage, before & after.",
+    "cap2.tag.left": "RAW",
+    "cap2.tag.right": "RESTORED",
 
-    "color.eyebrow": "<span class=\"index\">07</span> Image Pipeline",
-    "color.heading": "Not just <em>capturing</em> —<br>turning it into shareable footage.",
-    "color.lead": "Underwater color distortion isn't a filter problem — red light is nearly gone at 5 m, green heavily attenuated at 15 m, and traditional white balance can't compensate. Remo introduces a <strong style=\"color:var(--light);font-weight:500\">Generative Adversarial Network (GAN)</strong> underwater color restoration algorithm, combining the MS5837 depth sensor with acoustic distance data for physics-level color correction — and wrapping it into a cloud AI editing subscription for ongoing service: <em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>.",
-    "color.tag.left": "RAW · 18.6 M · Murky",
-    "color.tag.right": "GAN RESTORED · v0.4",
-    "color.disclaimer": "This image is an offline inference result from algorithm v0.4. The engineered version is planned for EP-stage validation and cloud service launch at Kickstarter.",
+    "cap3.label": "The Flow",
+    "cap3.heading": "Drop in. Let go.<br>It <em>starts itself</em>.",
+    "cap3.1.title": "Drop · Wake",
+    "cap3.1.desc": "Hits water — turns on. No buttons.",
+    "cap3.2.title": "Follow · Frame",
+    "cap3.2.desc": "Acoustic lock + visual framing. You never look at a screen.",
+    "cap3.3.title": "Surface · Dock",
+    "cap3.3.desc": "Auto-locks at the surface. Magnetic charging. Zero open ports.",
 
-    "compare.eyebrow": "<span class=\"index\">08</span> vs Traditional",
-    "compare.heading": "Filling a <em>market gap</em> —<br>not building another action cam.",
-    "compare.col.1": "Handheld Action Cam",
-    "compare.col.2": "Tethered Consumer ROV",
-    "compare.row.1.axis": "Typical Weight",
-    "compare.row.1.c1": "150–250 g",
-    "compare.row.1.c2": "4–8 kg",
-    "compare.row.1.c3": "Palm-Sized",
-    "compare.row.2.axis": "Hands Occupied",
-    "compare.row.2.c1": "Fully Occupied",
-    "compare.row.2.c2": "Partial (Joystick)",
-    "compare.row.2.c3": "0",
-    "compare.row.3.axis": "Tether Cable",
-    "compare.row.3.c1": "None",
-    "compare.row.3.c2": "50–100 m",
-    "compare.row.3.c3": "None",
-    "compare.row.4.axis": "Carry Form",
-    "compare.row.4.c1": "Pocket",
-    "compare.row.4.c2": "Large Case",
-    "compare.row.4.c3": "Palm",
-    "compare.row.5.axis": "Typical Endurance",
-    "compare.row.5.c1": "60–120 min",
-    "compare.row.5.c2": "2–4 h (w/ Battery Pack)",
-    "compare.row.5.c3": "40–60 min (Measured)",
-    "compare.row.6.axis": "Follow Capability",
-    "compare.row.6.c1": "None / Surface Only",
-    "compare.row.6.c2": "Manual Control",
-    "compare.row.6.c3": "Autonomous Acoustic+Visual",
-    "compare.row.7.axis": "Target User",
-    "compare.row.7.c1": "Selfie / 1st-Person",
-    "compare.row.7.c2": "Industrial / Hobbyist",
-    "compare.row.7.c3": "Travel Dive / Freedive",
-    "compare.row.8.axis": "Typical Price Range",
-    "compare.row.8.c1": "$300–600",
-    "compare.row.8.c2": "$2,000–8,000",
-    "compare.row.8.c3": "Consumer Target",
-    "compare.row.9.axis": "Learning Curve",
-    "compare.row.9.c1": "Minimal",
-    "compare.row.9.c2": "Steep",
-    "compare.row.9.c3": "Minimal (One-Tap Deploy)",
-    "compare.row.10.axis": "Failure Cost",
-    "compare.row.10.c1": "Lost Shot",
-    "compare.row.10.c2": "Lost Shot + Gear Risk",
-    "compare.row.10.c3": "Lost Shot (Auto-Return)",
-    "compare.note": "Comparison data based on publicly available consumer product specs. Remo data based on current POC prototype measurements and structural design targets.",
+    "compare.label": "The Difference",
+    "compare.heading": "It <em>isn't</em><br>another action cam.",
+    "compare.img.alt": "Comparison · action cam / tethered ROV / Remo",
+    "compare.col.1": "Action Cam",
+    "compare.col.2": "Tethered ROV",
+    "compare.row.1.axis": "Hands",
+    "compare.row.1.a": "Fully occupied",
+    "compare.row.1.b": "Needs operator",
+    "compare.row.1.c": "Completely free",
+    "compare.row.2.axis": "Size & Weight",
+    "compare.row.2.a": "200 g · pocket",
+    "compare.row.2.b": "7 kg+ · case",
+    "compare.row.2.c": "Palm-sized",
+    "compare.row.3.axis": "Tether",
+    "compare.row.3.a": "None",
+    "compare.row.3.b": "50–100 m",
+    "compare.row.3.c": "Fully wireless",
+    "compare.row.4.axis": "Follow",
+    "compare.row.4.a": "None",
+    "compare.row.4.b": "Manual",
+    "compare.row.4.c": "Autonomous",
 
-    "lineup.eyebrow": "<span class=\"index\">09</span> Product Lineup",
-    "lineup.heading": "One prototype,<br><em>two market visions</em>.",
-    "lineup.lite.tag": "01 · Mass Market & Rental",
-    "lineup.lite.desc": "Built for everyone who snorkels or freedives. Lighter travel footprint, simpler shooting workflow — making \"grab a Remo from the dive shop\" the standard move.",
-    "lineup.lite.spec.1": "Positioning",
-    "lineup.lite.spec.1.val": "Consumer · Rental",
-    "lineup.lite.spec.2": "Experience",
-    "lineup.lite.spec.2.val": "One-Tap Deploy & Shoot",
-    "lineup.lite.spec.3": "Price Strategy",
-    "lineup.lite.spec.3.val": "Entry Consumer",
-    "lineup.lite.spec.4": "Core Scenario",
-    "lineup.lite.spec.4.val": "Travel Dive · Courses",
-    "lineup.lite.when.label": "Vision",
-    "lineup.lite.when.val": "Toward Launch",
-    "lineup.pro.tag": "02 · Enthusiast & Creator",
-    "lineup.pro.desc": "A creative tool for people willing to pay for image quality. Built around a custom imaging system, extended endurance, and deeper depth rating — serving professional shoots and advanced dive sites.",
-    "lineup.pro.spec.1": "Positioning",
-    "lineup.pro.spec.1.val": "Professional Creation",
-    "lineup.pro.spec.2": "Imaging",
-    "lineup.pro.spec.2.val": "Custom Imaging System (Planned)",
-    "lineup.pro.spec.3": "Depth Rating",
-    "lineup.pro.spec.3.val": "Deeper Rating (Planned)",
-    "lineup.pro.spec.4": "Core Scenario",
-    "lineup.pro.spec.4.val": "Content Creation · Advanced Sites",
-    "lineup.pro.when.label": "Vision",
-    "lineup.pro.when.val": "Post-EP Planning",
-    "lineup.note": "Lite / Pro are future product-line visions. The current POC stage is a single prototype validating both brushed and brushless powertrain routes in parallel, ultimately converging into a unified product form.",
+    "gallery.label": "Behind the Scenes",
+    "gallery.heading": "We don't stop<br>at <em>renders</em>.",
+    "gallery.1.cap": "2026·04 · LAB ASSEMBLY",
+    "gallery.1.title": "Prototype",
+    "gallery.2.cap": "ID v2.1 · 2026·03",
+    "gallery.2.title": "Industrial Design",
+    "gallery.3.cap": "PCB · REV 3",
+    "gallery.3.title": "Hardware Iteration",
+    "gallery.4.cap": "WATER TEST · 2026·04·28",
+    "gallery.4.title": "Real-World Test",
 
-    "specs.eyebrow": "<span class=\"index\">10</span> Tech Specs",
-    "specs.heading": "Engineering details<br>you can <em>actually see</em>.",
-    "specs.tab.imaging": "成像 IMAGING",
-    "specs.tab.underwater": "水下 UNDERWATER",
-    "specs.tab.intelligence": "智能 INTELLIGENCE",
-    "specs.tab.powertrain": "动力 POWERTRAIN",
-    "specs.tab.physical": "物理 PHYSICAL",
-    "specs.tab.bracelet": "声学手环 BRACELET",
-    "specs.col.item": "Item",
-    "specs.col.value": "Spec",
-    "specs.col.status": "Status",
-    "specs.col.value.a": "Current POC Spec",
-    "specs.col.value.b": "Route A · Brushless",
-    "specs.col.value.c": "Route B · Brushed",
-    "specs.img.1": "Camera Solution",
-    "specs.img.1v": "4K HiSilicon camera + mainboard module",
-    "specs.img.2": "Capture Control",
-    "specs.img.2v": "Auto-start on power; start/stop controlled by FC via circuit relay",
-    "specs.img.3": "Companion Software",
-    "specs.img.3v": "Module has built-in Wi‑Fi & DVR software for footage import",
-    "specs.img.4": "Monitoring",
-    "specs.img.4v": "Basic surface monitoring available; no real-time underwater monitoring yet",
-    "specs.img.5": "Laser AF",
-    "specs.img.5v": "Camera + laser autofocus module (on schematic)",
-    "specs.img.6": "Fill Light System",
-    "specs.img.6v": "12 V LED internal fill light + ambient-light sensor auto-balance",
-    "specs.img.7": "Custom Imaging System",
-    "specs.img.7v": "Sensor selection, bitrate & color pipeline R&D",
-    "specs.img.8": "GAN Color Restoration",
-    "specs.img.8v": "Cloud-based underwater color restoration pipeline",
-    "specs.uw.1": "Target Depth Rating",
-    "specs.uw.1v": "40 m (structural target)",
-    "specs.uw.2": "Current Validation Env.",
-    "specs.uw.2v": "Pool / shallow water; no dedicated deep-water pressure test yet",
-    "specs.uw.3": "Thruster Layout",
-    "specs.uw.3v": "2 horizontal + 2 vertical + 1 lateral · 5 total",
-    "specs.uw.4": "Cruise Speed",
-    "specs.uw.4v": "~1.5 m/s",
-    "specs.uw.5": "Seawater Operation",
-    "specs.uw.5v": "Verified stable on brushless route",
-    "specs.uw.6": "Sealing Solution",
-    "specs.uw.6v": "O-Ring + hydrostatic pressure-assisted seal structure",
-    "specs.uw.7": "Waterproof Switch",
-    "specs.uw.7v": "External physical switch for master power cutoff",
-    "specs.uw.8": "Leak Detection",
-    "specs.uw.8v": "I2C general-purpose leak sensor",
-    "specs.uw.9": "Enclosure Process",
-    "specs.uw.9v": "Bambu Lab P1S high-precision print iteration",
-    "specs.int.1": "Acoustic Comms Module",
-    "specs.int.1v": "DYP-C01B ×3 (2 on camera + 1 on bracelet) · 360° · ≤120 m",
-    "specs.int.2": "Acoustic Correction Pos.",
-    "specs.int.2v": "Multi-module acoustic solving for bracelet relative position",
-    "specs.int.3": "Tap Command Recognition",
-    "specs.int.3v": "Bracelet tap ultrasonic signatures read by camera",
-    "specs.int.4": "Obstacle-Avoid Sonar",
-    "specs.int.4v": "DYP-L08 underwater ultrasonic · 5 cm–8 m",
-    "specs.int.5": "Auto Obstacle Avoid",
-    "specs.int.5v": "Proximity triggers reverse-thrust avoidance",
-    "specs.int.6": "Depth Sensor",
-    "specs.int.6v": "MS5837-30BA · ±0.2 m",
-    "specs.int.7": "Inertial Nav IMU",
-    "specs.int.7v": "ICM-42688-P + ICM-42605 (FC built-in dual IMU)",
-    "specs.int.8": "Barometer",
-    "specs.int.8v": "DPS368 (FC built-in, IPx8 rated)",
-    "specs.int.9": "Magnetometer",
-    "specs.int.9v": "QMC5883L (external I2C)",
-    "specs.int.10": "Immersion Wake / Surface Lock",
-    "specs.int.10v": "Dual water-pressure + conductivity detection",
-    "specs.int.11": "Auto Cruise",
-    "specs.int.11v": "Thruster PWM auto-cruise",
-    "specs.int.12": "Visual Tracking",
-    "specs.int.12v": "Visual fine-composition + acoustic weight correction",
-    "specs.pt.1": "Route Positioning",
-    "specs.pt.1a": "Seawater reliability priority",
-    "specs.pt.1b": "Cost control priority",
-    "specs.pt.2": "Thrusters",
-    "specs.pt.2a": "Cehai Technology T60-edu-se · 3 kgf thrust · 150 W",
-    "specs.pt.2b": "Brushed DC motor",
-    "specs.pt.3": "ESC",
-    "specs.pt.3a": "flyingRC AM32 Mini ESC",
-    "specs.pt.3b": "In-house dual bi-directional brushed ESC 1–3S",
-    "specs.pt.4": "Seawater Validation",
-    "specs.pt.4a": "Verified stable & reliable",
-    "specs.pt.4b": "In Development",
-    "specs.pt.5": "Battery (Shared)",
-    "specs.pt.5a": "Boston Power Li(NiCo)O₂ 3S 12.4 V · 5300 mAh",
-    "specs.pt.5b": "Same",
-    "specs.pt.6": "Discharge (Shared)",
-    "specs.pt.6a": "Continuous 8 A · Peak 10 A",
-    "specs.pt.6b": "Same",
-    "specs.pt.7": "Cruise Endurance",
-    "specs.pt.7a": "40–60 min (measured)",
-    "specs.pt.7b": "40–60 min (measured)",
-    "specs.pt.8": "Charging (Shared)",
-    "specs.pt.8a": "XL2326 charge management · 4P magnetic contact",
-    "specs.pt.8b": "Same",
-    "specs.pt.9": "FC (Shared)",
-    "specs.pt.9a": "FlyingRC H7Wlite MK1 · ArduSub 4.1.2",
-    "specs.pt.9b": "Same",
-    "specs.ph.1": "Form Factor",
-    "specs.ph.1v": "Palm-sized, 5-thruster integrated body",
-    "specs.ph.2": "Enclosure Material",
-    "specs.ph.2v": "PC transparent + engineering plastic (3D-printed iteration)",
-    "specs.ph.3": "Dimensions",
-    "specs.ph.3v": "Prototype finalizing; measured values TBD",
-    "specs.ph.4": "Net Weight",
-    "specs.ph.4v": "Prototype finalizing; measured values TBD",
-    "specs.ph.5": "Charging Port",
-    "specs.ph.5v": "4P magnetic data cable 2.5PH — no open USB port",
-    "specs.ph.6": "Waterproof Switch",
-    "specs.ph.6v": "External physical switch for master power cutoff",
-    "specs.br.1": "MCU",
-    "specs.br.1v": "ESP32-S3-WROOM",
-    "specs.br.2": "Acoustic Module",
-    "specs.br.2v": "DYP-C01B ×1 (networked with camera units)",
-    "specs.br.3": "Display",
-    "specs.br.3v": "1.8\" TFT-LCD · 180 × 128 px (upgrade planned)",
-    "specs.br.4": "IMU",
-    "specs.br.4v": "QMI8658A (6-axis), wrist-flick + tap control",
-    "specs.br.5": "Buttons",
-    "specs.br.5v": "No physical buttons; IMU gesture + haptic feedback",
-    "specs.br.6": "Haptic Feedback",
-    "specs.br.6v": "Linear / rotor motor (MOTOR_PWM channel)",
-    "specs.br.7": "Battery",
-    "specs.br.7v": "800 mAh 1S LiPo",
-    "specs.br.8": "Charging",
-    "specs.br.8v": "4P magnetic data cable 2.5PH",
-    "specs.br.9": "Enclosure",
-    "specs.br.9v": "3D-printed iteration, multiple strap options (universal lug interface)",
-    "specs.br.10": "Waterproofing",
-    "specs.br.10v": "Not yet tested",
-    "specs.br.11": "Battery Life / Standby",
-    "specs.br.11v": "Measured data TBD",
+    "investor.label": "For Investors",
+    "investor.heading": "Angel round,<br><em>open</em>.",
+    "investor.desc": "Full deck, prototype demo, water-test footage, patent portfolio — on request.",
+    "investor.cta": "Request Deck",
 
-    "gallery.eyebrow": "<span class=\"index\">11</span> Prototype Evidence",
-    "gallery.heading": "We don't stop<br>at concept art.",
-    "gallery.shot.1.cap": "2026·04 · Lab Assembly",
-    "gallery.shot.1.title": "Physical Prototype",
-    "gallery.shot.1.desc": "Palm-sized underwater camera · thruster structure assembly",
-    "gallery.shot.2.cap": "ID PROPOSAL · v2.1 · 2026·03",
-    "gallery.shot.2.title": "Industrial Design ID",
-    "gallery.shot.2.desc": "Surface language · color & volume study",
-    "gallery.shot.3.cap": "HARDWARE · PCB1 · REV 3 · 2026·03·17",
-    "gallery.shot.3.title": "PCB · Main Control Board",
-    "gallery.shot.3.desc": "Camera-side hardware · 3rd iteration",
-    "gallery.shot.4.cap": "WATCH SCH · 2026·03",
-    "gallery.shot.4.title": "Schematic · Acoustic Bracelet",
-    "gallery.shot.4.desc": "Underwater multimodal interaction gateway",
-    "gallery.shot.5.cap": "WATER TEST · 2026·04·28 · NO CUT · 11 consecutive logs",
-    "gallery.shot.5.title": "Scene Expression",
-    "gallery.shot.5.desc": "Freedive photography · consumer-facing product imagination",
+    "outro.heading": "Below the surface,<br>another kind of <em>freedom</em>.",
+    "outro.tag": "Remo · Summer 2027 · Subscribe for Early Bird",
+    "outro.cta": "Notify Me",
+    "outro.cta2": "Back to Top",
 
-    "business.eyebrow": "<span class=\"index\">12</span> Business Model",
-    "business.heading": "Hardware is the entry point.<br><em>HaaS</em> is the long-term value.",
-    "business.1.title": "Consumer Hardware",
-    "business.1.desc": "Differentiate on palm-sized deployment, wireless following, and one-tap edit — not on raw camera specs alone. Let design and experience be the first layer of the moat.",
-    "business.2.title": "Dive Shop Rental",
-    "business.2.desc": "A lower-barrier entry point for dive shops and travel scenarios. For dive shops, Remo improves gear turnover and content conversion rates. For users, \"you don't need to buy a camera before your trip.\" Rental is the best consumer education channel.",
-    "business.3.title": "Cloud AI Subscription",
-    "business.3.desc": "GAN color restoration, smart editing, dive logs, production templates — everything requiring compute power and asset libraries lives in the cloud, generating recurring subscription revenue. Hardware ASP fluctuates; HaaS revenue is steady.",
+    "sticky.specs": "Wireless Underwater Follow-Cam · 2027",
+    "sticky.cta": "Notify Me",
 
-    "roadmap.eyebrow": "<span class=\"index\">13</span> Milestones",
-    "roadmap.heading": "Three steps<br>to Kickstarter.",
-    "roadmap.1.when": "Now · 2026",
-    "roadmap.1.title": "POC · Proof of Concept",
-    "roadmap.1.desc": "Acoustic positioning + auto-cruise + obstacle-avoid state machine proven; PCB iteration 3; actively recruiting core team members.",
-    "roadmap.2.when": "Next · 2026 Q4",
-    "roadmap.2.title": "EP · Engineering Validation",
-    "roadmap.2.desc": "Focused on verifying stable follow-loop, hydrostatic seal consistency, reliable launch/recovery, endurance, and serviceability.",
-    "roadmap.3.when": "Launch · Summer 2027",
-    "roadmap.3.title": "Kickstarter Launch",
-    "roadmap.3.desc": "Launch global early-adopter conversion with real water-test footage, quantifiable metrics, and a dual-product-line narrative.",
-
-    "moat.kicker": "14 · IP &amp; Patent Defense",
-    "moat.heading": "Patent defense<br><em>under construction</em>.",
-    "moat.desc": "Rigorous FTO and patent portfolio construction around the product's hardest-to-replicate technical nodes — building competitive barriers for EP and Kickstarter phases.",
-    "moat.note": "Patent disclosure drafted · FTO search · IN-DEV",
-    "moat.1.title": "Acoustic-Assisted Visual Tracking Algorithm",
-    "moat.1.desc": "In bubble / turbidity scenarios, acoustic signals smoothly correct visual ROI weights — maintaining stable lock and follow.",
-    "moat.2.title": "Underwater Multimodal Interaction Control",
-    "moat.2.desc": "Acoustic bracelet tap encoding + haptic feedback, forming a low-bandwidth, high-robustness interaction channel between diver and device.",
-    "moat.3.title": "Hydrostatic Pressure-Assisted Seal Structure",
-    "moat.3.desc": "Mechanical design that leverages ambient water pressure to enhance seal conformity — optimized for consumer depth ratings and field serviceability.",
-
-    "investors.eyebrow": "<span class=\"index\">15</span> For Investors",
-    "investors.heading": "Physical evidence,<br><em>layered communication</em>.",
-    "investors.lead": "We only claim what's been \"verified\" externally, and mark roadmap items as \"in development\" or \"planned\" with clear layering. Below is the core information for angel-stage investors. For the full Deck and Tech Snapshot, please contact the founding team.",
-    "investors.1.num": "— 01 · Stage",
-    "investors.1.title": "POC · Working Prototype Proven",
-    "investors.1.desc": "Mechanical, PCB, control scripts, user interviews, and water-test footage are all archived. Demonstrable pipeline: immersion auto-unlock → auto-cruise → proximity obstacle avoidance → surface auto-lock.",
-    "investors.2.num": "— 02 · Next",
-    "investors.2.title": "2026 Q4 Entering EP · Engineering Validation",
-    "investors.2.desc": "Focused on stable follow-loop, hydrostatic seal consistency, continuous-run reliability, endurance, and serviceability — each with quantifiable target metrics.",
-    "investors.3.num": "— 03 · Use of Funds",
-    "investors.3.title": "Angel Round Allocation",
-    "investors.3.desc": "Core team hires (embedded / control algorithms / mechanical), EP-stage supply chain & small-batch water testing, Kickstarter video & marketing. Every dollar maps to a verifiable milestone.",
-    "investors.btn.1": "Request Tech Snapshot",
-    "investors.btn.2": "View 90s Evidence Reel",
-
-    "outro.heading": "<em>Under</em> the water,<br>nothing left<br>but <em>your breath</em>.",
-    "outro.btn.1": "Talk to the Founding Team",
-    "outro.btn.2": "Back to Top",
-    "outro.meta.1.label": "Stage",
-    "outro.meta.1.val": "POC · Working Prototype",
-    "outro.meta.2.label": "Next Stop",
-    "outro.meta.2.val": "EP · Engineering Validation · 2026 Q4",
-    "outro.meta.3.label": "Launch",
-    "outro.meta.3.val": "Lite · Summer 2027",
-
-    "sticky.specs": "5 Thrusters · Acoustic Positioning · Cruise 40–60 min · 4K HiSilicon",
-    "sticky.cta": "Join Kickstarter Early Bird",
-
-    "footer.tagline": "Wireless Underwater Follow-Cam · POC 2026",
-    "footer.copyright": "© Project Remo · All rights reserved",
+    "footer.tagline": "Wireless Underwater Follow-Cam · 2027",
+    "footer.copyright": "© Project Remo",
 
     "meta.title": "Project Remo — Wireless Underwater Follow-Cam",
-    "meta.desc": "Project Remo is a wireless, palm-sized underwater intelligent follow-camera. It fills the gap between consumer action cameras and traditional tethered ROVs — leaving the diver with nothing but their breath.",
-    "hero.product.alt": "Project Remo Underwater Intelligent Follow-Camera",
-    "acoustic.img.alt": "Acoustic Link Underwater Scene · Diver and Remo Acoustic Communication",
-    "compare.img.alt": "Comparison: Action Cam · Tethered ROV · Project Remo",
-    "bracelet.img.alt": "Project Remo Acoustic Bracelet · DYP-C01B + ESP32-S3",
+    "meta.desc": "Project Remo — a wireless, palm-launched underwater intelligent follow-camera. Leave the dive to your hands. Leave the shot to Remo.",
   }
 };
 
@@ -875,18 +268,14 @@ function setLang(lang) {
   const dict = I18N[lang] || I18N["zh"];
   document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
 
-  // Text content
   document.querySelectorAll(`[${I18N_ATTR}]`).forEach(el => {
     const key = el.getAttribute(I18N_ATTR);
     if (dict[key] !== undefined) el.textContent = dict[key];
   });
 
-  // HTML content
   document.querySelectorAll(`[${I18N_HTML_ATTR}]`).forEach(el => {
     const key = el.getAttribute(I18N_HTML_ATTR);
     if (dict[key] !== undefined) el.innerHTML = dict[key];
-
-    // Re-trigger hero title animation if it's the title
     if (el.id === "hero-title") {
       requestAnimationFrame(() => {
         el.classList.remove("in");
@@ -897,21 +286,18 @@ function setLang(lang) {
     }
   });
 
-  // Alt attributes
   document.querySelectorAll(`[${I18N_ALT_ATTR}]`).forEach(el => {
     const key = el.getAttribute(I18N_ALT_ATTR);
     if (dict[key] !== undefined) el.setAttribute("alt", dict[key]);
   });
 
-  // Meta
   if (dict["meta.title"]) document.title = dict["meta.title"];
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc && dict["meta.desc"]) metaDesc.setAttribute("content", dict["meta.desc"]);
 
-  // Update lang toggle UI
   const langBtn = document.getElementById("lang-toggle");
   if (langBtn) {
-    langBtn.textContent = lang === "en" ? "ZH · EN" : "ZH · EN";
+    langBtn.textContent = "ZH · EN";
     langBtn.classList.toggle("is-en", lang === "en");
   }
 
@@ -922,7 +308,6 @@ function toggleLang() {
   setLang(getLang() === "zh" ? "en" : "zh");
 }
 
-/* ─── Init ─────────────────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   setLang(getLang());
   const langBtn = document.getElementById("lang-toggle");
@@ -930,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================================================================
-   Interaction behaviours (unchanged)
+   Interaction behaviours
    ========================================================================= */
 
 (() => {
@@ -975,45 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ─── 4. Counter numbers ───────────────────────────────────────────── */
-  const counterEls = document.querySelectorAll("[data-count]");
-  if (counterEls.length && "IntersectionObserver" in window && !prefersReduced) {
-    const animateCounter = (el) => {
-      const target = parseInt(el.dataset.count, 10);
-      if (Number.isNaN(target)) return;
-      const span = el.querySelector(".num-val");
-      if (!span) return;
-
-      const duration = target > 1000 ? 1600 : 1100;
-      const startTime = performance.now();
-      const startVal = 0;
-
-      const tick = (now) => {
-        const t = Math.min(1, (now - startTime) / duration);
-        const eased = 1 - Math.pow(1 - t, 3);
-        const v = Math.round(startVal + (target - startVal) * eased);
-        span.textContent = v;
-        if (t < 1) requestAnimationFrame(tick);
-        else span.textContent = target;
-      };
-      requestAnimationFrame(tick);
-    };
-
-    const counterIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCounter(entry.target);
-            counterIO.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-    counterEls.forEach((el) => counterIO.observe(el));
-  }
-
-  /* ─── 5. GAN before/after slider ───────────────────────────────────── */
+  /* ─── 4. GAN before/after slider ───────────────────────────────────── */
   const slider = document.getElementById("color-slider");
   const restored = document.getElementById("color-restored");
   const handle = document.getElementById("color-handle");
@@ -1029,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
     slider.addEventListener("input", (e) => updateColorCompare(e.target.value));
   }
 
-  /* ─── Smooth scroll for anchor links ───────────────────────────────── */
+  /* ─── 5. Smooth scroll for anchor links ────────────────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const id = a.getAttribute("href");
@@ -1041,9 +388,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ─── Hero product subtle parallax on scroll ───────────────────────── */
+  /* ─── 6. Hero product subtle parallax on scroll (desktop) ──────────── */
   const heroProduct = document.querySelector(".hero-product");
-  if (heroProduct && !prefersReduced) {
+  const isDesktop = window.matchMedia("(min-width: 681px)").matches;
+  if (heroProduct && !prefersReduced && isDesktop) {
     let scrollY = 0;
     let ticking = false;
     const update = () => {
@@ -1062,26 +410,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   }
 
-  /* ─── 6. Tech specs tab switcher ───────────────────────────────────── */
-  const tabs = document.querySelectorAll(".specs-tabs .tab");
-  const panels = document.querySelectorAll(".specs-panel");
-  if (tabs.length && panels.length) {
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const target = tab.dataset.tab;
-        tabs.forEach((t) => {
-          const on = t === tab;
-          t.classList.toggle("active", on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
+  /* ─── 7. Product reveal — parallax background ──────────────────────── */
+  const prBg = document.querySelector(".pr-bg");
+  if (prBg && !prefersReduced && isDesktop) {
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const rect = prBg.parentElement.getBoundingClientRect();
+          const visible = rect.top < window.innerHeight && rect.bottom > 0;
+          if (visible) {
+            const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+            prBg.style.transform = `translateY(${progress * 60}px) scale(1.1)`;
+          }
+          ticking = false;
         });
-        panels.forEach((p) => {
-          p.classList.toggle("active", p.dataset.panel === target);
-        });
-      });
-    });
+        ticking = true;
+      }
+    }, { passive: true });
   }
 
-  /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
+  /* ─── 8. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
   const hero = document.querySelector(".hero");
   if (stickyBar && hero) {
