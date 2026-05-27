@@ -438,12 +438,13 @@ section + section::before {
   transform: rotate(-6deg);
 }
 
-/* Hero wordmark — large "PROJECT REMO" lockup behind the product image,
-   creating depth and brand presence. Sits between background and product
-   (z-index 1, vs hero-title z-3 and hero-product z-2). Poster-style:
-   bold solid type with a subtle inner glow, deliberately commanding. */
+/* Hero wordmark — full-bleed "PROJECT / REMO" lockup behind the product
+   image. Uses Anton (a tall narrow display sans, the same family used in
+   DJI/Insta360 posters) for editorial-grade visual tension. Fills the
+   viewport width; line gap is generous and intentional. */
 .hero-wordmark {
   position: absolute;
+  left: 0;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
@@ -451,38 +452,36 @@ section + section::before {
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 0.18em;
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  font-family: var(--display);
-  font-weight: 800;
-  font-variation-settings: "opsz" 144, "wght" 800;
-  font-size: clamp(140px, 22vw, 360px);
+  align-items: stretch;
+  gap: 0.32em;
+  line-height: 0.82;
+  letter-spacing: -0.025em;
+  font-family: "Anton", "Impact", "Helvetica Neue", "Arial Narrow", sans-serif;
+  font-weight: 400;
+  font-size: clamp(180px, 26vw, 460px);
   text-transform: uppercase;
   user-select: none;
   white-space: nowrap;
-  width: clamp(420px, 56vw, 920px);
-  text-align: right;
+  width: 100%;
+  text-align: center;
   opacity: 0;
   animation: heroWordmarkIn 1.8s 0.6s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
 }
 
 .hero-wordmark-line {
   display: block;
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.36);
   text-shadow:
-    0 2px 0 rgba(0, 0, 0, 0.35),
-    0 0 60px rgba(0, 217, 255, 0.18);
+    0 4px 0 rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(0, 217, 255, 0.18);
 }
 
 .hero-wordmark-line:nth-child(2) {
   /* "REMO" — accent color, brand emphasis */
-  margin-right: -0.04em;
-  color: rgba(0, 217, 255, 0.55);
+  color: rgba(0, 217, 255, 0.6);
   text-shadow:
-    0 2px 0 rgba(0, 0, 0, 0.4),
-    0 0 80px rgba(0, 217, 255, 0.5);
+    0 4px 0 rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(0, 217, 255, 0.55);
 }
 
 @keyframes heroWordmarkIn {
@@ -1939,21 +1938,23 @@ video.showcase-video {
     max-width: 100%;
     line-height: 1.0;
   }
-  /* Mobile: keep the wordmark backdrop, but resize/recolor for the
-     stacked layout. It now sits behind the product image area, centered. */
+  /* Mobile: keep the wordmark backdrop, full-bleed and centered behind
+     the product image area. Anton font carries the same visual tension
+     as desktop, just scaled for phone screens. */
   .hero-wordmark {
     position: absolute !important;
-    right: 50% !important;
-    top: auto !important;
-    bottom: 8% !important;
-    transform: translate(50%, 0) !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
     width: 100% !important;
     max-width: 100% !important;
-    align-items: center !important;
+    align-items: stretch !important;
     text-align: center !important;
-    font-size: clamp(80px, 26vw, 180px) !important;
-    gap: 0.12em !important;
-    line-height: 0.88 !important;
+    font-size: clamp(110px, 32vw, 240px) !important;
+    gap: 0.28em !important;
+    line-height: 0.82 !important;
     z-index: 1 !important;
     overflow: hidden;
   }
