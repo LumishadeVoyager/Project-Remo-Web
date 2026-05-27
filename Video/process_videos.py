@@ -29,33 +29,69 @@ import imageio_ffmpeg
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 HERE = Path(__file__).parent
 
-# Doubao watermark zones for the dominant 1280x720 output size.
-# delogo coordinates are top-left of the box to obscure.
-# Conservative boxes that cover both the static lower-right "豆包AI生成"
-# logo and any occasional upper-left timestamp.
-DOUBAO_DELOGO = (
-    "delogo=x=970:y=648:w=305:h=68,"    # bottom-right "豆包AI生成" + logo
-    "delogo=x=5:y=5:w=230:h=60"          # top-left (defensive, often empty)
-)
+# Doubao watermark is a fixed-size raster overlay anchored to the corners.
+# These dimensions cover the watermark across all aspect ratios Doubao outputs
+# (1280x720 16:9, 960x720 4:3, 720x1280 9:16, etc.) without scaling.
+WATERMARK_W = 320      # bottom-right watermark width  in pixels
+WATERMARK_H = 90       # bottom-right watermark height in pixels
+TOPLEFT_W   = 280      # top-left (defensive) width
+TOPLEFT_H   = 72       # top-left (defensive) height
+EDGE_PAD    = 2        # delogo cannot touch the very edge
 
 DOUBAO_RE = re.compile(r"^(V\d{2})-豆包(?:生成)?\.mp4$", re.IGNORECASE)
+
+
+def probe_size(src: Path) -> tuple[int, int] | None:
+    """Return (width, height) of the first video stream, or None on failure."""
+    import subprocess
+    cmd = [FFMPEG, "-i", str(src), "-hide_banner"]
+    r = subprocess.run(cmd, capture_output=True)
+    # ffmpeg writes stream info to stderr; decode latin-1 to avoid GBK errors
+    stderr = (r.stderr or b"").decode("latin-1", errors="ignore")
+    m = re.search(r"Video:.*?,\s*(\d+)x(\d+)", stderr)
+    if not m:
+        return None
+    return int(m.group(1)), int(m.group(2))
+
+
+def build_delogo(width: int, height: int) -> str:
+    """Build delogo filter chain anchored to corners, clamped to the frame."""
+    # Bottom-right box, anchored to the corner with EDGE_PAD margin
+    br_x = max(0, width  - WATERMARK_W - EDGE_PAD)
+    br_y = max(0, height - WATERMARK_H - EDGE_PAD)
+    br_w = min(WATERMARK_W, width  - br_x - EDGE_PAD)
+    br_h = min(WATERMARK_H, height - br_y - EDGE_PAD)
+    # Top-left box
+    tl_w = min(TOPLEFT_W, width  - 2 * EDGE_PAD)
+    tl_h = min(TOPLEFT_H, height - 2 * EDGE_PAD)
+    return (
+        f"delogo=x={br_x}:y={br_y}:w={br_w}:h={br_h},"
+        f"delogo=x={EDGE_PAD}:y={EDGE_PAD}:w={tl_w}:h={tl_h}"
+    )
 
 
 def process_doubao(src: Path, dst: Path) -> bool:
     """Run ffmpeg delogo on a Doubao-generated video. Returns True on success."""
     import subprocess
-    print(f"  → removing watermark: {src.name}  →  {dst.name}")
+    size = probe_size(src)
+    if not size:
+        print(f"    could not probe {src.name}")
+        return False
+    w, h = size
+    delogo_chain = build_delogo(w, h)
+    print(f"  -> removing watermark: {src.name} ({w}x{h})  ->  {dst.name}")
     cmd = [
         FFMPEG, "-y", "-i", str(src),
-        "-vf", DOUBAO_DELOGO,
+        "-vf", delogo_chain,
         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
         "-c:a", "copy",
         "-movflags", "+faststart",
         str(dst),
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"    ffmpeg failed:\n{result.stderr[-800:]}")
+    r = subprocess.run(cmd, capture_output=True)
+    if r.returncode != 0:
+        stderr = (r.stderr or b"").decode("latin-1", errors="ignore")
+        print(f"    ffmpeg failed:\n{stderr[-800:]}")
         return False
     return True
 
