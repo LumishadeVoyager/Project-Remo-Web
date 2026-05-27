@@ -17,3 +17,7 @@ _v1_backup/
 
 # Logs
 *.log
+
+# Raw watermarked source videos (before process_videos.py cleans them)
+Video/*-豆包*.mp4
+Video/*-豆包生成*.mp4

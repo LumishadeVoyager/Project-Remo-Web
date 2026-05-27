@@ -1081,6 +1081,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
+     For flow steps that have a `data-video-slot="VNN"` attribute, attempt
+     to load `./Video/VNN.mp4`. If it exists, replace the SVG fallback with
+     an autoplaying video. If it 404s, keep the SVG silently. */
+  document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
+    const slot = step.getAttribute("data-video-slot");
+    if (!slot) return;
+    const url = `./Video/${slot}.mp4`;
+    const probe = document.createElement("video");
+    probe.preload = "metadata";
+    probe.muted = true;
+    probe.playsInline = true;
+    probe.src = url;
+    probe.onloadedmetadata = () => {
+      const media = step.querySelector(".flow-media");
+      if (!media) return;
+      const video = document.createElement("video");
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+      video.className = "flow-video";
+      const source = document.createElement("source");
+      source.src = url;
+      source.type = "video/mp4";
+      video.appendChild(source);
+      media.insertBefore(video, media.firstChild);
+      step.classList.add("has-video");
+    };
+    probe.onerror = () => { /* video not ready — keep SVG fallback */ };
+  });
+
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
   const hero = document.querySelector(".hero");

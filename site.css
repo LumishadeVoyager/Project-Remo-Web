@@ -438,6 +438,19 @@ section + section::before {
   transform: rotate(-6deg);
 }
 
+/* Hero video — replaces the static product image when available.
+   Source videos are pre-processed by Video/process_videos.py to remove
+   watermarks, so no browser-side cropping is needed. */
+.hero-product .hero-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  transform: rotate(-6deg);
+  transform-origin: center;
+  object-fit: cover;
+}
+
 @keyframes heroProductIn {
   from { opacity: 0; transform: translateY(-50%) translateX(80px) scale(1.05); }
   to   { opacity: 1; transform: translateY(-50%) translateX(0) scale(1); }
@@ -2035,6 +2048,42 @@ section + section::before {
 .flow-icon .s { fill: none; stroke: var(--light-2); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 .flow-icon .s.a { stroke: var(--accent); }
 .flow-icon .s.faint { stroke: var(--faint); stroke-dasharray: 2 3; }
+
+/* Flow media container — holds either a video (preferred) or fallback SVG icon */
+.flow-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(0,217,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-media .flow-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flow-media .flow-icon {
+  position: relative;
+  z-index: 1;
+  width: 96px;
+  height: 96px;
+  opacity: 0.85;
+}
+
+/* When a real video is present, hide the fallback SVG icon */
+.flow-step.has-video .flow-media .flow-icon.fallback {
+  display: none;
+}
 
 .flow-step h3 {
   font-family: var(--display);
