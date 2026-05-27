@@ -440,7 +440,8 @@ section + section::before {
 
 /* Hero wordmark — large "PROJECT REMO" lockup behind the product image,
    creating depth and brand presence. Sits between background and product
-   (z-index 1, vs hero-title z-3 and hero-product z-2). */
+   (z-index 1, vs hero-title z-3 and hero-product z-2). Poster-style:
+   bold solid type with a subtle inner glow, deliberately commanding. */
 .hero-wordmark {
   position: absolute;
   right: 0;
@@ -455,21 +456,10 @@ section + section::before {
   line-height: 0.78;
   letter-spacing: -0.05em;
   font-family: var(--display);
-  font-weight: 200;
-  font-variation-settings: "opsz" 144;
+  font-weight: 800;
+  font-variation-settings: "opsz" 144, "wght" 800;
   font-size: clamp(110px, 18vw, 280px);
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
-  text-stroke: 1px rgba(255, 255, 255, 0.07);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.10) 0%,
-    rgba(255, 255, 255, 0.025) 60%,
-    transparent 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
   user-select: none;
   white-space: nowrap;
   width: clamp(380px, 50vw, 820px);
@@ -480,24 +470,30 @@ section + section::before {
 
 .hero-wordmark-line {
   display: block;
+  color: rgba(255, 255, 255, 0.32);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 0 60px rgba(0, 217, 255, 0.18);
 }
 
 .hero-wordmark-line:nth-child(2) {
-  /* Slight inset on second line + accent tint to subtly mark the brand */
+  /* "REMO" — accent color, brand emphasis */
   margin-right: -0.04em;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 217, 255, 0.10) 0%,
-    rgba(0, 217, 255, 0.02) 60%,
-    transparent 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: rgba(0, 217, 255, 0.55);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(0, 217, 255, 0.5);
 }
 
 @keyframes heroWordmarkIn {
   0%   { opacity: 0; transform: translate(20px, -50%); }
   100% { opacity: 1; transform: translate(0, -50%); }
+}
+
+/* All inline videos are click-to-play as a final fallback */
+video.flow-video,
+video.showcase-video {
+  cursor: pointer;
 }
 
 /* Hero video — replaces the static product image when available.

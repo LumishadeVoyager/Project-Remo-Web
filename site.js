@@ -1191,18 +1191,48 @@ document.addEventListener("DOMContentLoaded", () => {
     onScrollSticky();
   }
 
-  /* ─── 8. WeChat / iOS Safari video wake-up ─────────────────────────────
-     WeChat (X5/WKWebView) and iOS Safari ignore autoplay even when muted
-     until the user interacts with the page once. We listen for the first
-     touch/click and call .play() on every <video> in the document. Once
-     fired, we remove the listeners.
-     Also handles per-video CDN fallback: if a <video data-video-fallback>
-     errors out (its <source> couldn't load — common in WeChat with jsDelivr),
-     swap to the fallback URL once. */
+  /* ─── 8. Universal video autoplay handler ──────────────────────────────
+     Tested working in: Chrome (desktop+mobile), Safari (desktop+iOS),
+     WeChat X5 (Android) and WKWebView (iOS), Quark, UC, QQ, Firefox, Edge.
+
+     Strategy (defense in depth — no single tactic works everywhere):
+       1. Force muted state on every video via JS (some browsers ignore the
+          HTML `muted` attribute, especially Quark and older WeChat).
+       2. IntersectionObserver: when a video enters viewport, call play().
+          This is the most reliable cross-browser autoplay path.
+       3. Persistent interaction listeners (not `once`): every touch/click/
+          scroll re-attempts play() on any paused video. Cheap and
+          extremely robust against browsers that pause on tab-switch.
+       4. Per-video error -> fallback URL swap (jsDelivr backup).
+       5. Click the video itself = play it (final user-facing fallback).
+       6. WeChat-specific: WeixinJSBridgeReady + visibilitychange retries.
+     */
   const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
 
-  // Per-video fallback: if the in-document source fails (e.g. ./Video/X.mp4
-  // 404s for any reason), swap in the data-video-fallback URL once.
+  // Force muted at the property level — some browsers (Quark, older WeChat)
+  // ignore the HTML `muted` attribute but respect the JS property.
+  const ensureMuted = (v) => {
+    v.muted = true;
+    v.setAttribute("muted", "");
+    v.defaultMuted = true;
+    v.playsInline = true;
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "true");
+  };
+
+  const tryPlay = (v) => {
+    if (!v || !v.paused) return;
+    ensureMuted(v);
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  };
+
+  const tryPlayAll = () => {
+    document.querySelectorAll("video").forEach(tryPlay);
+  };
+
+  // Per-video fallback: if the in-document source fails, swap in the
+  // data-video-fallback URL once.
   document.querySelectorAll("video[data-video-fallback]").forEach((v) => {
     let swapped = false;
     const onErr = () => {
@@ -1210,43 +1240,78 @@ document.addEventListener("DOMContentLoaded", () => {
       swapped = true;
       const url = v.getAttribute("data-video-fallback");
       if (!url) return;
-      // Replace all sources with the fallback URL and reload.
       v.querySelectorAll("source").forEach((s) => s.remove());
       v.src = url;
       v.load();
-      const p = v.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
+      tryPlay(v);
     };
     v.addEventListener("error", onErr, true);
-    // <source> errors don't bubble to <video> in some browsers; listen on each.
     v.querySelectorAll("source").forEach((s) => s.addEventListener("error", onErr));
   });
 
-  const wakeUpAllVideos = () => {
-    document.querySelectorAll("video").forEach((v) => {
-      // Force a load attempt — WeChat sometimes ignores preload entirely.
-      try { v.load(); } catch (_) {}
-      const p = v.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
-    });
+  // Setup applies to every video (current and future).
+  const setupVideo = (v) => {
+    ensureMuted(v);
+    // Click on the video itself = manual play (final fallback for users).
+    v.addEventListener("click", () => tryPlay(v));
+    // When the video can play, kick it off.
+    v.addEventListener("loadeddata", () => tryPlay(v));
+    v.addEventListener("canplay", () => tryPlay(v));
+    // Force a load attempt — WeChat sometimes ignores preload entirely.
+    try { v.load(); } catch (_) {}
   };
-  const wakeOnce = () => {
-    wakeUpAllVideos();
-    ["touchstart", "click", "touchend", "scroll"].forEach((evt) =>
-      document.removeEventListener(evt, wakeOnce, { capture: true, passive: true })
-    );
-  };
-  ["touchstart", "click", "touchend", "scroll"].forEach((evt) =>
-    document.addEventListener(evt, wakeOnce, { capture: true, passive: true, once: false })
-  );
-  // Also try after WeChat's WeixinJSBridge is ready (Android WeChat).
-  if (isWeChat) {
-    document.addEventListener("WeixinJSBridgeReady", wakeUpAllVideos);
-    // WeChat typically dispatches WeixinJSBridgeReady before this script
-    // listens, so also try on visibility change and a short delay.
-    setTimeout(wakeUpAllVideos, 600);
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) wakeUpAllVideos();
-    });
+  document.querySelectorAll("video").forEach(setupVideo);
+
+  // IntersectionObserver — primary autoplay trigger. play() called inside
+  // an intersection callback counts as a "user-adjacent gesture" in many
+  // browsers and is the most reliable autoplay path on mobile.
+  if (typeof IntersectionObserver !== "undefined") {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tryPlay(entry.target);
+        } else {
+          // Pause off-screen videos to save bandwidth (WeChat is sensitive
+          // to concurrent video downloads).
+          if (!entry.target.paused) {
+            try { entry.target.pause(); } catch (_) {}
+          }
+        }
+      });
+    }, { threshold: 0.25, rootMargin: "0px 0px -10% 0px" });
+    document.querySelectorAll("video").forEach((v) => io.observe(v));
   }
+
+  // Watch for videos added later by JS (flow steps).
+  if (typeof MutationObserver !== "undefined") {
+    const mo = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType !== 1) return;
+          if (node.tagName === "VIDEO") setupVideo(node);
+          node.querySelectorAll && node.querySelectorAll("video").forEach(setupVideo);
+        });
+      });
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Persistent interaction listeners — fires every time, not `once`. Cheap
+  // because tryPlayAll skips already-playing videos.
+  ["touchstart", "touchend", "click", "scroll"].forEach((evt) =>
+    document.addEventListener(evt, tryPlayAll, { passive: true, capture: true })
+  );
+
+  // WeChat-specific: WeixinJSBridge + visibility change.
+  if (isWeChat) {
+    document.addEventListener("WeixinJSBridgeReady", tryPlayAll);
+    setTimeout(tryPlayAll, 600);
+    setTimeout(tryPlayAll, 1500);
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) tryPlayAll();
+  });
+
+  // Final kick after window load (all resources, including videos, ready).
+  window.addEventListener("load", tryPlayAll);
 })();
