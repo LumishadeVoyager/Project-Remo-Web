@@ -1083,18 +1083,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
      For flow steps that have a `data-video-slot="VNN"` attribute, attempt
-     to load `./Video/VNN.mp4`. If it exists, replace the SVG fallback with
-     an autoplaying video. If it 404s, keep the SVG silently. */
+     to load the video. Tries CDN first (faster in mainland China), then
+     falls back to local repo path. If neither exists, keep SVG fallback. */
+  const CDN_BASE = "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main";
   document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
     const slot = step.getAttribute("data-video-slot");
     if (!slot) return;
-    const url = `./Video/${slot}.mp4`;
+    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
+    const localUrl = `./Video/${slot}.mp4`;
     const probe = document.createElement("video");
     probe.preload = "metadata";
     probe.muted = true;
     probe.playsInline = true;
-    probe.src = url;
-    probe.onloadedmetadata = () => {
+    let triedLocal = false;
+    const onSuccess = (workingUrl) => {
       const media = step.querySelector(".flow-media");
       if (!media) return;
       const video = document.createElement("video");
@@ -1104,14 +1106,22 @@ document.addEventListener("DOMContentLoaded", () => {
       video.playsInline = true;
       video.preload = "metadata";
       video.className = "flow-video";
-      const source = document.createElement("source");
-      source.src = url;
-      source.type = "video/mp4";
-      video.appendChild(source);
+      // Provide CDN first, then local — browser uses whichever works.
+      [cdnUrl, localUrl].forEach((u) => {
+        const source = document.createElement("source");
+        source.src = u;
+        source.type = "video/mp4";
+        video.appendChild(source);
+      });
       media.insertBefore(video, media.firstChild);
       step.classList.add("has-video");
     };
-    probe.onerror = () => { /* video not ready — keep SVG fallback */ };
+    probe.onloadedmetadata = () => onSuccess(probe.src);
+    probe.onerror = () => {
+      if (!triedLocal) { triedLocal = true; probe.src = localUrl; }
+      /* else: keep SVG fallback */
+    };
+    probe.src = cdnUrl;
   });
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
