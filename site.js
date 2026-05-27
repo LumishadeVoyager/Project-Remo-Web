@@ -1146,6 +1146,12 @@ document.addEventListener("DOMContentLoaded", () => {
       video.playsInline = true;
       video.preload = "metadata";
       video.className = "flow-video";
+      // WeChat / X5 compatibility — without these, Android WeChat hijacks
+      // the <video> into a fullscreen player and iOS WeChat refuses inline.
+      video.setAttribute("webkit-playsinline", "true");
+      video.setAttribute("x5-playsinline", "true");
+      video.setAttribute("x5-video-player-type", "h5");
+      video.setAttribute("x5-video-player-fullscreen", "false");
       // Provide CDN first, then local — browser uses whichever works.
       [cdnUrl, localUrl].forEach((u) => {
         const source = document.createElement("source");
@@ -1181,5 +1187,33 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", onScrollSticky, { passive: true });
     window.addEventListener("resize", onScrollSticky);
     onScrollSticky();
+  }
+
+  /* ─── 8. WeChat / iOS Safari video wake-up ─────────────────────────────
+     WeChat (X5/WKWebView) and iOS Safari ignore autoplay even when muted
+     until the user interacts with the page once. We listen for the first
+     touch/click and call .play() on every <video> in the document. Once
+     fired, we remove the listeners. */
+  const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+  const wakeUpAllVideos = () => {
+    document.querySelectorAll("video").forEach((v) => {
+      if (v.paused) {
+        const p = v.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      }
+    });
+  };
+  const wakeOnce = () => {
+    wakeUpAllVideos();
+    ["touchstart", "click", "touchend", "scroll"].forEach((evt) =>
+      document.removeEventListener(evt, wakeOnce, { capture: true, passive: true })
+    );
+  };
+  ["touchstart", "click", "touchend", "scroll"].forEach((evt) =>
+    document.addEventListener(evt, wakeOnce, { capture: true, passive: true, once: false })
+  );
+  // Also try after WeChat's WeixinJSBridge is ready (Android WeChat).
+  if (isWeChat) {
+    document.addEventListener("WeixinJSBridgeReady", wakeUpAllVideos);
   }
 })();
