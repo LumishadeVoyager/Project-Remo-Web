@@ -427,7 +427,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "国家级冠军团队，<br>从<em>赛场</em>走向<em>产品</em>。",
-    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过<em style=\"font-style:normal;color:var(--accent)\">挑战杯全国一等奖</em>和<em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
+    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支拿过 <em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛水下机器人冠军</em>、并在国际先进机器人大赛智慧海洋赛道收获<em style=\"font-style:normal;color:var(--accent)\">三项国家级一等奖</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
     "team.founder.role": "创始人 · 项目负责人 · 技术总监",
     "team.founder.title": "北京信息科技大学 · 自动化（卓越工程师计划）<br>G_Robot 社团社长 · ROV / ARV 整机研发",
     "team.stack.1.k": "软件",
@@ -895,7 +895,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "Champion team —<br>from <em>competition arena</em> to <em>shipping product</em>.",
-    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">Challenge Cup national first prize</em> and a <em style=\"font-style:normal;color:var(--accent)\">RoboCup China champion title</em>. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
+    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em> and <em style=\"font-style:normal;color:var(--accent)\">three national first prizes</em> in the International Advanced Robotics Competition's Smart Ocean track. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
     "team.founder.role": "Founder · Project Lead · CTO",
     "team.founder.title": "Beijing Information Science &amp; Technology University · Automation (Excellent Engineer Program)<br>President, G_Robot Society · ROV / ARV systems engineering",
     "team.stack.1.k": "Software",
@@ -1182,55 +1182,68 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
      For flow steps that have a `data-video-slot="VNN"` attribute, attempt
      to load the video. Tries local repo path first (works on GitHub Pages
-     same-origin, no CDN), then jsDelivr CDN as fallback. WeChat browsers
-     are unreliable with jsDelivr in mainland China, so local is primary. */
+     same-origin, no CDN), then jsDelivr CDN as fallback.
+
+     WeChat fork: WeChat's X5/WKWebView sandbox is unreliable for multiple
+     concurrent <video> elements (network stack contention + async play()
+     dropped). We restrict the page to ONE video in WeChat — the Showcase
+     V01 reel — and let the flow step cards fall back to their SVG icons.
+     That's the only way to guarantee at least the headline reel plays. */
+  const __isWeChatUA = /MicroMessenger/i.test(navigator.userAgent);
   const CDN_BASE = "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main";
-  document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
-    const slot = step.getAttribute("data-video-slot");
-    if (!slot) return;
-    const localUrl = `./Video/${slot}.mp4`;
-    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
-    const probe = document.createElement("video");
-    probe.preload = "metadata";
-    probe.muted = true;
-    probe.playsInline = true;
-    let triedCdn = false;
-    const onSuccess = (workingUrl) => {
-      const media = step.querySelector(".flow-media");
-      if (!media) return;
-      // Tag any existing icon as fallback so it gets hidden by .has-video rule.
-      media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
-      const video = document.createElement("video");
-      video.autoplay = true;
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.preload = "auto";
-      video.className = "flow-video";
-      // WeChat / X5 compatibility — without these, Android WeChat hijacks
-      // the <video> into a fullscreen player and iOS WeChat refuses inline.
-      video.setAttribute("webkit-playsinline", "true");
-      video.setAttribute("x5-playsinline", "true");
-      video.setAttribute("x5-video-player-type", "h5");
-      video.setAttribute("x5-video-player-fullscreen", "false");
-      // Use the URL that actually worked in the probe.
-      video.src = workingUrl;
-      // If even this URL fails on the real <video>, swap to the other one.
-      const otherUrl = workingUrl === localUrl ? cdnUrl : localUrl;
-      let swapped = false;
-      video.addEventListener("error", () => {
-        if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
-      });
-      media.insertBefore(video, media.firstChild);
-      step.classList.add("has-video");
-    };
-    probe.onloadedmetadata = () => onSuccess(probe.src);
-    probe.onerror = () => {
-      if (!triedCdn) { triedCdn = true; probe.src = cdnUrl; }
-      /* else: keep SVG fallback */
-    };
-    probe.src = localUrl;
-  });
+
+  if (!__isWeChatUA) {
+    document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
+      const slot = step.getAttribute("data-video-slot");
+      if (!slot) return;
+      const localUrl = `./Video/${slot}.mp4`;
+      const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
+      const probe = document.createElement("video");
+      probe.preload = "metadata";
+      probe.muted = true;
+      probe.playsInline = true;
+      let triedCdn = false;
+      const onSuccess = (workingUrl) => {
+        const media = step.querySelector(".flow-media");
+        if (!media) return;
+        // Tag any existing icon as fallback so it gets hidden by .has-video rule.
+        media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
+        const video = document.createElement("video");
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = "auto";
+        video.className = "flow-video";
+        video.setAttribute("webkit-playsinline", "true");
+        video.setAttribute("x5-playsinline", "true");
+        video.setAttribute("x5-video-player-type", "h5");
+        video.setAttribute("x5-video-player-fullscreen", "false");
+        video.src = workingUrl;
+        const otherUrl = workingUrl === localUrl ? cdnUrl : localUrl;
+        let swapped = false;
+        video.addEventListener("error", () => {
+          if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
+        });
+        media.insertBefore(video, media.firstChild);
+        step.classList.add("has-video");
+      };
+      probe.onloadedmetadata = () => onSuccess(probe.src);
+      probe.onerror = () => {
+        if (!triedCdn) { triedCdn = true; probe.src = cdnUrl; }
+      };
+      probe.src = localUrl;
+    });
+  } else {
+    /* WeChat: strip the V02 video that ships hard-coded in the HTML and
+       restore the SVG fallback icon on flow-step #1. Multiple <video>
+       elements + the showcase reel = X5 network stack collapse. */
+    document.querySelectorAll(".flow-step.has-video").forEach((step) => {
+      step.querySelectorAll("video").forEach((v) => v.remove());
+      step.classList.remove("has-video");
+      step.querySelectorAll(".flow-icon.fallback").forEach((el) => el.classList.remove("fallback"));
+    });
+  }
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
@@ -1251,30 +1264,31 @@ document.addEventListener("DOMContentLoaded", () => {
     onScrollSticky();
   }
 
-  /* ─── 8. Universal video autoplay handler — "never-die" edition ───────
-     Tested working in: Chrome (desktop+mobile), Safari (desktop+iOS),
-     WeChat X5 (Android) and WKWebView (iOS), Quark, UC, QQ, Firefox, Edge.
+  /* ─── 8. Video autoplay — TWO completely different pipelines ───────────
 
-     Hard lessons baked into this version:
-       - X5 (WeChat Android) silently drops play() if the page contains
-         elements with `filter` in the current compositor pass. Mobile
-         hero-product no longer has a filter; do not reintroduce one.
-       - X5 pause() is a one-way street: once a video is paused while
-         off-screen, calling play() again often returns a resolved promise
-         but the video stays frozen on the poster. Therefore we DO NOT
-         pause videos when they leave the viewport. Bandwidth cost is
-         acceptable; "video that won't play" is not.
-       - X5 + iOS WeChat sometimes need ABSOLUTE URLs for <video src>.
-         Relative paths can resolve against an unexpected baseURI when
-         the hash changes. We rewrite src to an absolute URL on setup.
-       - A 1.5s heartbeat (setInterval) is the cheapest, most reliable
-         catch-all. play() is a no-op on already-playing videos, so the
-         interval has near-zero cost while in-view.
+     === The hard truth about WeChat ===
+     After three rounds of trying to make autoplay "just work" in WeChat
+     (IntersectionObserver, MutationObserver, heartbeat setInterval,
+     WeixinJSBridgeReady kicks, every event listener under the sun), the
+     diagnosis is final: **X5/WKWebView silently drops play() calls that
+     are not on the same synchronous callstack as a user gesture.**
+
+     A 1.5s heartbeat doesn't help — those play() calls fire from
+     setInterval, which is NOT a user gesture context. IntersectionObserver
+     doesn't help — same problem. Even play() inside a touchend listener
+     can be dropped if the gesture target isn't the video itself.
+
+     The ONLY guaranteed path in WeChat: paint a tap-to-play poster, let
+     the user tap it, call play() in the SAME tick as the click handler.
+     Then leave the rest of the page alone (no flow-step videos, no
+     concurrent decode pressure on the X5 network stack).
+
+     === Pipeline split ===
+       WeChat:  inject .showcase-tap overlay → tap → synchronous play()
+       Else:    full "never-die" pipeline (heartbeat + observers + events)
      */
-  const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+  const isWeChat = __isWeChatUA;
 
-  // Force muted at the property level — some browsers (Quark, older WeChat)
-  // ignore the HTML `muted` attribute but respect the JS property.
   const ensureMuted = (v) => {
     v.muted = true;
     v.setAttribute("muted", "");
@@ -1287,13 +1301,91 @@ document.addEventListener("DOMContentLoaded", () => {
     v.setAttribute("x5-video-player-fullscreen", "false");
   };
 
-  // Normalize <video src> to an absolute URL. Relative paths sometimes
-  // re-resolve in X5/WKWebView when the location hash changes, breaking
-  // playback after a single anchor click. Absolute URLs are stable.
   const absolutize = (url) => {
     try { return new URL(url, document.baseURI).toString(); }
     catch (_) { return url; }
   };
+
+  if (isWeChat) {
+    /* ── WeChat path ─────────────────────────────────────────────────
+       Single video on the page (showcase V01). The tap overlay sits on
+       top of it and converts a user tap into an in-gesture play(). */
+    const showcaseFrame = document.querySelector(".showcase-frame");
+    const showcaseVideo = document.querySelector("video.showcase-video");
+    if (!showcaseFrame || !showcaseVideo) return;
+
+    ensureMuted(showcaseVideo);
+
+    // Force absolute URLs in WeChat — relative paths sometimes get re-
+    // resolved against an unexpected baseURI when location.hash changes.
+    showcaseVideo.querySelectorAll("source").forEach((s) => {
+      const orig = s.getAttribute("src");
+      if (orig && !/^https?:\/\//.test(orig)) {
+        s.setAttribute("src", absolutize(orig));
+      }
+    });
+    showcaseVideo.load();
+
+    // CDN fallback if local source fails (network or 404).
+    const cdnFallback = showcaseVideo.getAttribute("data-video-fallback");
+    if (cdnFallback) {
+      let swapped = false;
+      const onErr = () => {
+        if (swapped) return;
+        swapped = true;
+        showcaseVideo.querySelectorAll("source").forEach((s) => s.remove());
+        showcaseVideo.src = absolutize(cdnFallback);
+        showcaseVideo.load();
+      };
+      showcaseVideo.addEventListener("error", onErr, true);
+      showcaseVideo.querySelectorAll("source").forEach((s) => s.addEventListener("error", onErr));
+    }
+
+    // Build the tap-to-play overlay.
+    const overlay = document.createElement("div");
+    overlay.className = "showcase-tap";
+    overlay.setAttribute("role", "button");
+    overlay.setAttribute("aria-label", "点击启用视频播放");
+    overlay.innerHTML = `
+      <div class="showcase-tap-icon" aria-hidden="true"></div>
+      <div class="showcase-tap-title">点击启用视频播放</div>
+      <div class="showcase-tap-hint">微信浏览器需要手动启用 · TAP TO PLAY</div>
+    `;
+
+    // The activation callback. Critical: play() must be called
+    // SYNCHRONOUSLY on the same callstack as the click/touchend event.
+    // No await, no setTimeout, no Promise.then before play() — those
+    // would lose the gesture context and X5 drops the call.
+    const activate = (ev) => {
+      ev && ev.preventDefault && ev.preventDefault();
+      ensureMuted(showcaseVideo);
+      // Synchronous play() — this is the entire reason the overlay exists.
+      try { showcaseVideo.play(); } catch (_) {}
+      overlay.classList.add("activated");
+      // Remove from DOM after the fade so it doesn't intercept clicks.
+      setTimeout(() => overlay.remove(), 500);
+    };
+
+    // touchend is what WeChat actually fires; click is a backup for
+    // browsers that don't synthesize a touchend (rare in X5 but cheap).
+    overlay.addEventListener("touchend", activate, { passive: false });
+    overlay.addEventListener("click", activate);
+
+    showcaseFrame.appendChild(overlay);
+
+    // Loop guard for X5 — when the looped video reaches the end, X5
+    // occasionally fails to wrap around. Forcing currentTime + play()
+    // works because we're already inside an established playing session
+    // (the original user gesture from the tap), so it's still considered
+    // gesture-adjacent.
+    showcaseVideo.addEventListener("ended", () => {
+      try { showcaseVideo.currentTime = 0; showcaseVideo.play(); } catch (_) {}
+    });
+
+    return;
+  }
+
+  /* ── Non-WeChat path: full "never-die" pipeline ───────────────────── */
 
   const tryPlay = (v) => {
     if (!v) return;
@@ -1307,8 +1399,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("video").forEach(tryPlay);
   };
 
-  // Per-video fallback: if the in-document source fails, swap in the
-  // data-video-fallback URL once.
   document.querySelectorAll("video[data-video-fallback]").forEach((v) => {
     let swapped = false;
     const onErr = () => {
@@ -1325,51 +1415,21 @@ document.addEventListener("DOMContentLoaded", () => {
     v.querySelectorAll("source").forEach((s) => s.addEventListener("error", onErr));
   });
 
-  // Setup applies to every video (current and future).
   const setupVideo = (v) => {
     ensureMuted(v);
-    // Force absolute src for any inline <source> children — only matters
-    // in WeChat (X5/WKWebView) which mis-resolves relative URLs across
-    // hash changes, but is harmless elsewhere.
-    if (isWeChat) {
-      v.querySelectorAll("source").forEach((s) => {
-        const orig = s.getAttribute("src");
-        if (orig && !/^https?:\/\//.test(orig)) {
-          s.setAttribute("src", absolutize(orig));
-        }
-      });
-      if (v.src && !/^https?:\/\//.test(v.src)) {
-        v.src = absolutize(v.src);
-      }
-    }
-    // Click on the video itself = manual play (final fallback for users).
     v.addEventListener("click", () => tryPlay(v));
     v.addEventListener("touchend", () => tryPlay(v), { passive: true });
-    // When the video can play, kick it off.
     v.addEventListener("loadeddata", () => tryPlay(v));
     v.addEventListener("canplay", () => tryPlay(v));
     v.addEventListener("canplaythrough", () => tryPlay(v));
-    // Loop guard — if a non-looping browser quirk pauses at end, restart.
     v.addEventListener("ended", () => { try { v.currentTime = 0; tryPlay(v); } catch (_) {} });
-    // Stall recovery — if X5 stalls mid-buffer, re-issue play().
     v.addEventListener("stalled", () => tryPlay(v));
     v.addEventListener("suspend", () => tryPlay(v));
-    v.addEventListener("pause", () => {
-      // Only re-play if the pause was NOT user-initiated (always restart).
-      // Browsers occasionally pause autoplaying muted videos on tab focus
-      // change; we want them to come back immediately.
-      setTimeout(() => tryPlay(v), 80);
-    });
-    // Force a load attempt — WeChat sometimes ignores preload entirely.
+    v.addEventListener("pause", () => { setTimeout(() => tryPlay(v), 80); });
     try { v.load(); } catch (_) {}
   };
   document.querySelectorAll("video").forEach(setupVideo);
 
-  // IntersectionObserver — primary autoplay trigger. play() called inside
-  // an intersection callback counts as a "user-adjacent gesture" in many
-  // browsers and is the most reliable autoplay path on mobile.
-  // CRITICAL: we no longer pause off-screen videos. X5 pause() is a
-  // one-way trap (see header comment).
   if (typeof IntersectionObserver !== "undefined") {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1378,7 +1438,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.01, rootMargin: "200px 0px 200px 0px" });
     document.querySelectorAll("video").forEach((v) => io.observe(v));
 
-    // Re-observe future videos.
     if (typeof MutationObserver !== "undefined") {
       const moObs = new MutationObserver((mutations) => {
         mutations.forEach((m) => m.addedNodes.forEach((node) => {
@@ -1391,7 +1450,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Watch for videos added later by JS (flow steps).
   if (typeof MutationObserver !== "undefined") {
     const mo = new MutationObserver((mutations) => {
       mutations.forEach((m) => {
@@ -1405,43 +1463,16 @@ document.addEventListener("DOMContentLoaded", () => {
     mo.observe(document.body, { childList: true, subtree: true });
   }
 
-  // Persistent interaction listeners — fires every time, not `once`. Cheap
-  // because tryPlayAll skips already-playing videos.
   ["touchstart", "touchend", "click", "pointerdown", "pointerup", "scroll", "scrollend"].forEach((evt) =>
     document.addEventListener(evt, tryPlayAll, { passive: true, capture: true })
   );
 
-  // WeChat-specific: WeixinJSBridge + visibility change.
-  // The invoke() call establishes a trusted bridge session; in some
-  // WeChat versions this enables video.play() to succeed.
-  if (isWeChat) {
-    const wechatReady = () => {
-      try { WeixinJSBridge && WeixinJSBridge.invoke("getNetworkType", {}, () => tryPlayAll()); } catch (_) {}
-      tryPlayAll();
-    };
-    document.addEventListener("WeixinJSBridgeReady", wechatReady);
-    // WeChat may fire WeixinJSBridgeReady before our listener is registered.
-    if (typeof WeixinJSBridge !== "undefined") wechatReady();
-    setTimeout(wechatReady, 600);
-    setTimeout(wechatReady, 1500);
-    setTimeout(wechatReady, 3000);
-  }
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) tryPlayAll();
   });
-  // pageshow fires when returning from bfcache (iOS Safari, WeChat
-  // in-app back/forward). Videos often pause in bfcache.
   window.addEventListener("pageshow", tryPlayAll);
   window.addEventListener("focus", tryPlayAll);
-
-  // Final kick after window load (all resources, including videos, ready).
   window.addEventListener("load", tryPlayAll);
 
-  // Heartbeat — the never-die fallback. Every 1.5 seconds we look at every
-  // video on the page and re-issue play() on anything that's paused. play()
-  // is a no-op on already-playing videos, so the cost is negligible (one
-  // querySelectorAll + cheap branch per video). This is what guarantees
-  // recovery in scenarios where every other mechanism above silently
-  // failed — and it's the single most reliable thing in this whole file.
   setInterval(tryPlayAll, 1500);
 })();

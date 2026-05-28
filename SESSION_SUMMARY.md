@@ -365,3 +365,53 @@ heading 改为 "专利护城河*已落地*"；状态从 "FTO 检索 · IN-DEV" �
 - `CONTENT.md` 已更新 ## 15 Founding Team section：移除「行业经历 / 在研项目」表，新增"不上墙的内容"备注；lead / note 文案改写。
 - 本块就是本轮改动的 SESSION_SUMMARY 增量记录。
 - 旧 `.team-experience` / `.exp-col` / `.exp-eyebrow` CSS 规则仍保留在 `site.css` 中（无对应 DOM 节点，不会渲染，留作未来若需要重新启用时直接复用）。
+
+---
+
+## 2026-05-28 会话增量更新 · 第 3 轮
+
+### 1. 删除整段 05 By the Numbers
+- HTML 中整段 `<section class="stats wrap">` 删除（40 m / 5× / 3× / 3+ 4 个数字卡片）
+- 原因：Hero 顶部已有 `hero-keyspecs` 5 个数字（40 m / 5× / 3× / 40–60 min / 4K），具体硬件数字也在 04 Architecture 与 10 Tech Specs 的表格里以 LIVE/IN-DEV 状态明确写明；重复呈现没有信息增量，反而稀释 Specs section 的权威感
+- 后续：site.js 的 counter 动画函数对零元素天然容错，无需调整；i18n stats.* keys 暂留（无害死代码）
+
+### 2. 团队奖项 5 → 2
+**删除 3 项**：
+- ❌ 挑战杯全国大学生（AI+应用赛 · 国家级一等奖 · "深智鲨"）—— 与"水下机器人冠军班底"叙事不直接相关
+- ❌ 挑战杯首都大学生（"青聚 AI" · 省级特等 ×2）—— 省级含金量低于全国级，且与上一项重复
+- ❌ 中国国际海洋水下机器人大赛（ROV / AUV · 国家级二等）—— 含金量低于 RoboCup 冠军
+
+**保留 2 项**（都是国家级一等及以上 + 水下机器人专项）：
+- ✅ RoboCup 中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）
+- ✅ 国际先进机器人及仿真技术大赛 · 智慧海洋赛道 · 3 × 国家级一等
+
+**lead 文案改写**：去掉"挑战杯"提及，改为「RoboCup 中国赛冠军 + 国际先进机器人智慧海洋三项一等」双重背书。`site.js` 中 zh + en 的 `team.lead` 已同步。
+
+### 3. 微信视频 — TAP-TO-PLAY 终极方案
+**最终诊断（三轮失败后的硬结论）**：X5 / WKWebView 的视频沙箱限制 *无法用 JS 防御绕过*。所有非用户手势上下文里的 `play()` 都会被静默丢弃，包括但不限于：
+- `setInterval` 心跳调用的 play()
+- `IntersectionObserver` 回调内的 play()
+- `MutationObserver` / `WeixinJSBridgeReady` 回调内的 play()
+- 异步任务（`setTimeout`、Promise.then）后调用的 play()
+
+X5 唯一允许的：**与 click/touchend 事件 handler 在同一同步 callstack 内**的 play()。
+
+**方案**：双流水线分流。
+- **WeChat 路径**（site.js section 8 上半部）：
+  1. **页面只保留 1 个视频** —— Showcase V01。flow-step 的 V02-V05 全部不加载（V02 写死在 HTML 里的 video 元素被 site.js 直接 remove，恢复 SVG fallback icon）。X5 网络栈对并发视频解码非常敏感，从 5 减到 1 大幅提升成功率。
+  2. **注入 `.showcase-tap` 全填充蒙层** —— 半透明深色 + 中央脉冲呼吸的 ▶ 播放按钮 + "点击启用视频播放 / TAP TO PLAY" 引导文案。CSS 在 site.css 顶部新增样式。
+  3. **蒙层 click/touchend handler 同步调用 `showcaseVideo.play()`** —— 严禁 await / setTimeout / Promise.then 在 play() 之前，必须在事件 handler 的 *同一同步 callstack* 上发起 play()，否则 X5 会丢弃。
+  4. **激活后蒙层 fade 出消失** —— 用户成功 tap 一次后，蒙层永久消失，视频开始播放
+  5. **ended 事件 → 强制 currentTime=0 + play()** —— X5 偶尔不能正确处理 `loop` 属性的环绕，强制循环兜底（这一次的 play() 仍处于 X5 认为的"playing session"上下文，所以允许）
+  6. CDN fallback + 绝对化 URL 保留
+  7. **不做心跳，不做 IntersectionObserver，不做 MutationObserver** —— 上一轮的"七管齐下"在 X5 内全部无效，删除以避免误导未来调试者
+
+- **非 WeChat 路径**（下半部）：保留 7 重防御原貌（心跳 + IntersectionObserver + MutationObserver + 各种事件 + 错误 fallback），Chrome / Safari / Quark / UC / QQ 等浏览器仍走这条路
+
+**关键代码注释**：site.js section 8 头部新增的硬注释明确写下："X5 silently drops play() calls that are not on the same synchronous callstack as a user gesture"——避免下次维护者再走"加更多事件监听就能修好"的弯路。
+
+### 文档同步
+- `CONTENT.md`：删除 ## 05 By the Numbers 表格（替换为删除说明）；## 15 Founding Team 的奖项从 5 项精简为 2 项（附"为什么删 3 项"的说明）；lead 文案同步
+- `index.html`：删除 stats section；team-awards 删除 3 个 `<li>`；team.lead 文案改写
+- `site.js`：分双路径重写视频处理；team.lead zh + en 文案改写
+- `site.css`：新增 `.showcase-tap` / `.showcase-tap-icon` / `.showcase-tap-title` / `.showcase-tap-hint` + `@keyframes showcaseTapPulse`

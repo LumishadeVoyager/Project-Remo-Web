@@ -219,18 +219,10 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 
 ---
 
-## 05 By the Numbers（关键数字）
+## ~~05 By the Numbers~~（**已删除**）
 
-**排版：** 大标题在上。下方四个大数字卡片横排（带计数动画）。
-
-**Eyebrow：** `05 By the Numbers`
-
-| 数字 + 单位 | ZH 标签 | EN 标签 | ZH 注释 | EN 注释 |
-|---|---|---|---|---|
-| 40 m | 设计目标深潜 | Target Depth Rating | 结构设计目标，当前于泳池 / 浅水验证。 | Structural design target. Currently validated in pool / shallow water only. |
-| 5 × | 推进器架构 | Thruster Layout | 2 水平 + 2 垂直 + 1 横向，稳定优先。 | 2 horizontal + 2 vertical + 1 lateral. Stability-first philosophy. |
-| 3 × | 声学通信模块 | Acoustic Comms Modules | DYP-C01B，相机端 2 + 手环端 1，纠偏定位。 | DYP-C01B ×3: 2 on camera + 1 on bracelet. Relative-position correction. |
-| 3 + | 核心专利布局 | Core Patent Portfolio | 声学辅助视觉、多模态交互、水压辅助密封。 | Acoustic-assisted vision, multimodal interaction, hydrostatic seal. |
+> **2026-05-28 第 3 轮调整**：整段 "By the Numbers" 4 个数字卡片已删除。
+> 原因：40 m / 5× / 3× / 3+ 这种数字脱离上下文之后没有传达价值——Hero 顶部已有 `hero-keyspecs` 5 个数字（40 m / 5× / 3× / 40–60 min / 4K），具体硬件数字也在 04 Architecture 与 10 Tech Specs 中以 LIVE/IN-DEV 状态写明，重复呈现反而稀释了 Specs section 的权威感。
 
 ---
 
@@ -605,8 +597,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - EN：Champion team —<br>from *competition arena* to *shipping product*.
 
 **Lead：**
-- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支同时拿过*挑战杯全国一等奖*和*RoboCup 中国赛冠军*的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。
-- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist team that holds both a *Challenge Cup national first prize* and a *RoboCup China champion title*. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.
+- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支拿过 *RoboCup 中国赛水下机器人冠军*、并在国际先进机器人大赛智慧海洋赛道收获*三项国家级一等奖*的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。
+- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist team that holds the *RoboCup China underwater-robotics champion title* and *three national first prizes* in the International Advanced Robotics Competition's Smart Ocean track. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.
 
 ### 创始人 Founder Card
 - **角色 / Role：** 创始人 · 项目负责人 · 技术总监 / Founder · Project Lead · CTO
@@ -621,17 +613,18 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 | 机械 / Mechanical | SolidWorks · AutoCAD |
 | 学术 / Academia | EI 会议论文 1 篇 · Sensors 期刊论文 1 篇 |
 
-### 5 项核心获奖（按重要性排序）
-1. **2025 · 第十九届"挑战杯"全国大学生课外学术科技作品竞赛 · 人工智能+应用赛 · 国家级一等奖**
-   - 参赛作品："深智鲨"——基于嵌入式 AI 的小型无人潜航器自主控制系统设计
-   - 担任角色：项目负责人 · 技术总监 · 路演主讲
-2. **2025 · 中国机器人大赛暨 RoboCup 机器人世界杯中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）**
+### 2 项核心获奖（精挑直接相关的水下机器人专项）
+1. **2025 · 中国机器人大赛暨 RoboCup 机器人世界杯中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）**
    - 水中作业项目冠军；同期总决赛 国家级一等奖（亚军）+ 水中巡游 国家级二等奖
-3. **2024 · 第十七届国际先进机器人及仿真技术大赛 · 智慧海洋赛道**
+2. **2024 · 第十七届国际先进机器人及仿真技术大赛 · 智慧海洋赛道**
    - 水下作业赛 国家级一等奖（冠军）· 水下目标抓取赛 国家级一等奖（冠军）· 水下对抗赛 国家级一等奖
-4. **2025 · "挑战杯"首都大学生课外学术科技作品竞赛 · "青聚 AI"人工智能+应用赛 · 省级特等奖 ×2**
-5. **2025 · 中国国际海洋水下机器人大赛 · 第六届国际海洋工程装备科技创新大赛**
-   - ROV 赛道 国家级二等奖 · AUV 赛道 国家级二等奖
+
+> **2026-05-28 第 3 轮调整**：之前的 5 项获奖已精简为 2 项最直接相关的水下机器人专项。**删去**的 3 项是：
+> - 挑战杯全国大学生（AI+应用赛 · 国家级一等奖）—— 学术氛围 + 通用 AI 赛道，与"水下机器人冠军班底"叙事不直接相关
+> - 挑战杯首都大学生（省级特等 ×2）—— 省级，含金量低于全国级，且与第 1 项重复
+> - 中国国际海洋水下机器人大赛（国家级二等）—— 名头比 RoboCup 弱，且只是二等
+>
+> 保留的 2 项都是国家级一等及以上，且全部聚焦水下机器人——把"包装"做精，避免奖项罗列稀释。
 
 ### 底部 team-note
 - ZH：这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的*完整水下机器人工程能力*。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。

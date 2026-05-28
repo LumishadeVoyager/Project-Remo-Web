@@ -116,6 +116,10 @@
 
   <!-- ─────────────────────────────────────────────────────────────
        SHOWCASE — full-bleed cinematic video (V01)
+       Tap-to-play overlay (.showcase-tap) is injected by site.js only
+       in WeChat browsers, since X5/WKWebView silently drop async play()
+       calls — the only reliable path is a synchronous play() inside a
+       user gesture handler.
        ───────────────────────────────────────────────────────────── -->
   <section class="showcase" aria-label="Project Remo 水下跟随实录">
     <div class="showcase-frame">
@@ -240,40 +244,6 @@
         <h3 data-i18n="flow.4.title">出水无感回传</h3>
         <p data-i18n="flow.4.desc">出水后自动与配套手机应用建立连接，原始素材在后台静默传输；云端深度学习模型对水下色彩进行自动还原，用户在应用中即可查看处理完成的素材。</p>
         <span class="status-badge dev">IN-DEV</span>
-      </article>
-    </div>
-  </section>
-
-  <!-- ─────────────────────────────────────────────────────────────
-       STATS
-       ───────────────────────────────────────────────────────────── -->
-  <section class="stats wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow" data-i18n-html="stats.eyebrow"><span class="index">05</span> By the Numbers</span>
-    </div>
-    <div class="stats-grid">
-      <article class="stat reveal">
-        <div class="label" data-i18n="stats.1.label">设计目标深潜</div>
-        <div class="value" data-count="40"><span class="num-val">40</span><span class="unit">m</span></div>
-        <p class="note" data-i18n="stats.1.note">结构设计目标，当前于泳池 / 浅水验证。</p>
-      </article>
-
-      <article class="stat reveal delay-1">
-        <div class="label" data-i18n="stats.2.label">推进器架构</div>
-        <div class="value" data-count="5"><span class="num-val">5</span><span class="unit">×</span></div>
-        <p class="note" data-i18n="stats.2.note">2 水平 + 2 垂直 + 1 横向，稳定优先。</p>
-      </article>
-
-      <article class="stat reveal delay-2">
-        <div class="label" data-i18n="stats.3.label">声学通信模块</div>
-        <div class="value" data-count="3"><span class="num-val">3</span><span class="unit">×</span></div>
-        <p class="note" data-i18n="stats.3.note">DYP-C01B，相机端 2 + 手环端 1，纠偏定位。</p>
-      </article>
-
-      <article class="stat reveal delay-3">
-        <div class="label" data-i18n="stats.4.label">核心专利布局</div>
-        <div class="value" data-count="3"><span class="num-val">3</span><span class="unit">+</span></div>
-        <p class="note" data-i18n="stats.4.note">声学辅助视觉、多模态交互、水压辅助密封。</p>
       </article>
     </div>
   </section>
@@ -857,7 +827,7 @@
 
     <div class="team-body">
       <div class="team-lead reveal">
-        <p data-i18n-html="team.lead">Remo 的核心团队来自 <strong style="color:var(--light);font-weight:500">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过<em style="font-style:normal;color:var(--accent)">挑战杯全国一等奖</em>和<em style="font-style:normal;color:var(--accent)">RoboCup 中国赛冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。</p>
+        <p data-i18n-html="team.lead">Remo 的核心团队来自 <strong style="color:var(--light);font-weight:500">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支拿过 <em style="font-style:normal;color:var(--accent)">RoboCup 中国赛水下机器人冠军</em>、并在国际先进机器人大赛智慧海洋赛道收获<em style="font-style:normal;color:var(--accent)">三项国家级一等奖</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。</p>
       </div>
 
       <div class="team-founder reveal delay-1">
@@ -880,14 +850,6 @@
         <li>
           <span class="year">2025</span>
           <div class="award-body">
-            <strong data-i18n="team.award.1.title">第十九届"挑战杯"全国大学生课外学术科技作品竞赛 · 人工智能+应用赛</strong>
-            <p data-i18n="team.award.1.desc">国家级一等奖 · "深智鲨"——基于嵌入式 AI 的小型无人潜航器自主控制系统设计 / 项目负责人 · 技术总监 · 路演主讲</p>
-          </div>
-          <span class="award-tag gold" data-i18n="team.award.1.tag">国家级一等奖</span>
-        </li>
-        <li>
-          <span class="year">2025</span>
-          <div class="award-body">
             <strong data-i18n="team.award.2.title">中国机器人大赛暨 RoboCup 机器人世界杯中国赛 · 水下机器人专项赛</strong>
             <p data-i18n="team.award.2.desc">国家级一等奖（冠军）· 水中作业项目 / 同期总决赛 国家级一等奖（亚军）+ 水中巡游 国家级二等奖</p>
           </div>
@@ -900,22 +862,6 @@
             <p data-i18n="team.award.3.desc">水下作业赛 国家级一等奖（冠军）· 水下目标抓取赛 国家级一等奖（冠军）· 水下对抗赛 国家级一等奖</p>
           </div>
           <span class="award-tag gold" data-i18n="team.award.3.tag">3 × 国家级一等</span>
-        </li>
-        <li>
-          <span class="year">2025</span>
-          <div class="award-body">
-            <strong data-i18n="team.award.4.title">"挑战杯"首都大学生课外学术科技作品竞赛 · "青聚 AI"人工智能+应用赛</strong>
-            <p data-i18n="team.award.4.desc">省级特等奖 ×2 项</p>
-          </div>
-          <span class="award-tag silver" data-i18n="team.award.4.tag">省级特等</span>
-        </li>
-        <li>
-          <span class="year">2025</span>
-          <div class="award-body">
-            <strong data-i18n="team.award.5.title">中国国际海洋水下机器人大赛 · 第六届国际海洋工程装备科技创新大赛</strong>
-            <p data-i18n="team.award.5.desc">ROV 赛道 国家级二等奖 · AUV 赛道 国家级二等奖</p>
-          </div>
-          <span class="award-tag silver" data-i18n="team.award.5.tag">国家级二等</span>
         </li>
       </ul>
 
