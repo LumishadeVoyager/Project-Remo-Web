@@ -623,16 +623,6 @@ video.showcase-video {
   100% { transform: translateY(-50%) translate(0px, 0px) rotate(0deg); }
 }
 
-/* Mobile-only hover variant (no translateY(-50%) baseline, since on mobile
-   the product is in normal flow rather than absolutely centered). */
-@keyframes heroFloatMobile {
-  0%   { transform: translate(0px, 0px) rotate(0deg); }
-  25%  { transform: translate(6px, -14px) rotate(-1.4deg); }
-  50%  { transform: translate(0px, -22px) rotate(0deg); }
-  75%  { transform: translate(-6px, -10px) rotate(1.6deg); }
-  100% { transform: translate(0px, 0px) rotate(0deg); }
-}
-
 @keyframes haloPulse {
   0%, 100% { opacity: 0; }
   50%      { opacity: 1; }
@@ -1988,17 +1978,18 @@ video.showcase-video {
     letter-spacing: 0.16em;
   }
   .hero-stage {
-    /* Mobile: keep relative positioning so the wordmark can absolutely
-       anchor to top/bottom, sandwiching the product image. The stage
-       height is driven by the hero <section> min-height (100svh). */
+    /* Mobile: normal flex flow with hero-wordmark and hero-product as
+       siblings. The wordmark itself owns the two-line lockup via
+       justify-content: space-between, so PROJECT sits at the top and
+       REMO sits at the bottom of its own box — the product image floats
+       in between as a relative sibling, NOT absolutely positioned. */
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
-    padding-top: 0;
-    min-height: 78svh;
+    padding-top: 16px;
   }
   .hero-title {
     font-size: clamp(28px, 7vw, 44px);
@@ -2006,21 +1997,19 @@ video.showcase-video {
     line-height: 1.05;
     position: relative;
     z-index: 3;
-    /* Push the title down so it sits between PROJECT (top wordmark) and
-       the floating product, not stacked on top of PROJECT. */
-    margin-top: clamp(80px, 16vw, 140px);
-    margin-bottom: clamp(16px, 4vw, 24px);
+    margin-bottom: 16px;
   }
-  /* Mobile: wordmark splits — "PROJECT" sticks to the top of the stage,
-     "REMO" sticks to the bottom, and the product image floats in the
-     middle. This creates a massive vertical air gap that reads as the
-     editorial "line-spacing" the design calls for. */
+  /* Mobile: wordmark is a fixed-height flex column. PROJECT lives at the
+     top of the box, REMO at the bottom. The hero-product image is laid
+     out underneath the wordmark BUT is pulled visually into the middle
+     by negative margin (see below) so it appears sandwiched between the
+     two lines without using absolute positioning. */
   .hero-wordmark {
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    top: 0 !important;
-    bottom: 0 !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
     transform: none !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -2029,18 +2018,28 @@ video.showcase-video {
     justify-content: space-between !important;
     align-items: stretch !important;
     text-align: center !important;
-    /* Big — ~30vw lands "PROJECT" / "REMO" at roughly screen-width on
-       a 6-char word. clamp keeps it sane on edge cases. */
-    font-size: clamp(72px, 30vw, 220px) !important;
+    /* Big — but the line-height is tight so the actual rendered box
+       height is roughly 2 × font-size. clamp keeps it sane on edge
+       cases. ~26vw on a 390-wide phone = ~100px per line. */
+    font-size: clamp(64px, 26vw, 200px) !important;
     line-height: 0.85 !important;
+    /* Total wordmark column height — enough to fit two lines plus an
+       intentional gap. The product image is then pulled up into the
+       gap via negative margin (see .hero-product). */
+    min-height: clamp(280px, 70vw, 520px);
     gap: 0 !important;
     z-index: 1 !important;
     overflow: hidden;
     pointer-events: none;
+    opacity: 1 !important;
+    animation: none !important;
   }
-  /* mobile: product floats in the vertical center, between the two
-     wordmark lines. Width capped so it doesn't collide with the giant
-     type. z-index above wordmark so the product reads as the focus. */
+  /* Mobile: product image is laid out AFTER the wordmark in source
+     order, then pulled back up by a large negative margin to land in
+     the gap between PROJECT and REMO. Width capped so it never crowds
+     the giant type. No floating animation on mobile — keeps WeChat X5
+     rendering stable (filter + animation combinations have caused
+     concurrent <video> decodes to drop on X5). */
   .hero-product {
     display: block !important;
     position: relative !important;
@@ -2048,16 +2047,13 @@ video.showcase-video {
     top: auto !important;
     bottom: auto !important;
     left: auto !important;
-    width: 80% !important;
-    max-width: 360px;
-    margin: 0 auto;
+    width: 70% !important;
+    max-width: 320px;
+    margin: clamp(-260px, -55vw, -180px) auto 0 auto;
     transform: none !important;
     opacity: 1 !important;
-    /* Mobile keeps the float animation enabled so the product still
-       feels buoyant. The mobile-specific keyframes below override the
-       desktop transform that includes translateY(-50%). */
-    animation: heroFloatMobile 5.5s ease-in-out infinite !important;
-    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
+    animation: none !important;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.55));
     z-index: 2;
   }
   .hero-product img,
