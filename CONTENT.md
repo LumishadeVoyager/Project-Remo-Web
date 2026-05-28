@@ -170,11 +170,11 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - **ZH：** 智能跟随构图 / 声学定位提供位置先验，视觉追踪进行精构图。当视觉丢失时，声学权重立即接管。
 - **EN：** Intelligent Follow-Framing / Acoustic positioning provides positional priors; visual tracking handles fine composition. When vision drops, acoustic weighting takes over instantly.
 
-### 步骤 4（LIVE）
-- **编号：** 04 · DOCK
-- **图标：** 方框 + 上方插头（归仓）
-- **ZH：** 上水自动归仓 / 出水自动上锁，磁吸接触式充电，无 USB 接口意味着无密封风险。
-- **EN：** Auto-Dock on Surfacing / Auto-locks upon surfacing. Magnetic contact charging — no USB port means no sealing risk.
+### 步骤 4（IN-DEV）
+- **编号：** 04 · TRANSFER
+- **图标：** 手机轮廓 + 上方云朵（无感传输 + 云端处理）
+- **ZH：** 出水无感传输 / 出水即与手机 App 自动建立连接，原始素材后台静默回传；云端深度学习模型自动还原水下色彩，开 App 时片子已经准备好。
+- **EN：** Seamless Surface Transfer / Once surfaced, footage syncs to the companion app in the background. A cloud deep-learning model restores underwater color automatically — open the app and your shot is already finished.
 
 ---
 

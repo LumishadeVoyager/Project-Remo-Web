@@ -52,9 +52,9 @@ const I18N = {
     "features.2.title": "深度感知色彩还原",
     "features.2.desc": "GAN 算法结合 MS5837 深度数据，红光与绿光大幅衰减的水下场景一键还原自然色彩。",
     "features.2.cta": "了解影像方案 →",
-    "features.3.eyebrow": "03 / SmartDeploy",
-    "features.3.title": "无按键智能部署",
-    "features.3.desc": "入水自动唤醒，出水磁吸归仓。无开放式 USB 接口，无密封风险。",
+    "features.3.eyebrow": "03 / CloudSync",
+    "features.3.title": "出水即同步，云端出片",
+    "features.3.desc": "出水自动连手机 App，原片后台静默回传；云端深度学习还原水下色彩，开 App 即取片。",
     "features.3.cta": "了解工作流 →",
 
     /* Pain */
@@ -76,8 +76,8 @@ const I18N = {
     "flow.2.desc": "潜水员佩戴的声学手环通过 DYP-C01B 建立声学链路，Remo 即使在浑浊水域也能保持稳定定位。",
     "flow.3.title": "智能跟随构图",
     "flow.3.desc": "声学定位提供位置先验，视觉追踪进行精构图。当视觉丢失时，声学权重立即接管。",
-    "flow.4.title": "上水自动归仓",
-    "flow.4.desc": "出水自动上锁，磁吸接触式充电，无 USB 接口意味着无密封风险。",
+    "flow.4.title": "出水无感传输",
+    "flow.4.desc": "出水即与手机 App 自动建立连接，原始素材后台静默回传；云端深度学习模型自动还原水下色彩，开 App 时片子已经准备好。",
 
     /* Architecture */
     "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
@@ -509,9 +509,9 @@ const I18N = {
     "features.2.title": "Depth-Aware Color Restoration",
     "features.2.desc": "GAN algorithm fused with MS5837 depth data. One-tap natural color recovery for scenes where red and green wavelengths have heavily attenuated.",
     "features.2.cta": "Explore Imaging →",
-    "features.3.eyebrow": "03 / SmartDeploy",
-    "features.3.title": "Buttonless Smart Deployment",
-    "features.3.desc": "Auto-wake on water entry, magnetic auto-dock on surfacing. No exposed USB port means no sealing risk.",
+    "features.3.eyebrow": "03 / CloudSync",
+    "features.3.title": "Surface and Your Footage Is Ready",
+    "features.3.desc": "On surfacing, the unit auto-connects to the companion app and silently uploads raw footage; a cloud deep-learning model restores underwater color — open the app and your shot is ready.",
     "features.3.cta": "Explore Workflow →",
 
     "pain.eyebrow": "<span class=\"index\">02</span> The Pain",
@@ -531,8 +531,8 @@ const I18N = {
     "flow.2.desc": "The diver's acoustic bracelet establishes an acoustic link via DYP-C01B, allowing Remo to maintain stable positioning even in murky water.",
     "flow.3.title": "Intelligent Follow-Framing",
     "flow.3.desc": "Acoustic positioning provides positional priors; visual tracking handles fine composition. When vision drops, acoustic weighting takes over instantly.",
-    "flow.4.title": "Auto-Dock on Surfacing",
-    "flow.4.desc": "Auto-locks upon surfacing. Magnetic contact charging — no USB port means no sealing risk.",
+    "flow.4.title": "Seamless Surface Transfer",
+    "flow.4.desc": "Once surfaced, the unit auto-pairs with the companion app and uploads raw footage in the background. A cloud deep-learning model restores underwater color automatically — open the app and your shot is already finished.",
 
     "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
     "arch.heading": "Not chasing vectored thrust.<br><em>Chasing</em> stability.",
