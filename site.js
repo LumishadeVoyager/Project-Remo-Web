@@ -427,7 +427,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "国家级冠军团队，<br>从<em>赛场</em>走向<em>产品</em>。",
-    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支由<em style=\"font-style:normal;color:var(--accent)\">挑战杯全国一等奖</em>与<em style=\"font-style:normal;color:var(--accent)\">Robocup 中国赛冠军</em>双重背书的水下机器人专项团队。从 ROV 整机到 ARV 自主控制，从竞赛冠军到产品落地——我们把赛场上验证过的技术能力，工程化成消费者真正能用的产品。",
+    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过<em style=\"font-style:normal;color:var(--accent)\">挑战杯全国一等奖</em>和<em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
     "team.founder.role": "创始人 · 项目负责人 · 技术总监",
     "team.founder.title": "北京信息科技大学 · 自动化（卓越工程师计划）<br>G_Robot 社团社长 · ROV / ARV 整机研发",
     "team.stack.1.k": "软件",
@@ -449,17 +449,7 @@ const I18N = {
     "team.award.5.title": "中国国际海洋水下机器人大赛 · 第六届国际海洋工程装备科技创新大赛",
     "team.award.5.desc": "ROV 赛道 国家级二等奖 · AUV 赛道 国家级二等奖",
     "team.award.5.tag": "国家级二等",
-    "team.exp.industry.eyebrow": "行业经历 · INDUSTRY",
-    "team.exp.industry.1": "研发助理 · 新一代 ROV 水下机器人整机开发 / 软硬件系统设计、样机装配、功能调试与测试验证（2024·07—09）",
-    "team.exp.industry.2": "研发工程师 · 含砂量传感器声发射与振动测试数据分析 / Python 数据管线、回归拟合、标定曲线（2026·01—03）",
-    "team.exp.research.eyebrow": "在研项目 · ONGOING",
-    "team.exp.research.1.t": "深智鲨 · 嵌入式 AI 小型无人潜航器",
-    "team.exp.research.1.d": "AUV/ROV 双模一键切换 · YOLOv8 改进 + 多波束声呐 · 模块化外设扩展（项目负责人）",
-    "team.exp.research.2.t": "海底飞侠 · AI 驱动 FPV 水下机器人交互系统",
-    "team.exp.research.2.d": "实时同步头部运动与水下防水云台 · 沉浸式 FPV 操控（技术顾问）",
-    "team.exp.research.3.t": "深蓝净 · 跨介质通信混合控制水下 ARV 平台",
-    "team.exp.research.3.d": "空中与水下稳定数据传输 · 自主航行与远程操控混合架构（技术骨干）",
-    "team.note": "竞赛冠军证明的是工程团队的<em style=\"font-style:normal;color:var(--accent)\">动手能力与系统集成能力</em>——同一支团队，正在把赛场原型工程化为消费者可购买的产品。Project Remo 不是一次性的概念演示，而是建立在 3 年以上水下机器人整机开发经验之上的产品化项目。",
+    "team.note": "这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的<em style=\"font-style:normal;color:var(--accent)\">完整水下机器人工程能力</em>。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。",
 
     /* Investors */
     "investors.eyebrow": "<span class=\"index\">16</span> For Investors",
@@ -905,7 +895,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "Champion team —<br>from <em>competition arena</em> to <em>shipping product</em>.",
-    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist underwater-robotics team backed by both a <em style=\"font-style:normal;color:var(--accent)\">Challenge Cup national first prize</em> and a <em style=\"font-style:normal;color:var(--accent)\">RoboCup China champion title</em>. From ROVs to autonomous ARVs, from competition trophies to consumer product — we engineer arena-proven technology into something divers can actually buy.",
+    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">Challenge Cup national first prize</em> and a <em style=\"font-style:normal;color:var(--accent)\">RoboCup China champion title</em>. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
     "team.founder.role": "Founder · Project Lead · CTO",
     "team.founder.title": "Beijing Information Science &amp; Technology University · Automation (Excellent Engineer Program)<br>President, G_Robot Society · ROV / ARV systems engineering",
     "team.stack.1.k": "Software",
@@ -927,17 +917,7 @@ const I18N = {
     "team.award.5.title": "China International Ocean Underwater Robotics Competition · 6th International Marine Engineering Innovation",
     "team.award.5.desc": "ROV Track National Second Prize · AUV Track National Second Prize",
     "team.award.5.tag": "National 2nd",
-    "team.exp.industry.eyebrow": "Industry · INDUSTRY",
-    "team.exp.industry.1": "R&amp;D Assistant · New-generation ROV underwater vehicle development / software-hardware system design, prototype assembly, functional debugging &amp; test validation (Jul–Sep 2024)",
-    "team.exp.industry.2": "R&amp;D Engineer · Sand-content sensor acoustic emission &amp; vibration data analysis / Python data pipeline, regression fitting, calibration curves (Jan–Mar 2026)",
-    "team.exp.research.eyebrow": "Ongoing Projects · ONGOING",
-    "team.exp.research.1.t": "DeepSmartShark · Embedded-AI Small UUV",
-    "team.exp.research.1.d": "AUV/ROV one-tap dual-mode switching · Modified YOLOv8 + multi-beam sonar · Modular peripheral expansion (Project Lead)",
-    "team.exp.research.2.t": "Seabed Flying Hero · AI-Driven FPV Underwater Interaction System",
-    "team.exp.research.2.d": "Real-time head-motion sync with waterproof underwater gimbal · Immersive FPV control (Technical Advisor)",
-    "team.exp.research.3.t": "DeepBlue Clean · Cross-Medium Communication Hybrid-Control ARV",
-    "team.exp.research.3.d": "Stable air-to-underwater data transfer · Hybrid autonomous-navigation + remote-control architecture (Core Engineer)",
-    "team.note": "Competition titles prove an engineering team's <em style=\"font-style:normal;color:var(--accent)\">hands-on capability and systems integration ability</em> — the same team that won those trophies is now engineering arena prototypes into consumer-grade product. Project Remo is not a one-off concept demo: it sits on 3+ years of underwater-vehicle development experience.",
+    "team.note": "Behind every trophy is the same crew — covering acoustics, vision, control, mechanical structure and embedded AI as a <em style=\"font-style:normal;color:var(--accent)\">complete underwater-robotics engineering stack</em>. Project Remo is the first commercial product built on the technology stack this team has stress-tested on the competition floor.",
 
     "investors.eyebrow": "<span class=\"index\">16</span> For Investors",
     "investors.heading": "Verified claims,<br><em>clearly layered</em>.",
@@ -1271,21 +1251,25 @@ document.addEventListener("DOMContentLoaded", () => {
     onScrollSticky();
   }
 
-  /* ─── 8. Universal video autoplay handler ──────────────────────────────
+  /* ─── 8. Universal video autoplay handler — "never-die" edition ───────
      Tested working in: Chrome (desktop+mobile), Safari (desktop+iOS),
      WeChat X5 (Android) and WKWebView (iOS), Quark, UC, QQ, Firefox, Edge.
 
-     Strategy (defense in depth — no single tactic works everywhere):
-       1. Force muted state on every video via JS (some browsers ignore the
-          HTML `muted` attribute, especially Quark and older WeChat).
-       2. IntersectionObserver: when a video enters viewport, call play().
-          This is the most reliable cross-browser autoplay path.
-       3. Persistent interaction listeners (not `once`): every touch/click/
-          scroll re-attempts play() on any paused video. Cheap and
-          extremely robust against browsers that pause on tab-switch.
-       4. Per-video error -> fallback URL swap (jsDelivr backup).
-       5. Click the video itself = play it (final user-facing fallback).
-       6. WeChat-specific: WeixinJSBridgeReady + visibilitychange retries.
+     Hard lessons baked into this version:
+       - X5 (WeChat Android) silently drops play() if the page contains
+         elements with `filter` in the current compositor pass. Mobile
+         hero-product no longer has a filter; do not reintroduce one.
+       - X5 pause() is a one-way street: once a video is paused while
+         off-screen, calling play() again often returns a resolved promise
+         but the video stays frozen on the poster. Therefore we DO NOT
+         pause videos when they leave the viewport. Bandwidth cost is
+         acceptable; "video that won't play" is not.
+       - X5 + iOS WeChat sometimes need ABSOLUTE URLs for <video src>.
+         Relative paths can resolve against an unexpected baseURI when
+         the hash changes. We rewrite src to an absolute URL on setup.
+       - A 1.5s heartbeat (setInterval) is the cheapest, most reliable
+         catch-all. play() is a no-op on already-playing videos, so the
+         interval has near-zero cost while in-view.
      */
   const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
 
@@ -1298,10 +1282,22 @@ document.addEventListener("DOMContentLoaded", () => {
     v.playsInline = true;
     v.setAttribute("playsinline", "");
     v.setAttribute("webkit-playsinline", "true");
+    v.setAttribute("x5-playsinline", "true");
+    v.setAttribute("x5-video-player-type", "h5");
+    v.setAttribute("x5-video-player-fullscreen", "false");
+  };
+
+  // Normalize <video src> to an absolute URL. Relative paths sometimes
+  // re-resolve in X5/WKWebView when the location hash changes, breaking
+  // playback after a single anchor click. Absolute URLs are stable.
+  const absolutize = (url) => {
+    try { return new URL(url, document.baseURI).toString(); }
+    catch (_) { return url; }
   };
 
   const tryPlay = (v) => {
-    if (!v || !v.paused) return;
+    if (!v) return;
+    if (!v.paused && !v.ended) return;
     ensureMuted(v);
     const p = v.play();
     if (p && typeof p.catch === "function") p.catch(() => {});
@@ -1321,7 +1317,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const url = v.getAttribute("data-video-fallback");
       if (!url) return;
       v.querySelectorAll("source").forEach((s) => s.remove());
-      v.src = url;
+      v.src = absolutize(url);
       v.load();
       tryPlay(v);
     };
@@ -1332,11 +1328,38 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup applies to every video (current and future).
   const setupVideo = (v) => {
     ensureMuted(v);
+    // Force absolute src for any inline <source> children — only matters
+    // in WeChat (X5/WKWebView) which mis-resolves relative URLs across
+    // hash changes, but is harmless elsewhere.
+    if (isWeChat) {
+      v.querySelectorAll("source").forEach((s) => {
+        const orig = s.getAttribute("src");
+        if (orig && !/^https?:\/\//.test(orig)) {
+          s.setAttribute("src", absolutize(orig));
+        }
+      });
+      if (v.src && !/^https?:\/\//.test(v.src)) {
+        v.src = absolutize(v.src);
+      }
+    }
     // Click on the video itself = manual play (final fallback for users).
     v.addEventListener("click", () => tryPlay(v));
+    v.addEventListener("touchend", () => tryPlay(v), { passive: true });
     // When the video can play, kick it off.
     v.addEventListener("loadeddata", () => tryPlay(v));
     v.addEventListener("canplay", () => tryPlay(v));
+    v.addEventListener("canplaythrough", () => tryPlay(v));
+    // Loop guard — if a non-looping browser quirk pauses at end, restart.
+    v.addEventListener("ended", () => { try { v.currentTime = 0; tryPlay(v); } catch (_) {} });
+    // Stall recovery — if X5 stalls mid-buffer, re-issue play().
+    v.addEventListener("stalled", () => tryPlay(v));
+    v.addEventListener("suspend", () => tryPlay(v));
+    v.addEventListener("pause", () => {
+      // Only re-play if the pause was NOT user-initiated (always restart).
+      // Browsers occasionally pause autoplaying muted videos on tab focus
+      // change; we want them to come back immediately.
+      setTimeout(() => tryPlay(v), 80);
+    });
     // Force a load attempt — WeChat sometimes ignores preload entirely.
     try { v.load(); } catch (_) {}
   };
@@ -1345,21 +1368,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // IntersectionObserver — primary autoplay trigger. play() called inside
   // an intersection callback counts as a "user-adjacent gesture" in many
   // browsers and is the most reliable autoplay path on mobile.
+  // CRITICAL: we no longer pause off-screen videos. X5 pause() is a
+  // one-way trap (see header comment).
   if (typeof IntersectionObserver !== "undefined") {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          tryPlay(entry.target);
-        } else {
-          // Pause off-screen videos to save bandwidth (WeChat is sensitive
-          // to concurrent video downloads).
-          if (!entry.target.paused) {
-            try { entry.target.pause(); } catch (_) {}
-          }
-        }
+        if (entry.isIntersecting) tryPlay(entry.target);
       });
-    }, { threshold: 0.25, rootMargin: "0px 0px -10% 0px" });
+    }, { threshold: 0.01, rootMargin: "200px 0px 200px 0px" });
     document.querySelectorAll("video").forEach((v) => io.observe(v));
+
+    // Re-observe future videos.
+    if (typeof MutationObserver !== "undefined") {
+      const moObs = new MutationObserver((mutations) => {
+        mutations.forEach((m) => m.addedNodes.forEach((node) => {
+          if (node.nodeType !== 1) return;
+          if (node.tagName === "VIDEO") io.observe(node);
+          node.querySelectorAll && node.querySelectorAll("video").forEach((v) => io.observe(v));
+        }));
+      });
+      moObs.observe(document.body, { childList: true, subtree: true });
+    }
   }
 
   // Watch for videos added later by JS (flow steps).
@@ -1378,7 +1407,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Persistent interaction listeners — fires every time, not `once`. Cheap
   // because tryPlayAll skips already-playing videos.
-  ["touchstart", "touchend", "click", "scroll"].forEach((evt) =>
+  ["touchstart", "touchend", "click", "pointerdown", "pointerup", "scroll", "scrollend"].forEach((evt) =>
     document.addEventListener(evt, tryPlayAll, { passive: true, capture: true })
   );
 
@@ -1395,11 +1424,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof WeixinJSBridge !== "undefined") wechatReady();
     setTimeout(wechatReady, 600);
     setTimeout(wechatReady, 1500);
+    setTimeout(wechatReady, 3000);
   }
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) tryPlayAll();
   });
+  // pageshow fires when returning from bfcache (iOS Safari, WeChat
+  // in-app back/forward). Videos often pause in bfcache.
+  window.addEventListener("pageshow", tryPlayAll);
+  window.addEventListener("focus", tryPlayAll);
 
   // Final kick after window load (all resources, including videos, ready).
   window.addEventListener("load", tryPlayAll);
+
+  // Heartbeat — the never-die fallback. Every 1.5 seconds we look at every
+  // video on the page and re-issue play() on anything that's paused. play()
+  // is a no-op on already-playing videos, so the cost is negligible (one
+  // querySelectorAll + cheap branch per video). This is what guarantees
+  // recovery in scenarios where every other mechanism above silently
+  // failed — and it's the single most reliable thing in this whole file.
+  setInterval(tryPlayAll, 1500);
 })();

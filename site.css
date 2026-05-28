@@ -2053,9 +2053,14 @@ video.showcase-video {
     transform: none !important;
     opacity: 1 !important;
     animation: none !important;
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.55));
+    /* CRITICAL: no filter on mobile — `filter: drop-shadow` is composited
+       on the GPU and on X5/WKWebView it contends with concurrent <video>
+       decodes, causing videos elsewhere on the page to stall or refuse
+       to play. The shadow effect is intentionally dropped on mobile. */
+    filter: none !important;
     z-index: 2;
   }
+  .hero-product::after { display: none !important; }
   .hero-product img,
   .hero-product .hero-video {
     transform: none !important;
@@ -2975,29 +2980,112 @@ video.showcase-video {
   }
   .feature-card:last-child { border-bottom: 0; }
 
+  /* ── Compare table → card layout on phones ────────────────────────
+     Each row becomes its own bordered card. The "axis" cell becomes
+     the card title (accent mono); the three values stack as a 2-col
+     mini-grid (label | value). The REMO row is highlighted with a
+     left accent bar so the buyer's eye lands on it immediately. */
+  .compare-table {
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+  }
   .ct-row {
-    grid-template-columns: 1fr;
-    border-bottom: 0;
-    padding: 16px 0;
+    display: block;
+    grid-template-columns: none;
+    border: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.015);
+    padding: 18px 16px 14px;
+    position: relative;
   }
+  .ct-row:hover { background: rgba(255, 255, 255, 0.015); }
   .ct-row.ct-head { display: none; }
+
   .ct-cell {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    align-items: baseline;
     border-right: 0;
-    padding: 8px 0;
-  }
-  .ct-cell:not(:first-child) { padding-left: 0; }
-  .ct-cell.ct-axis {
-    color: var(--accent);
     border-bottom: 1px dashed var(--line);
-    margin-bottom: 6px;
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--light-2);
   }
-  .ct-cell.ct-hero { background: transparent; }
-  .ct-cell.ct-hero::before { display: none; }
-  /* show pseudo "from / to" labels */
-  .ct-cell:nth-child(2)::before { content: "运动相机 · "; color: var(--mute); font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-right: 8px; }
-  .ct-cell:nth-child(3)::before { content: "ROV · "; color: var(--mute); font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-right: 8px; }
-  .ct-cell:nth-child(4)::before { content: "REMO · "; color: var(--accent); font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-right: 8px; }
+  .ct-cell:last-child { border-bottom: 0; }
+  .ct-cell:not(:first-child) { padding-left: 0; }
+
+  /* axis becomes the card title */
+  .ct-cell.ct-axis {
+    display: block;
+    grid-template-columns: none;
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Remo hero cell — color + small accent dot */
+  .ct-cell.ct-hero {
+    background: transparent;
+    color: var(--accent);
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 15px;
+  }
+  .ct-cell.ct-hero::before {
+    display: block;
+    content: "REMO";
+    position: static;
+    background: none;
+    width: auto;
+    height: auto;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-right: 0;
+  }
+
+  /* show pseudo labels for the 2 comparison cells */
+  .ct-cell:nth-child(2)::before {
+    content: "运动相机";
+    color: var(--mute);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-right: 0;
+  }
+  .ct-cell:nth-child(3)::before {
+    content: "ROV";
+    color: var(--mute);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-right: 0;
+  }
+
+  /* Accent left edge bar to draw the eye to the Remo row */
+  .ct-row::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 14%;
+    bottom: 14%;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
 
   .specs-tabs {
     overflow-x: auto;

@@ -594,7 +594,7 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 
 ## 15 Founding Team（创始团队）
 
-**排版：** 左上：lead 段（团队来源、双重背书叙事）。下方左侧：创始人 founder-card（角色 + 大名 + 学校信息 + 4 项工具栈）。右侧：5 条获奖时间轴（年份 + 奖项 + 描述 + 高亮 tag）。底部：两列 industry / ongoing 项目经历，最后一条 team-note 收尾。
+**排版：** 左上：lead 段（团队来源、双重背书叙事）。下方左侧：创始人 founder-card（角色 + 大名 + 学校信息 + 4 项工具栈）。右侧：5 条获奖时间轴（年份 + 奖项 + 描述 + 高亮 tag）。底部 team-note 收尾。**不展开个人实习经历与在研项目**——这些与 Project Remo 无关，留作冠军班底的整体包装即可。
 
 **素材：** 暂无人像图。可选放在 `Image/founders/` 目录后再补充。
 
@@ -605,8 +605,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - EN：Champion team —<br>from *competition arena* to *shipping product*.
 
 **Lead：**
-- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支由*挑战杯全国一等奖*与*Robocup 中国赛冠军*双重背书的水下机器人专项团队。从 ROV 整机到 ARV 自主控制，从竞赛冠军到产品落地——我们把赛场上验证过的技术能力，工程化成消费者真正能用的产品。
-- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist underwater-robotics team backed by both a *Challenge Cup national first prize* and a *RoboCup China champion title*. From ROVs to autonomous ARVs, from competition trophies to consumer product — we engineer arena-proven technology into something divers can actually buy.
+- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支同时拿过*挑战杯全国一等奖*和*RoboCup 中国赛冠军*的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。
+- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist team that holds both a *Challenge Cup national first prize* and a *RoboCup China champion title*. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.
 
 ### 创始人 Founder Card
 - **角色 / Role：** 创始人 · 项目负责人 · 技术总监 / Founder · Project Lead · CTO
@@ -633,18 +633,11 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 5. **2025 · 中国国际海洋水下机器人大赛 · 第六届国际海洋工程装备科技创新大赛**
    - ROV 赛道 国家级二等奖 · AUV 赛道 国家级二等奖
 
-### 行业经历（Industry）
-- **青岛策海自动化科技**（2024-07—2024-09 · 研发助理）：新一代 ROV 水下机器人整机开发；软硬件系统设计、样机装配、功能调试与测试验证；参与水下机器人赛事的赛前调试与现场技术支持。
-- **海默新宸水下技术（上海）**（2026-01—2026-03 · 研发工程师）：含砂量传感器声发射与振动测试数据分析；Python 数据管线、回归拟合、标定曲线、图像生成。
-
-### 在研项目（Ongoing）
-- **深智鲨 · 嵌入式 AI 小型无人潜航器**（项目负责人）：AUV/ROV 双模一键切换 · YOLOv8 改进 + 多波束声呐 · 模块化外设扩展。
-- **海底飞侠 · AI 驱动 FPV 水下机器人交互系统**（技术顾问）：实时同步头部运动与水下防水云台 · 沉浸式 FPV 操控。
-- **深蓝净 · 跨介质通信混合控制水下 ARV 平台**（技术骨干）：空中与水下稳定数据传输 · 自主航行+远程操控混合架构。
-
 ### 底部 team-note
-- ZH：竞赛冠军证明的是工程团队的*动手能力与系统集成能力*——同一支团队，正在把赛场原型工程化为消费者可购买的产品。Project Remo 不是一次性的概念演示，而是建立在 3 年以上水下机器人整机开发经验之上的产品化项目。
-- EN：Competition titles prove an engineering team's *hands-on capability and systems integration ability* — the same team that won those trophies is now engineering arena prototypes into consumer-grade product. Project Remo is not a one-off concept demo: it sits on 3+ years of underwater-vehicle development experience.
+- ZH：这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的*完整水下机器人工程能力*。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。
+- EN：Behind every trophy is the same crew — covering acoustics, vision, control, mechanical structure and embedded AI as a *complete underwater-robotics engineering stack*. Project Remo is the first commercial product built on the technology stack this team has stress-tested on the competition floor.
+
+> **不上墙的内容**：个人实习经历（青岛策海 / 海默新宸）、在研项目（深智鲨 / 海底飞侠 / 深蓝净）等与 Remo 直接关联弱的简历条目已从公开站点中移除。这些信息留在 BD/投资人材料里，不在面向消费者的产品页展示。
 
 ---
 

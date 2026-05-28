@@ -309,3 +309,59 @@ heading 改为 "专利护城河*已落地*"；状态从 "FTO 检索 · IN-DEV" �
 - 所有文案改动已写入 `CONTENT.md`（02 The Pain 整段已不在；新增 ## 15 Founding Team 完整规范；## 16 For Investors 编号顺延；## 14 IP 替换为 4 项真实专利清单）。
 - 本块就是本次会话改动的 SESSION_SUMMARY 增量记录。
 - `MEMORY.md` 不在 Web 项目下，无需操作。
+
+---
+
+## 2026-05-28 会话增量更新 · 第 2 轮
+
+### 1. 团队板块去个人化、强化冠军班底包装
+- **删除整段 `<div class="team-experience">`**：行业经历（青岛策海 / 海默新宸）与在研项目（深智鲨 / 海底飞侠 / 深蓝净）均与 Remo 弱相关，从公开站点移除，留作 BD/投资人材料。
+- **team.lead 文案改短**：去掉"从 ROV 整机到 ARV 自主控制……工程化成消费者真正能用的产品"长句，改为"竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座"——短促有力，不暴露个人深度细节。
+- **team.note 文案改写**：去掉"3 年以上水下机器人整机开发经验"这种容易暴露团队规模/资历的表述，改为"同一支班底覆盖声学/视觉/控制/结构/嵌入式 AI 的完整工程能力"，把"班底"模糊化为整体能力维度。
+- 站点其余团队元素（founder-card + 5 项获奖时间轴）保留——它们就是"冠军团队"包装的核心证据。
+- `site.js` 中 `team.exp.*` 所有 i18n keys（zh + en 共 14 项）已删除。
+
+### 2. i18n 乱码修复（6 处）
+根因：`data-i18n` 走 `textContent`，把值作为纯文本注入；如果 i18n 值里含 HTML 标签（`<code>` `<br>` `<em>`），用户就会看到字面的 HTML 标记，呈现为"乱码"。修复：改为 `data-i18n-html`（走 `innerHTML`）。
+
+| HTML 位置 | i18n key | 内含 HTML |
+|---|---|---|
+| `<p>` in 14 IP 卡 #1 | `moat.1.desc` | `<code>` 申请号 |
+| `<p>` in 14 IP 卡 #2 | `moat.2.desc` | `<code>` 申请号 |
+| `<p>` in 14 IP 卡 #3 | `moat.3.desc` | `<code>` 申请号 |
+| `<p>` in 14 IP 卡 #4 | `moat.4.desc` | （现无 HTML，提前转 `-html` 防患） |
+| `<p class="founder-title">` | `team.founder.title` | `<br>` |
+| `<p class="team-note">` | `team.note` | `<em style="...">` |
+
+### 3. 三机对比表手机端重排
+**问题**：旧实现是单列堆叠 10 行裸文本，每个 cell 前用 `::before` 加 "运动相机 · " / "ROV · " / "REMO · " 字符串前缀。结果是大段无层级文本，对比关系丢失。
+
+**方案**：手机端把每行渲染为"对比卡片"。
+- 每个 `.ct-row` → bordered card（1px 边 + 微微的灰底）
+- axis cell 作为卡片标题（accent 色 mono 大小写字体，下方 1px 实线分隔）
+- 三档值变成 `grid-template-columns: 90px 1fr` 双列子表：左是 "运动相机 / ROV / REMO" label，右是值
+- Remo 行用 `accent` 字色 + display 字体强调
+- 卡片左侧 2px accent 竖线作为视觉钩子
+
+`@media (max-width: 680px)` block 中替换了原有 `.compare-table` 子规则。
+
+### 4. 微信 X5 视频"再也不会挂"方案
+**根因复盘**（综合三个独立失败模式）：
+- (a) 手机端 `.hero-product` 仍保留 `filter: drop-shadow(...)`，X5 的 GPU 合成线程与 video 解码线程争用，导致同帧视频解码失败。
+- (b) 离屏视频自动 `pause()` — X5 上 pause 后再调用 play() 经常无响应（promise 解析但视频卡在 poster 上）。
+- (c) 缺少最后一道兜底 — 单靠 IntersectionObserver + 事件监听器，X5 锁屏唤醒、bfcache 恢复等场景仍会丢帧。
+
+**修复**（site.css + site.js）：
+1. **去掉 mobile `.hero-product` 的 filter**（含 drop-shadow）以及 `::after` 装饰光晕（同样含合成层）。注释里写明"do not reintroduce"。
+2. **IntersectionObserver 改为仅 play、不再 pause**。即使视频离屏也保持播放，X5 安全。
+3. **新增 1.5 秒 setInterval 心跳**`tryPlayAll`——任何场景下 paused 的视频 1.5s 内必然被重新 play()。这是"永不挂"的最后保险。
+4. **新增 `pageshow` / `focus` / `pointerdown` / `pointerup` / `scrollend` 事件 → tryPlayAll**（bfcache + 触摸都能唤醒）。
+5. **`pause` 事件 → 80ms 后自动 `play()` 重启**（X5 内部 pause 也能被反弹回 playing 状态）。
+6. **`stalled` / `suspend` / `canplaythrough` / `ended` 事件全部接 tryPlay**（缓冲卡顿恢复 + 循环边界恢复）。
+7. **WeChat 内 `<source src>` 强制绝对化**（用 `new URL(src, document.baseURI)`）——避免相对路径在 hash change 时被 X5 重解析到错误的 baseURI。
+8. **`ensureMuted()` 现在同时设置 x5-playsinline / x5-video-player-type / x5-video-player-fullscreen 属性**（视频后绑也能拥有 X5 内联属性）。
+
+### 文档同步
+- `CONTENT.md` 已更新 ## 15 Founding Team section：移除「行业经历 / 在研项目」表，新增"不上墙的内容"备注；lead / note 文案改写。
+- 本块就是本轮改动的 SESSION_SUMMARY 增量记录。
+- 旧 `.team-experience` / `.exp-col` / `.exp-eyebrow` CSS 规则仍保留在 `site.css` 中（无对应 DOM 节点，不会渲染，留作未来若需要重新启用时直接复用）。
