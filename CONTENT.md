@@ -72,9 +72,9 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 ```
 
 ### 概要段落
-**ZH：** Project Remo 是一款无线、掌上起降的水下跟随相机，位于运动相机与传统 ROV 之间的空白地带。入水自动唤醒，声学定位跟随，出水自动归仓。让潜水员专注于潜水本身。
+**ZH：** Project Remo 是一款无线、掌上起降的水下跟随相机，位于运动相机与传统 ROV 之间的空白地带。入水自动唤醒，声学定位跟随，出水无感回传，云端自动还原色彩。让潜水员专注于潜水本身。
 
-**EN：** Project Remo is a wireless, palm-deployable underwater follow-cam that sits between action cameras and tethered ROVs. Auto-wake on entry, acoustic positioning, auto-dock on surfacing. It handles the shot so the diver doesn't have to.
+**EN：** Project Remo is a wireless, palm-deployable underwater follow-cam that sits between action cameras and tethered ROVs. Auto-wake on entry, acoustic positioning underwater, seamless upload on surfacing, automatic color restoration in the cloud. It handles the shot so the diver doesn't have to.
 
 ### 主要按钮（2 个）
 | 类型 | ZH | EN | 链接 |
@@ -264,7 +264,7 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 |---|---|---|
 | DYP-C01B 声学模块 ×3 | DYP-C01B Module ×3 | LIVE |
 | 自动巡航 / 避障 | Auto-Cruise / Obstacle Avoid | LIVE |
-| 入水唤醒 / 出水上锁 | Immersion Wake / Surface Lock | LIVE |
+| 入水唤醒 / 出水无感回传 | Immersion Wake / Seamless Upload | LIVE |
 | 声学纠偏定位 | Acoustic Correction Positioning | IN-DEV |
 | 敲击超声指令识别 | Tap Ultrasonic Recognition | IN-DEV |
 | 声学-视觉融合 | Acoustic-Visual Fusion | IN-DEV |
@@ -330,7 +330,7 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 | 目标用户 / Target User | 自拍 / Selfie / 1st-Person | 工业 / Industrial / Hobbyist | 旅行潜 / Travel Dive |
 | 典型价格带 / Price | ¥2–4k / $300–600 | ¥15–60k / $2,000–8,000 | 消费级目标 / Consumer Target |
 | 学习曲线 / Learning Curve | 极低 / Minimal | 高 / Steep | 极低（一键投放）/ Minimal (One-Tap Deploy) |
-| 失败成本 / Failure Cost | 拍废 / Lost Shot | 拍废 + 设备风险 / Lost Shot + Gear Risk | 拍废（自动归仓）/ Lost Shot (Auto-Return) |
+| 失败成本 / Failure Cost | 拍废 / Lost Shot | 拍废 + 设备风险 / Lost Shot + Gear Risk | 拍废（原片云端可恢复）/ Lost Shot (Cloud Backup Recoverable) |
 
 **免责声明：**
 - ZH：对比数据基于公开消费类产品参数。Remo 数据基于当前 POC 样机实测与结构设计目标。
@@ -352,8 +352,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - **Tag：** `01 · 大众与租赁` / `01 · Mass Market & Rental` + `VISION`
 - **名字：** Remo *Lite*
 - **描述：**
-  - ZH：面向浮潜与自由潜用户，以及潜店租赁场景。轻量化出行、一键拍摄、自动归仓——把操作复杂度降到最低。
-  - EN：For snorkelers, freedivers, and dive shop rentals. Lightweight travel, one-tap shooting, auto-dock recovery — minimal operational complexity.
+  - ZH：面向浮潜与自由潜用户，以及潜店租赁场景。轻量化出行、一键拍摄、出水无感回传——把操作复杂度降到最低。
+  - EN：For snorkelers, freedivers, and dive shop rentals. Lightweight travel, one-tap shooting, seamless post-dive upload — minimal operational complexity.
 - **4 项规格：**
   | ZH | EN |
   |---|---|
@@ -552,38 +552,107 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 
 ## 14 IP & Patent Defense（专利护城河）
 
-**排版：** 左侧文案（kicker + 大标题 + 描述 + 状态说明）；右侧 3 项专利列表（编号 + 标题 + 描述）。
+**排版：** 左侧文案（kicker + 大标题 + 描述 + 状态说明）；右侧 4 项专利列表（编号 + 标题 + 描述含申请号 + 申请日 + 权项数）。
 
 **Kicker：** `14 · IP & Patent Defense`
 
 **大标题：**
-- ZH：专利防御*正在构筑*。
-- EN：Patent defense<br>*under construction*.
+- ZH：专利护城河*已落地*。
+- EN：Patent moat<br>*filed and accepted*.
 
 **描述：**
-- ZH：围绕产品最难复现的技术节点，进行严密的 FTO 与专利布局，为 EP 与 Kickstarter 阶段建立竞争壁垒。
-- EN：Rigorous FTO and patent portfolio construction around the product's hardest-to-replicate technical nodes — building competitive barriers for EP and Kickstarter phases.
+- ZH：围绕产品最难复现的技术节点，已向国家知识产权局完成 4 项专利布局：声学+视觉融合定位、GAN 水下色彩还原、双核控制架构、潜水电脑表交互——构成 EP 与 Kickstarter 阶段的核心壁垒。
+- EN：Four patents covering the product's hardest-to-replicate technical nodes have been filed with the China National Intellectual Property Administration: acoustic-visual fusion positioning, GAN underwater color restoration, dual-core control architecture, and dive-computer interaction — the core competitive barriers for EP and Kickstarter phases.
 
-**状态：** 专利交底书已起草 · FTO 检索 · IN-DEV / Patent disclosure drafted · FTO search · IN-DEV
+**状态：** 3 项已受理 · 1 项撰写中 · 申请人 / 发明人 杨文俊 / 3 accepted · 1 in submission · Applicant / Inventor: Yang Wenjun
 
-### 3 项专利
-1. **声学辅助视觉跟随算法 / Acoustic-Assisted Visual Tracking Algorithm**
-   - ZH：气泡 / 浑浊场景下，声学信号平滑修正视觉 ROI 权重，保持稳定锁定与跟随。
-   - EN：In bubble / turbidity scenarios, acoustic signals smoothly correct visual ROI weights — maintaining stable lock and follow.
-2. **水下多模态交互控制 / Underwater Multimodal Interaction Control**
-   - ZH：声学手环敲击编码 + 震动反馈，构成水下与设备之间的低带宽、高鲁棒交互通道。
-   - EN：Acoustic bracelet tap encoding + haptic feedback, forming a low-bandwidth, high-robustness interaction channel between diver and device.
-3. **水压辅助密封结构 / Hydrostatic Pressure-Assisted Seal Structure**
-   - ZH：利用环境水压增强密封贴合度的机械结构设计，专为消费级潜深与维护性优化。
-   - EN：Mechanical design that leverages ambient water pressure to enhance seal conformity — optimized for consumer depth ratings and field serviceability.
+### 4 项专利
+1. **声学与视觉融合的水下自动定位拍摄系统及控制方法 / Underwater Acoustic-Visual Fusion Positioning & Capture System**
+   - 类型：发明专利 · 国家知识产权局已受理
+   - 申请号：`202610208723.3`
+   - 申请日：2026-02-13
+   - 权利要求：10 项
+   - 申请人/发明人：杨文俊
+2. **基于物理环境元数据约束的水下图像生成式色彩还原方法及系统 / Generative Underwater Color Restoration with Physical Environmental Metadata Constraints**
+   - 类型：发明专利 · 国家知识产权局已受理
+   - 申请号：`202610208686.6`
+   - 申请日：2026-02-12
+   - 权利要求：18 项
+   - 申请人/发明人：杨文俊
+3. **基于视控解耦双核架构的微型水下航行器电子系统 / Vision-Control Decoupled Dual-Core Electronics Architecture for Micro AUV**
+   - 类型：实用新型专利 · 国家知识产权局已受理
+   - 申请号：`202620215579.1`
+   - 申请日：2026-02-13
+   - 权利要求：10 项
+   - 申请人/发明人：杨文俊
+4. **集成轻量化水声模组及震动反馈机制的潜水电脑表 / Dive Computer Watch with Lightweight Acoustic Module & Haptic Feedback**
+   - 类型：实用新型专利 · 交底书已完成，正在提交流程中
+   - 涵盖：手环端 DYP-C01B 集成 · IMU 翻腕+敲击识别 · 震动反馈闭环结构
+   - 申请人/发明人：杨文俊
 
 ---
 
-## 15 For Investors（投资人）
+## 15 Founding Team（创始团队）
+
+**排版：** 左上：lead 段（团队来源、双重背书叙事）。下方左侧：创始人 founder-card（角色 + 大名 + 学校信息 + 4 项工具栈）。右侧：5 条获奖时间轴（年份 + 奖项 + 描述 + 高亮 tag）。底部：两列 industry / ongoing 项目经历，最后一条 team-note 收尾。
+
+**素材：** 暂无人像图。可选放在 `Image/founders/` 目录后再补充。
+
+**Eyebrow：** `15 Founding Team`
+
+**大标题：**
+- ZH：国家级冠军团队，<br>从*赛场*走向*产品*。
+- EN：Champion team —<br>from *competition arena* to *shipping product*.
+
+**Lead：**
+- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支由*挑战杯全国一等奖*与*Robocup 中国赛冠军*双重背书的水下机器人专项团队。从 ROV 整机到 ARV 自主控制，从竞赛冠军到产品落地——我们把赛场上验证过的技术能力，工程化成消费者真正能用的产品。
+- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist underwater-robotics team backed by both a *Challenge Cup national first prize* and a *RoboCup China champion title*. From ROVs to autonomous ARVs, from competition trophies to consumer product — we engineer arena-proven technology into something divers can actually buy.
+
+### 创始人 Founder Card
+- **角色 / Role：** 创始人 · 项目负责人 · 技术总监 / Founder · Project Lead · CTO
+- **大名 / Name：** 杨*文俊* / Yang *Wenjun*
+- **抬头 / Title：** 北京信息科技大学 · 自动化（卓越工程师计划）· G_Robot 社团社长 · ROV / ARV 整机研发
+
+### 工具栈（4 行）
+| 标签 ZH | 内容 |
+|---|---|
+| 软件 / Software | Python · C · ROS · YOLOv8 · PyTorch |
+| 硬件 / Hardware | Altium Designer · 嘉立创 EDA |
+| 机械 / Mechanical | SolidWorks · AutoCAD |
+| 学术 / Academia | EI 会议论文 1 篇 · Sensors 期刊论文 1 篇 |
+
+### 5 项核心获奖（按重要性排序）
+1. **2025 · 第十九届"挑战杯"全国大学生课外学术科技作品竞赛 · 人工智能+应用赛 · 国家级一等奖**
+   - 参赛作品："深智鲨"——基于嵌入式 AI 的小型无人潜航器自主控制系统设计
+   - 担任角色：项目负责人 · 技术总监 · 路演主讲
+2. **2025 · 中国机器人大赛暨 RoboCup 机器人世界杯中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）**
+   - 水中作业项目冠军；同期总决赛 国家级一等奖（亚军）+ 水中巡游 国家级二等奖
+3. **2024 · 第十七届国际先进机器人及仿真技术大赛 · 智慧海洋赛道**
+   - 水下作业赛 国家级一等奖（冠军）· 水下目标抓取赛 国家级一等奖（冠军）· 水下对抗赛 国家级一等奖
+4. **2025 · "挑战杯"首都大学生课外学术科技作品竞赛 · "青聚 AI"人工智能+应用赛 · 省级特等奖 ×2**
+5. **2025 · 中国国际海洋水下机器人大赛 · 第六届国际海洋工程装备科技创新大赛**
+   - ROV 赛道 国家级二等奖 · AUV 赛道 国家级二等奖
+
+### 行业经历（Industry）
+- **青岛策海自动化科技**（2024-07—2024-09 · 研发助理）：新一代 ROV 水下机器人整机开发；软硬件系统设计、样机装配、功能调试与测试验证；参与水下机器人赛事的赛前调试与现场技术支持。
+- **海默新宸水下技术（上海）**（2026-01—2026-03 · 研发工程师）：含砂量传感器声发射与振动测试数据分析；Python 数据管线、回归拟合、标定曲线、图像生成。
+
+### 在研项目（Ongoing）
+- **深智鲨 · 嵌入式 AI 小型无人潜航器**（项目负责人）：AUV/ROV 双模一键切换 · YOLOv8 改进 + 多波束声呐 · 模块化外设扩展。
+- **海底飞侠 · AI 驱动 FPV 水下机器人交互系统**（技术顾问）：实时同步头部运动与水下防水云台 · 沉浸式 FPV 操控。
+- **深蓝净 · 跨介质通信混合控制水下 ARV 平台**（技术骨干）：空中与水下稳定数据传输 · 自主航行+远程操控混合架构。
+
+### 底部 team-note
+- ZH：竞赛冠军证明的是工程团队的*动手能力与系统集成能力*——同一支团队，正在把赛场原型工程化为消费者可购买的产品。Project Remo 不是一次性的概念演示，而是建立在 3 年以上水下机器人整机开发经验之上的产品化项目。
+- EN：Competition titles prove an engineering team's *hands-on capability and systems integration ability* — the same team that won those trophies is now engineering arena prototypes into consumer-grade product. Project Remo is not a one-off concept demo: it sits on 3+ years of underwater-vehicle development experience.
+
+---
+
+## 16 For Investors（投资人）
 
 **排版：** 「米色（paper）」反转背景——和其他深色 section 形成视觉对比。大标题在上。一段 lead 文案。下方 3 列投资信息卡。底部两个 CTA 按钮。
 
-**Eyebrow：** `15 For Investors`
+**Eyebrow：** `16 For Investors`
 
 **大标题：**
 - ZH：已验证的，*分层呈现*。
@@ -597,7 +666,7 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 
 | 编号 | 标题 | 描述 |
 |---|---|---|
-| 01 · 阶段 / Stage | POC · 原理样机已跑通 / POC · Working Prototype Proven | 机械、PCB、控制脚本、用户访谈、水测视频均已沉淀。可演示链路：入水自动解锁 → 自动巡航 → 近障避让 → 出水自动上锁。/ Mechanical, PCB, control scripts, user interviews, and water-test footage are all archived. Demonstrable pipeline: immersion auto-unlock → auto-cruise → proximity obstacle avoidance → surface auto-lock. |
+| 01 · 阶段 / Stage | POC · 原理样机已跑通 / POC · Working Prototype Proven | 机械、PCB、控制脚本、用户访谈、水测视频均已沉淀。可演示链路：入水自动解锁 → 自动巡航 → 近障避让 → 出水无感回传 → 云端色彩还原。/ Mechanical, PCB, control scripts, user interviews, and water-test footage are all archived. Demonstrable pipeline: immersion auto-unlock → auto-cruise → proximity obstacle avoidance → seamless post-dive upload → cloud color restoration. |
 | 02 · 即将 / Next | 2026 Q4 进入 EP · 工程验证 / 2026 Q4 Entering EP · Engineering Validation | 聚焦稳定跟随闭环、水压辅助密封一致性、连续运行可靠性、续航与可维护性。每一项都有可量化的目标指标。/ Focused on stable follow-loop, hydrostatic seal consistency, continuous-run reliability, endurance, and serviceability — each with quantifiable target metrics. |
 | 03 · 用途 / Use of Funds | 天使轮资金分配 / Angel Round Allocation | 核心团队补位（嵌入式 / 控制算法 / 结构）、EP 阶段供应链与小批量水测、Kickstarter 视频与传播。每一笔资金对应一个可验证的里程碑。/ Core team hires (embedded / control algorithms / mechanical), EP-stage supply chain & small-batch water testing, Kickstarter video & marketing. Every dollar maps to a verifiable milestone. |
 

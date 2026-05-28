@@ -247,3 +247,65 @@ af423fc fix(wechat): local video sources first; hero adds large wordmark backdro
 - **配置：** `~/.cc-connect/config.toml`
 - **微信 ID：** `o9cq8040xmRTH3PsQhrddEtA9RJ4@im.wechat`
 - **开机自启：** Startup 文件夹 `cc-connect.vbs`（静默启动）
+
+---
+
+## 2026-05-28 会话增量更新
+
+### 文案重大调整
+1. **删除 02 The Pain section** — 不教育用户，让用户自己意识到痛点。
+2. **Step 4：DOCK / 归仓 → TRANSFER / 出水无感回传 + 云端 AI 色彩还原**
+   - 物理"归仓"叙事彻底废弃。相机仍会回手心，但已不是产品卖点。
+   - 出水后通过手机配套 App 自动回传素材，云端深度学习模型还原色彩，用户在 App 中查看成片。
+   - 状态：`LIVE` → `IN-DEV`（GAN 算法 v0.4，HaaS 云端服务尚未上线）
+3. **首页 features 卡 03：SmartDeploy → CloudSync**（"出水即回传，云端自动还原"）
+4. **04 Hardware Architecture section 已挪到 08 vs Traditional 之后** — 三机对比后紧接硬件细节，叙事变成"先看对比，再看可信度"。
+5. **全局清除"归仓 / auto-dock / Surface Lock / 出水上锁"** — 涉及 hero.summary / acoustic.badge.3 / specs.int.10 / lineup.lite.desc / compare.row.10.c3 / investors.1.desc / meta.desc 共 7 处中英文，全部替换为"出水无感回传 + 云端色彩还原"叙事。
+
+### 14 IP & Patent Defense section 内容大改
+旧版是 3 个虚构标题 + "IN-DEV"。现在是 **4 项真实专利 + 3 项已国家知识产权局受理**：
+
+| # | 名称 | 类型 | 申请号 | 申请日 | 权项 |
+|---|---|---|---|---|---|
+| 01 | 声学与视觉融合的水下自动定位拍摄系统及控制方法 | 发明 | 202610208723.3 | 2026-02-13 | 10 |
+| 02 | 基于物理环境元数据约束的水下图像生成式色彩还原方法及系统 | 发明 | 202610208686.6 | 2026-02-12 | 18 |
+| 03 | 基于视控解耦双核架构的微型水下航行器电子系统 | 实用新型 | 202620215579.1 | 2026-02-13 | 10 |
+| 04 | 集成轻量化水声模组及震动反馈机制的潜水电脑表 | 实用新型 | 撰写中 | — | — |
+
+申请人/发明人统一为 **杨文俊**。受理通知书 PDF 位于 `G:/我的云端硬盘/Project Remo/专利/` 各子目录。
+
+heading 改为 "专利护城河*已落地*"；状态从 "FTO 检索 · IN-DEV" 改为 "3 项已受理 · 1 项撰写中"。
+
+### 新增 15 Founding Team section
+- 插入位置：14 IP 之后、原 15 For Investors 之前。For Investors 编号顺延为 16。
+- 核心叙事：把团队包装成「水下机器人方向的挑战杯/Robocup 冠军团队」。
+- 内容来源：`G:/我的云端硬盘/个人简历/202605杨文俊个人简历.pdf`
+- 结构（5 块）：
+  1. lead 段：G_Robot 社团双重背书叙事
+  2. 创始人 founder-card：杨文俊（21 岁，北京信息科技大学自动化卓越工程师）+ 4 项工具栈
+  3. 5 条核心获奖时间轴：挑战杯全国一等 / Robocup 冠军 / 国际先进机器人 3 × 国家级一等 / 挑战杯首都省级特等 ×2 / 国际海洋水下机器人国家级二等
+  4. 行业经历 + 在研项目双栏
+  5. team-note 收尾：「竞赛冠军 = 工程能力背书」
+
+### Hero / Step 4 / Architecture 视觉调整
+- **Hero 主图浮动**：12px → 28px + ±1.4° 旋转（更明显）
+- **Hero wordmark 移动端**：PROJECT/REMO 包夹产品图（min-height 限定 wordmark 高度，space-between，产品图用负 margin 拉到中部）
+- **微信 X5 视频修复**：移除移动端 .hero-product 上的 `animation + filter` 组合，避免抢占 GPU 合成线程
+- **flow-step 4 个视频框尺寸统一**：所有列对称 padding `48px 16px`（之前首列左 padding 是 0，比其他列宽 32px）
+
+### 命名表更新
+| 技术 | 命名 |
+|---|---|
+| 出水传输 + 云端还原 | **CloudSync** |
+| 入水唤醒 | HydroLock |
+| 声学定位跟随 | HydroLock（同名） |
+| GAN 色彩还原 | TrueColor Depth |
+| 敲击指令 | TapCode |
+| 5 推进器架构 | PentaThrust |
+| 声学+视觉融合 | FusionTrack |
+| ~~SmartDeploy~~ | ❌ 已废弃 |
+
+### 文档同步
+- 所有文案改动已写入 `CONTENT.md`（02 The Pain 整段已不在；新增 ## 15 Founding Team 完整规范；## 16 For Investors 编号顺延；## 14 IP 替换为 4 项真实专利清单）。
+- 本块就是本次会话改动的 SESSION_SUMMARY 增量记录。
+- `MEMORY.md` 不在 Web 项目下，无需操作。
