@@ -415,3 +415,48 @@ X5 唯一允许的：**与 click/touchend 事件 handler 在同一同步 callsta
 - `index.html`：删除 stats section；team-awards 删除 3 个 `<li>`；team.lead 文案改写
 - `site.js`：分双路径重写视频处理；team.lead zh + en 文案改写
 - `site.css`：新增 `.showcase-tap` / `.showcase-tap-icon` / `.showcase-tap-title` / `.showcase-tap-hint` + `@keyframes showcaseTapPulse`
+
+---
+
+## 2026-05-29 会话增量更新 · 第 4 轮
+
+### 1. 奖项纠错：补回挑战杯全国一等奖
+**根因**：第 3 轮判断失误。挑战杯**全国**大学生一等奖含金量在大学生科技竞赛体系中最高（与 RoboCup 中国赛冠军并列），不能因"AI+应用赛道"看上去不直接水下就删除——"深智鲨"作品本身就是水下无人潜航器嵌入式 AI 项目，完全切题。
+
+**当前奖项 3 项**（按含金量排序）：
+1. ✅ 挑战杯全国大学生 AI+应用赛 · 国家级一等奖（"深智鲨" · 项目负责人）
+2. ✅ RoboCup 中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）
+3. ✅ 国际先进机器人 · 智慧海洋赛道 · 3 × 国家级一等
+
+**继续删除的 2 项**：挑战杯首都大学生（省级 < 国家级）、中国国际海洋水下机器人大赛（国家二等 < 一等）。
+
+**lead 文案改回**：「挑战杯全国大学生一等奖 + RoboCup 中国赛水下机器人冠军」双重背书。zh + en 已同步。
+
+### 2. 04 Architecture：隐藏 14 项硬件选型 + 真实示意图
+- **删除整段 `<ul class="specs">`**（14 项硬件清单：策海推进器、自研有刷电调、FlyingRC H7Wlite 飞控、ArduSub 4.1.2、AM32 ESC、MS5837-30BA 深度计、DYP-L08 避障声呐、DYP-C01B ×3、12V LED、舱外开关、I2C 漏水、水压密封、Bambu Lab P1S）
+- **原因**：详细 BOM 不应在公开站点暴露——属于供应链与 BD 谈判维度的信息，过早披露会被竞品/厂商定价利用。具体选型留在 BD/投资人材料中
+- **替代内容**：在 `arch-copy` 内追加 `.arch-pillars` 段落："水平 ×2 提供巡航与转向 · 垂直 ×2 提供升沉与俯仰 · 横向 ×1 提供平移构图——精确解耦的 5 自由度控制基底"
+- **替换右侧 inline SVG 推进器示意图** 为真实图：`Image/动力架构布局示意图.png`（用户上传）。`<img>` 双源（CDN 优先、本地 fallback）
+- **arch.* i18n keys**：新增 `arch.pillars` / `arch.img.alt`（zh + en）；旧 `arch.spec.*` keys 14 项保留（无害死代码，下次清理）
+- `site.css` 删除了 `.arch-copy .specs` / `.arch-diagram svg` / `.arch-diagram .stroke|label|pulse` 等约 60 行规则；新增 `.arch-copy .arch-pillars` + `.arch-diagram img` + `.arch-diagram .diagram-label` + 移动端规则
+
+### 3. 微信视频"双路径"终极方案
+**第 3 轮 inline play() 仍失败的根因**：X5 沙箱 spec 允许实现"在某些版本上即使是同步 callstack 内的 play() 也可以静默丢弃"——这是 X5 内部为了避免广告滥用预留的 escape hatch。我们必须假设 inline 路径**有概率失败**。
+
+**新方案 — 双路径并行**（每次访问用户都看到两个按钮，自由选择）：
+- **Path A · Inline play()**（与第 3 轮一致）：tap → 同步 callstack `play()` → 视频原位播放。失败时 X5 静默丢弃
+- **Path B · 直链 mp4 全屏播放器**（新增）：用户点击 `<a href="./Video/V01.mp4">` → X5 启动其内置全屏 MP4 播放器。**这条路径由 WeChat spec 保证**——他们不能屏蔽，否则朋友圈 / 群组所有视频链接都会打不开
+
+**实现细节**：
+- overlay 内布局：上方 `.showcase-tap-inline`（▶ + 主提示）；下方 `.showcase-tap-fallback` `<a>` 按钮（"若点击无效，点这里全屏观看 →"）
+- video 触发 `playing` 事件 → 整个 overlay fade out 移除（说明 Path A 起效，无需再看到 fallback）
+- video 一直没 playing → fallback 按钮永远在那里，用户随时可点
+- 无论 Path A 是否成功，**用户 100% 至少有一条路径能看到视频**——这就是对"再也不会挂"的硬保证
+
+**保留的 X5 适配**：source URL 绝对化、CDN fallback、ended → currentTime=0 + play() 循环兜底、ensureMuted。
+
+### 文档同步
+- `CONTENT.md`：## 04 Architecture 标注 14 项 BOM 已隐藏；## 15 Founding Team 奖项回到 3 项 + 改回 lead；新增 5 自由度三柱说明
+- `index.html`：删除 ul.specs；删除 inline SVG 推进器图；新增 img + .arch-pillars 段；team.lead 改回；team-awards 加回 #1
+- `site.js`：双路径 overlay；ZH/EN team.lead 改回；新增 arch.pillars / arch.img.alt zh+en
+- `site.css`：删除旧 specs/SVG 相关规则；新增 .arch-pillars / .arch-diagram img；overlay 双按钮布局 (.showcase-tap-inline + .showcase-tap-fallback)

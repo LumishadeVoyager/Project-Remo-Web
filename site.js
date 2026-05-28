@@ -85,6 +85,8 @@ const I18N = {
     "arch.heading": "不追矢量方案，<em>追</em>稳定性。",
     "arch.title": "2 水平 + 2 垂直 + 1 横向。",
     "arch.desc": "Remo 采用 5 推进器固定布局（2 水平 + 2 垂直 + 1 横向），避开矢量推进的复杂调参，选择 ROV 行业成熟验证过的方案——水动力学建模更简单，控制器更易收敛，外壳工程化难度更低。当前并行验证<em style=\"font-style:normal;color:var(--accent)\">两套动力方案</em>：策海科技无刷推进器面向海水可靠性，自研有刷方案面向成本控制；两套方案共用同一飞控、声学与传感平台。",
+    "arch.pillars": "<strong style=\"color:var(--light);font-weight:500\">水平 × 2</strong> 提供巡航与转向 · <strong style=\"color:var(--light);font-weight:500\">垂直 × 2</strong> 提供升沉与俯仰 · <strong style=\"color:var(--light);font-weight:500\">横向 × 1</strong> 提供平移构图——精确解耦的 5 自由度控制基底。",
+    "arch.img.alt": "Project Remo 推进器架构示意 · 2 水平 + 2 垂直 + 1 横向 · 5 自由度",
     "arch.spec.1": "推进器架构",
     "arch.spec.1.val": "2H + 2V + 1L",
     "arch.spec.2": "动力 A · 无刷",
@@ -427,7 +429,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "国家级冠军团队，<br>从<em>赛场</em>走向<em>产品</em>。",
-    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支拿过 <em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛水下机器人冠军</em>、并在国际先进机器人大赛智慧海洋赛道收获<em style=\"font-style:normal;color:var(--accent)\">三项国家级一等奖</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
+    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过 <em style=\"font-style:normal;color:var(--accent)\">挑战杯全国大学生一等奖</em>与 <em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛水下机器人冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
     "team.founder.role": "创始人 · 项目负责人 · 技术总监",
     "team.founder.title": "北京信息科技大学 · 自动化（卓越工程师计划）<br>G_Robot 社团社长 · ROV / ARV 整机研发",
     "team.stack.1.k": "软件",
@@ -569,6 +571,8 @@ const I18N = {
     "arch.heading": "Not chasing vectored thrust.<br><em>Chasing</em> stability.",
     "arch.title": "2 Horizontal + 2 Vertical + 1 Lateral.",
     "arch.desc": "Remo uses a fixed 5-thruster layout (2H + 2V + 1L), avoiding the tuning complexity of vectored thrust in favor of an ROV-industry-validated approach — simpler hydrodynamic modeling, easier controller convergence, lower packaging complexity. Two powertrain routes are being validated in parallel: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control. Both share the same flight controller, acoustics, and sensor platform.",
+    "arch.pillars": "<strong style=\"color:var(--light);font-weight:500\">2 horizontal</strong> for cruise &amp; yaw · <strong style=\"color:var(--light);font-weight:500\">2 vertical</strong> for heave &amp; pitch · <strong style=\"color:var(--light);font-weight:500\">1 lateral</strong> for sway framing — a cleanly decoupled 5-DoF control basis.",
+    "arch.img.alt": "Project Remo thruster layout · 2 horizontal + 2 vertical + 1 lateral · 5 degrees of freedom",
     "arch.spec.1": "Thruster Layout",
     "arch.spec.1.val": "2H + 2V + 1L",
     "arch.spec.2": "Route A · Brushless",
@@ -895,7 +899,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "Champion team —<br>from <em>competition arena</em> to <em>shipping product</em>.",
-    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em> and <em style=\"font-style:normal;color:var(--accent)\">three national first prizes</em> in the International Advanced Robotics Competition's Smart Ocean track. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
+    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">Challenge Cup national first prize</em> and the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em>. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
     "team.founder.role": "Founder · Project Lead · CTO",
     "team.founder.title": "Beijing Information Science &amp; Technology University · Automation (Excellent Engineer Program)<br>President, G_Robot Society · ROV / ARV systems engineering",
     "team.stack.1.k": "Software",
@@ -1308,16 +1312,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (isWeChat) {
     /* ── WeChat path ─────────────────────────────────────────────────
-       Single video on the page (showcase V01). The tap overlay sits on
-       top of it and converts a user tap into an in-gesture play(). */
+       Single video on the page (showcase V01). The overlay sits on top
+       of it and offers TWO independent paths to actually see the reel:
+
+         Path A (inline)  : Tap the overlay → synchronous play() on the
+                            <video>. Works on most X5 builds but X5 is
+                            allowed by spec to silently refuse.
+         Path B (fallback): Tap the embedded <a href="*.mp4"> link →
+                            X5 launches its built-in fullscreen MP4
+                            player. This is guaranteed by WeChat's own
+                            spec — they cannot block it without breaking
+                            every Moments/PYQ video link.
+
+       Path B is the safety net. Even if Path A is dropped by X5, the
+       user always has a one-tap route to actually view the reel. */
     const showcaseFrame = document.querySelector(".showcase-frame");
     const showcaseVideo = document.querySelector("video.showcase-video");
     if (!showcaseFrame || !showcaseVideo) return;
 
     ensureMuted(showcaseVideo);
 
-    // Force absolute URLs in WeChat — relative paths sometimes get re-
-    // resolved against an unexpected baseURI when location.hash changes.
+    // Resolve every <source> URL to an absolute URL (X5 mis-resolves
+    // relatives across hash changes).
     showcaseVideo.querySelectorAll("source").forEach((s) => {
       const orig = s.getAttribute("src");
       if (orig && !/^https?:\/\//.test(orig)) {
@@ -1326,7 +1342,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     showcaseVideo.load();
 
-    // CDN fallback if local source fails (network or 404).
+    // Build a stable absolute URL for the fallback <a>. Prefer the
+    // local GitHub Pages path (same-origin, no CDN warm-up), then the
+    // declared data-video-fallback (jsDelivr).
+    const firstSource = showcaseVideo.querySelector("source");
+    const videoUrl = (firstSource && firstSource.getAttribute("src"))
+      || absolutize(showcaseVideo.getAttribute("data-video-fallback") || "")
+      || "";
+
+    // CDN fallback if local source fails.
     const cdnFallback = showcaseVideo.getAttribute("data-video-fallback");
     if (cdnFallback) {
       let swapped = false;
@@ -1341,46 +1365,57 @@ document.addEventListener("DOMContentLoaded", () => {
       showcaseVideo.querySelectorAll("source").forEach((s) => s.addEventListener("error", onErr));
     }
 
-    // Build the tap-to-play overlay.
+    // ── Build the dual-path tap overlay ──────────────────────────────
     const overlay = document.createElement("div");
     overlay.className = "showcase-tap";
-    overlay.setAttribute("role", "button");
-    overlay.setAttribute("aria-label", "点击启用视频播放");
     overlay.innerHTML = `
-      <div class="showcase-tap-icon" aria-hidden="true"></div>
-      <div class="showcase-tap-title">点击启用视频播放</div>
-      <div class="showcase-tap-hint">微信浏览器需要手动启用 · TAP TO PLAY</div>
+      <div class="showcase-tap-inline" role="button" aria-label="点击启用视频播放">
+        <div class="showcase-tap-icon" aria-hidden="true"></div>
+        <div class="showcase-tap-title">点击启用视频播放</div>
+        <div class="showcase-tap-hint">微信浏览器需要手动启用 · TAP TO PLAY</div>
+      </div>
+      <a class="showcase-tap-fallback" href="${videoUrl}" target="_blank" rel="noopener noreferrer">
+        若点击无效，<u>点这里全屏观看 →</u>
+      </a>
     `;
 
-    // The activation callback. Critical: play() must be called
-    // SYNCHRONOUSLY on the same callstack as the click/touchend event.
-    // No await, no setTimeout, no Promise.then before play() — those
-    // would lose the gesture context and X5 drops the call.
+    // Path A: inline tap.
+    const inlineBtn = overlay.querySelector(".showcase-tap-inline");
     const activate = (ev) => {
       ev && ev.preventDefault && ev.preventDefault();
+      ev && ev.stopPropagation && ev.stopPropagation();
       ensureMuted(showcaseVideo);
-      // Synchronous play() — this is the entire reason the overlay exists.
+      // SYNCHRONOUS play() — must not be wrapped in setTimeout / Promise.
       try { showcaseVideo.play(); } catch (_) {}
+      // Optimistically hide the inline prompt; if X5 silently refused,
+      // the user can still see and tap the fallback link.
       overlay.classList.add("activated");
-      // Remove from DOM after the fade so it doesn't intercept clicks.
-      setTimeout(() => overlay.remove(), 500);
     };
+    inlineBtn.addEventListener("touchend", activate, { passive: false });
+    inlineBtn.addEventListener("click", activate);
 
-    // touchend is what WeChat actually fires; click is a backup for
-    // browsers that don't synthesize a touchend (rare in X5 but cheap).
-    overlay.addEventListener("touchend", activate, { passive: false });
-    overlay.addEventListener("click", activate);
+    // Path B: the <a> link is its own user gesture. No JS needed — X5
+    // handles href="*.mp4" with its built-in fullscreen player.
+
+    // If video actually starts playing, fade the entire overlay out.
+    showcaseVideo.addEventListener("playing", () => {
+      overlay.classList.add("playing");
+      setTimeout(() => overlay.remove(), 500);
+    }, { once: true });
 
     showcaseFrame.appendChild(overlay);
 
-    // Loop guard for X5 — when the looped video reaches the end, X5
-    // occasionally fails to wrap around. Forcing currentTime + play()
-    // works because we're already inside an established playing session
-    // (the original user gesture from the tap), so it's still considered
-    // gesture-adjacent.
+    // Loop guard — X5 sometimes drops `loop`.
     showcaseVideo.addEventListener("ended", () => {
       try { showcaseVideo.currentTime = 0; showcaseVideo.play(); } catch (_) {}
     });
+
+    // Try once on load — some X5 builds do allow muted autoplay after
+    // the page is fully loaded. Cheap to try; if X5 drops it, the
+    // overlay is still there for the user.
+    const tryOnce = () => { try { showcaseVideo.play(); } catch (_) {} };
+    if (document.readyState === "complete") tryOnce();
+    else window.addEventListener("load", tryOnce);
 
     return;
   }

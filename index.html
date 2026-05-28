@@ -425,71 +425,16 @@
       <div class="arch-copy reveal">
         <h3 data-i18n="arch.title">2 水平 + 2 垂直 + 1 横向。</h3>
         <p data-i18n-html="arch.desc">Remo 摒弃矢量推进（vectored thruster）方案的复杂调参，采用经过 ROV 工业验证的 5 推进器布局——更易于水动力学建模、控制器收敛与外壳工程化。我们并行验证<em style="font-style:normal;color:var(--accent)">两套动力路线</em>：策海科技无刷推进器主打海水可靠性，自研有刷方案主打成本可控；二者共享同一套飞控、声学与传感平台。</p>
-
-        <ul class="specs">
-          <li><span data-i18n="arch.spec.1">推进器架构</span> <strong data-i18n="arch.spec.1.val">2H + 2V + 1L</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.2">动力 A · 无刷</span> <strong data-i18n="arch.spec.2.val">策海 T60-edu-se</strong> <span class="t live">LIVE</span></li>
-          <li class="sub" data-i18n="arch.spec.2.sub">推力 3 kgf · 功率 150 W</li>
-          <li><span data-i18n="arch.spec.3">动力 B · 有刷</span> <strong data-i18n="arch.spec.3.val">自研双向电调</strong> <span class="t dev">IN-DEV</span></li>
-          <li><span data-i18n="arch.spec.4">飞控平台</span> <strong data-i18n="arch.spec.4.val">FlyingRC H7Wlite</strong> <span class="t live">LIVE</span></li>
-          <li class="sub" data-i18n="arch.spec.4.sub">MCU STM32H743VIH6 · 双 IMU + DPS368</li>
-          <li><span data-i18n="arch.spec.5">固件</span> <strong data-i18n="arch.spec.5.val">ArduSub 4.1.2</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.6">无刷电调</span> <strong data-i18n="arch.spec.6.val">AM32 Mini ESC</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.7">深度传感</span> <strong data-i18n="arch.spec.7.val">MS5837-30BA</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.8">避障声呐</span> <strong data-i18n="arch.spec.8.val">DYP-L08</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.9">声学模块</span> <strong data-i18n="arch.spec.9.val">DYP-C01B ×3</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.10">补光系统</span> <strong data-i18n="arch.spec.10.val">12V LED · 环境光平衡</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.11">防水开关</span> <strong data-i18n="arch.spec.11.val">舱外物理通断</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.12">漏水检测</span> <strong data-i18n="arch.spec.12.val">I2C 传感器</strong> <span class="t plan">PLANNED</span></li>
-          <li><span data-i18n="arch.spec.13">水压辅助密封</span> <strong data-i18n="arch.spec.13.val">自研结构</strong> <span class="t dev">IN-DEV</span></li>
-          <li><span data-i18n="arch.spec.14">原型工艺</span> <strong data-i18n="arch.spec.14.val">Bambu Lab P1S</strong> <span class="t live">LIVE</span></li>
-        </ul>
+        <p class="arch-pillars" data-i18n-html="arch.pillars"><strong style="color:var(--light);font-weight:500">水平 × 2</strong> 提供巡航与转向 · <strong style="color:var(--light);font-weight:500">垂直 × 2</strong> 提供升沉与俯仰 · <strong style="color:var(--light);font-weight:500">横向 × 1</strong> 提供平移构图——精确解耦的 5 自由度控制基底。</p>
       </div>
 
       <div class="arch-diagram reveal delay-1">
-        <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet" aria-label="推进器布局示意">
-          <line class="stroke faint" x1="0" y1="60"  x2="500" y2="60"/>
-          <line class="stroke faint" x1="0" y1="340" x2="500" y2="340"/>
-
-          <rect class="stroke" x="120" y="120" width="260" height="160" rx="68" ry="68"/>
-          <circle class="stroke accent" cx="250" cy="200" r="28"/>
-          <circle class="stroke faint" cx="250" cy="200" r="44"/>
-
-          <g class="pulse">
-            <circle class="stroke accent" cx="90" cy="200" r="18"/>
-            <line class="stroke accent" x1="36" y1="200" x2="72" y2="200"/>
-            <text class="label accent" x="36" y="184">H1 ◄</text>
-          </g>
-          <g class="pulse">
-            <circle class="stroke accent" cx="410" cy="200" r="18"/>
-            <line class="stroke accent" x1="428" y1="200" x2="464" y2="200"/>
-            <text class="label accent" x="416" y="184">► H2</text>
-          </g>
-
-          <g class="pulse">
-            <circle class="stroke accent" cx="190" cy="100" r="14"/>
-            <line class="stroke accent" x1="190" y1="58" x2="190" y2="86"/>
-            <text class="label accent" x="200" y="76">V1 ▲</text>
-          </g>
-          <g class="pulse">
-            <circle class="stroke accent" cx="310" cy="300" r="14"/>
-            <line class="stroke accent" x1="310" y1="314" x2="310" y2="342"/>
-            <text class="label accent" x="320" y="334">V2 ▼</text>
-          </g>
-
-          <g class="pulse">
-            <circle class="stroke" cx="320" cy="140" r="12"/>
-            <text class="label" x="338" y="138">L · LATERAL</text>
-          </g>
-
-          <line class="stroke faint" x1="120" y1="380" x2="380" y2="380"/>
-          <line class="stroke faint" x1="120" y1="376" x2="120" y2="384"/>
-          <line class="stroke faint" x1="380" y1="376" x2="380" y2="384"/>
-          <text class="label" x="240" y="396">260 MM (BODY)</text>
-
-          <text class="label" x="0" y="20">FIG · 01 — THRUSTER MAP · TOP VIEW</text>
-          <text class="label" x="400" y="20">SCALE 1:1.2</text>
-        </svg>
+        <img
+          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E5%8A%A8%E5%8A%9B%E6%9E%B6%E6%9E%84%E5%B8%83%E5%B1%80%E7%A4%BA%E6%84%8F%E5%9B%BE.png"
+          onerror="this.onerror=null;this.src='./Image/动力架构布局示意图.png'"
+          data-i18n-alt="arch.img.alt"
+          alt="Project Remo 推进器架构示意 · 2 水平 + 2 垂直 + 1 横向 · 5 自由度">
+        <span class="diagram-label">FIG · 01 — THRUSTER MAP · 2H + 2V + 1L</span>
       </div>
     </div>
   </section>
@@ -827,7 +772,7 @@
 
     <div class="team-body">
       <div class="team-lead reveal">
-        <p data-i18n-html="team.lead">Remo 的核心团队来自 <strong style="color:var(--light);font-weight:500">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支拿过 <em style="font-style:normal;color:var(--accent)">RoboCup 中国赛水下机器人冠军</em>、并在国际先进机器人大赛智慧海洋赛道收获<em style="font-style:normal;color:var(--accent)">三项国家级一等奖</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。</p>
+        <p data-i18n-html="team.lead">Remo 的核心团队来自 <strong style="color:var(--light);font-weight:500">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过 <em style="font-style:normal;color:var(--accent)">挑战杯全国大学生一等奖</em>与 <em style="font-style:normal;color:var(--accent)">RoboCup 中国赛水下机器人冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。</p>
       </div>
 
       <div class="team-founder reveal delay-1">
@@ -847,6 +792,14 @@
       </div>
 
       <ul class="team-awards reveal delay-2">
+        <li>
+          <span class="year">2025</span>
+          <div class="award-body">
+            <strong data-i18n="team.award.1.title">第十九届"挑战杯"全国大学生课外学术科技作品竞赛 · 人工智能+应用赛</strong>
+            <p data-i18n="team.award.1.desc">国家级一等奖 · "深智鲨"——基于嵌入式 AI 的小型无人潜航器自主控制系统设计 / 项目负责人 · 技术总监 · 路演主讲</p>
+          </div>
+          <span class="award-tag gold" data-i18n="team.award.1.tag">国家级一等奖</span>
+        </li>
         <li>
           <span class="year">2025</span>
           <div class="award-body">

@@ -180,7 +180,9 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 
 ## 04 Hardware Architecture（架构）
 
-**排版：** 左侧文案区（Eyebrow + 大标题 + 副标题 + 长段描述）；右侧 14 项规格列表（2列网格）。
+**排版：** 左侧文案区（Eyebrow + 大标题 + 副标题 + 长段描述 + 5 自由度三柱说明）；右侧动力架构布局示意图（`Image/动力架构布局示意图.png`）。
+
+> **2026-05-29 调整**：原右侧的 14 项硬件选型列表（动力 A/B、飞控、声学模块、传感器、补光、密封等）已从公开站点移除。**原因**：详细的硬件选型属于供应链与 BD 谈判维度的信息，对外公开会过早暴露 Bill of Materials；面向消费者只需呈现"5 推进器布局 + 双动力路线"的工程哲学即可。具体选型保留在 BD/投资人材料里。
 
 **Eyebrow：** `04 Hardware Architecture`
 
@@ -196,26 +198,15 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - **ZH：** Remo 采用 5 推进器固定布局（2 水平 + 2 垂直 + 1 横向），避开矢量推进的复杂调参，选择 ROV 行业成熟验证过的方案——水动力学建模更简单，控制器更易收敛，外壳工程化难度更低。当前并行验证*两套动力方案*：策海科技无刷推进器面向海水可靠性，自研有刷方案面向成本控制；两套方案共用同一飞控、声学与传感平台。
 - **EN：** Remo uses a fixed 5-thruster layout (2H + 2V + 1L), avoiding the tuning complexity of vectored thrust in favor of an ROV-industry-validated approach — simpler hydrodynamic modeling, easier controller convergence, lower packaging complexity. Two powertrain routes are being validated in parallel: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control. Both share the same flight controller, acoustics, and sensor platform.
 
-### 规格列表（14 项 · 项目 · 值 · 状态）
+**5 自由度三柱（替代规格列表的新文案）：**
+- **ZH：** **水平 × 2** 提供巡航与转向 · **垂直 × 2** 提供升沉与俯仰 · **横向 × 1** 提供平移构图——精确解耦的 5 自由度控制基底。
+- **EN：** **2 horizontal** for cruise & yaw · **2 vertical** for heave & pitch · **1 lateral** for sway framing — a cleanly decoupled 5-DoF control basis.
 
-| # | ZH 项 | EN 项 | ZH 值 | EN 值 | 状态 |
-|---|---|---|---|---|---|
-| 1 | 推进器架构 | Thruster Layout | 2H + 2V + 1L | 2H + 2V + 1L | LIVE |
-| 2 | 动力 A · 无刷 | Route A · Brushless | 策海 T60-edu-se | Cehai T60-edu-se | LIVE |
-| 2-sub | 推力 3 kgf · 功率 150 W | Thrust 3 kgf · Power 150 W |  |  |  |
-| 3 | 动力 B · 有刷 | Route B · Brushed | 自研双向电调 | In-House Bi-Dir ESC | IN-DEV |
-| 4 | 飞控平台 | Flight Controller | FlyingRC H7Wlite | FlyingRC H7Wlite | LIVE |
-| 4-sub | MCU STM32H743VIH6 · 双 IMU + DPS368 | MCU STM32H743VIH6 · Dual IMU + DPS368 |  |  |  |
-| 5 | 固件 | Firmware | ArduSub 4.1.2 | ArduSub 4.1.2 | LIVE |
-| 6 | 无刷电调 | BLDC ESC | AM32 Mini ESC | AM32 Mini ESC | LIVE |
-| 7 | 深度传感 | Depth Sensor | MS5837-30BA | MS5837-30BA | LIVE |
-| 8 | 避障声呐 | Obstacle Sonar | DYP-L08 | DYP-L08 | LIVE |
-| 9 | 声学模块 | Acoustic Module | DYP-C01B ×3 | DYP-C01B ×3 | LIVE |
-| 10 | 补光系统 | Fill Light | 12V LED · 环境光平衡 | 12V LED · Ambient-Light Balanced | LIVE |
-| 11 | 防水开关 | Waterproof Switch | 舱外物理通断 | External Physical Cutoff | LIVE |
-| 12 | 漏水检测 | Leak Detection | I2C 传感器 | I2C Sensor | PLANNED |
-| 13 | 水压辅助密封 | Hydrostatic Seal | 自研结构 | In-House Structure | IN-DEV |
-| 14 | 原型工艺 | Prototyping | Bambu Lab P1S | Bambu Lab P1S | LIVE |
+**示意图：** `Image/动力架构布局示意图.png`（替换了原 SVG 推进器布局示意）
+
+### ~~规格列表（14 项）~~（**已隐藏**）
+
+> 原 14 项硬件选型清单（动力 A/B、飞控、固件、电调、深度传感、避障声呐、声学模块、补光、防水开关、漏水检测、水压密封、原型工艺）已从公开站点移除。具体选型保留在 BD 材料里。
 
 ---
 
@@ -597,8 +588,8 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - EN：Champion team —<br>from *competition arena* to *shipping product*.
 
 **Lead：**
-- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支拿过 *RoboCup 中国赛水下机器人冠军*、并在国际先进机器人大赛智慧海洋赛道收获*三项国家级一等奖*的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。
-- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist team that holds the *RoboCup China underwater-robotics champion title* and *three national first prizes* in the International Advanced Robotics Competition's Smart Ocean track. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.
+- ZH：Remo 的核心团队来自 **北京信息科技大学 G_Robot 水下机器人社团**——一支同时拿过 *挑战杯全国大学生一等奖*与 *RoboCup 中国赛水下机器人冠军*的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。
+- EN：Remo's core team comes from **G_Robot, the underwater-robotics society at Beijing Information Science & Technology University** — a specialist team that holds both a *Challenge Cup national first prize* and the *RoboCup China underwater-robotics champion title*. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.
 
 ### 创始人 Founder Card
 - **角色 / Role：** 创始人 · 项目负责人 · 技术总监 / Founder · Project Lead · CTO
@@ -613,18 +604,18 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 | 机械 / Mechanical | SolidWorks · AutoCAD |
 | 学术 / Academia | EI 会议论文 1 篇 · Sensors 期刊论文 1 篇 |
 
-### 2 项核心获奖（精挑直接相关的水下机器人专项）
-1. **2025 · 中国机器人大赛暨 RoboCup 机器人世界杯中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）**
+### 3 项核心获奖（按含金量排序）
+1. **2025 · 第十九届"挑战杯"全国大学生课外学术科技作品竞赛 · 人工智能+应用赛 · 国家级一等奖**
+   - 参赛作品："深智鲨"——基于嵌入式 AI 的小型无人潜航器自主控制系统设计
+   - 担任角色：项目负责人 · 技术总监 · 路演主讲
+2. **2025 · 中国机器人大赛暨 RoboCup 机器人世界杯中国赛 · 水下机器人专项赛 · 国家级一等奖（冠军）**
    - 水中作业项目冠军；同期总决赛 国家级一等奖（亚军）+ 水中巡游 国家级二等奖
-2. **2024 · 第十七届国际先进机器人及仿真技术大赛 · 智慧海洋赛道**
+3. **2024 · 第十七届国际先进机器人及仿真技术大赛 · 智慧海洋赛道**
    - 水下作业赛 国家级一等奖（冠军）· 水下目标抓取赛 国家级一等奖（冠军）· 水下对抗赛 国家级一等奖
 
-> **2026-05-28 第 3 轮调整**：之前的 5 项获奖已精简为 2 项最直接相关的水下机器人专项。**删去**的 3 项是：
-> - 挑战杯全国大学生（AI+应用赛 · 国家级一等奖）—— 学术氛围 + 通用 AI 赛道，与"水下机器人冠军班底"叙事不直接相关
-> - 挑战杯首都大学生（省级特等 ×2）—— 省级，含金量低于全国级，且与第 1 项重复
-> - 中国国际海洋水下机器人大赛（国家级二等）—— 名头比 RoboCup 弱，且只是二等
+> **2026-05-29 第 4 轮纠错**：第 3 轮误删了挑战杯**全国**一等奖（"深智鲨"）。事实上挑战杯全国一等奖含金量在大学生科技赛事中最高，应该作为首位。本次回滚补回，与 RoboCup 中国赛冠军、国际先进机器人 3×国家级一等奖共同构成 3 项核心叙事。
 >
-> 保留的 2 项都是国家级一等及以上，且全部聚焦水下机器人——把"包装"做精，避免奖项罗列稀释。
+> **保持已删的 2 项**：挑战杯首都大学生（省级特等 · 含金量低于全国级）+ 中国国际海洋水下机器人大赛（国家级二等 · 低于一等）。
 
 ### 底部 team-note
 - ZH：这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的*完整水下机器人工程能力*。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。
