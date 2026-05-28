@@ -1303,10 +1303,18 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // WeChat-specific: WeixinJSBridge + visibility change.
+  // The invoke() call establishes a trusted bridge session; in some
+  // WeChat versions this enables video.play() to succeed.
   if (isWeChat) {
-    document.addEventListener("WeixinJSBridgeReady", tryPlayAll);
-    setTimeout(tryPlayAll, 600);
-    setTimeout(tryPlayAll, 1500);
+    const wechatReady = () => {
+      try { WeixinJSBridge && WeixinJSBridge.invoke("getNetworkType", {}, () => tryPlayAll()); } catch (_) {}
+      tryPlayAll();
+    };
+    document.addEventListener("WeixinJSBridgeReady", wechatReady);
+    // WeChat may fire WeixinJSBridgeReady before our listener is registered.
+    if (typeof WeixinJSBridge !== "undefined") wechatReady();
+    setTimeout(wechatReady, 600);
+    setTimeout(wechatReady, 1500);
   }
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) tryPlayAll();

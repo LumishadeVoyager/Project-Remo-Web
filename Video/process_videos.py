@@ -79,24 +79,17 @@ def process_doubao(src: Path, dst: Path) -> bool:
         return False
     w, h = size
     delogo_chain = build_delogo(w, h)
-    # Cap long edge at 720px for mobile-friendly file size on weak networks
-    # (especially WeChat in mainland China). Combined with CRF 26 this lands
-    # most clips under 1 MB / 10 seconds without obvious quality loss.
-    long_edge = max(w, h)
-    if long_edge > 720:
-        scale = "scale='if(gt(iw,ih),720,-2)':'if(gt(iw,ih),-2,720)'"
-        vf_chain = f"{delogo_chain},{scale}"
-    else:
-        vf_chain = delogo_chain
-    print(f"  -> removing watermark + compressing: {src.name} ({w}x{h})  ->  {dst.name}")
+    # Keep original resolution — CRF 22 strikes a good balance between
+    # visual quality and web file size (~2–4 MB per 10-second clip).
+    print(f"  -> removing watermark: {src.name} ({w}x{h})  ->  {dst.name}")
     cmd = [
         FFMPEG, "-y", "-i", str(src),
-        "-vf", vf_chain,
-        "-c:v", "libx264", "-preset", "medium", "-crf", "26",
+        "-vf", delogo_chain,
+        "-c:v", "libx264", "-preset", "medium", "-crf", "22",
         "-pix_fmt", "yuv420p",   # WeChat / iOS Safari requirement
         "-profile:v", "main",    # broader compatibility than High
-        "-level", "3.1",
-        "-c:a", "aac", "-b:a", "96k",
+        "-level", "4.0",
+        "-c:a", "aac", "-b:a", "128k",
         "-movflags", "+faststart",
         str(dst),
     ]
