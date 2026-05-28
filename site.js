@@ -1188,66 +1188,72 @@ document.addEventListener("DOMContentLoaded", () => {
      to load the video. Tries local repo path first (works on GitHub Pages
      same-origin, no CDN), then jsDelivr CDN as fallback.
 
-     WeChat fork: WeChat's X5/WKWebView sandbox is unreliable for multiple
-     concurrent <video> elements (network stack contention + async play()
-     dropped). We restrict the page to ONE video in WeChat — the Showcase
-     V01 reel — and let the flow step cards fall back to their SVG icons.
-     That's the only way to guarantee at least the headline reel plays. */
+     WeChat note: V01 showcase confirmed that X5 *does* play() inline
+     when called from a user gesture, so V02-V05 ride the same path —
+     the showcase tap will also kick the flow videos awake. */
   const __isWeChatUA = /MicroMessenger/i.test(navigator.userAgent);
   const CDN_BASE = "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main";
 
-  if (!__isWeChatUA) {
-    document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
-      const slot = step.getAttribute("data-video-slot");
-      if (!slot) return;
-      const localUrl = `./Video/${slot}.mp4`;
-      const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
-      const probe = document.createElement("video");
-      probe.preload = "metadata";
-      probe.muted = true;
-      probe.playsInline = true;
-      let triedCdn = false;
-      const onSuccess = (workingUrl) => {
-        const media = step.querySelector(".flow-media");
-        if (!media) return;
-        // Tag any existing icon as fallback so it gets hidden by .has-video rule.
-        media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
-        const video = document.createElement("video");
-        video.autoplay = true;
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.preload = "auto";
-        video.className = "flow-video";
-        video.setAttribute("webkit-playsinline", "true");
-        video.setAttribute("x5-playsinline", "true");
-        video.setAttribute("x5-video-player-type", "h5");
-        video.setAttribute("x5-video-player-fullscreen", "false");
-        video.src = workingUrl;
-        const otherUrl = workingUrl === localUrl ? cdnUrl : localUrl;
-        let swapped = false;
-        video.addEventListener("error", () => {
-          if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
-        });
-        media.insertBefore(video, media.firstChild);
-        step.classList.add("has-video");
+  // Set to true the moment the user successfully taps the WeChat
+  // showcase overlay. After that point, every newly-attached flow
+  // video should play() immediately on attach (X5 grandfathers the
+  // gesture into subsequent play() calls within the same session).
+  window.__remoVideoUnlocked = false;
+
+  document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
+    const slot = step.getAttribute("data-video-slot");
+    if (!slot) return;
+    const localUrl = `./Video/${slot}.mp4`;
+    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
+    const probe = document.createElement("video");
+    probe.preload = "metadata";
+    probe.muted = true;
+    probe.playsInline = true;
+    let triedCdn = false;
+    const onSuccess = (workingUrl) => {
+      const media = step.querySelector(".flow-media");
+      if (!media) return;
+      media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
+      const video = document.createElement("video");
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = "auto";
+      video.className = "flow-video";
+      video.setAttribute("webkit-playsinline", "true");
+      video.setAttribute("x5-playsinline", "true");
+      video.setAttribute("x5-video-player-type", "h5");
+      video.setAttribute("x5-video-player-fullscreen", "false");
+      video.src = workingUrl;
+      const otherUrl = workingUrl === localUrl ? cdnUrl : localUrl;
+      let swapped = false;
+      video.addEventListener("error", () => {
+        if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
+      });
+      // Per-video click → synchronous play() inside user gesture. This
+      // is the WeChat-safe activation path; harmless on every other
+      // browser (already auto-playing).
+      const tapToPlay = (ev) => {
+        try { video.muted = true; video.play(); } catch (_) {}
       };
-      probe.onloadedmetadata = () => onSuccess(probe.src);
-      probe.onerror = () => {
-        if (!triedCdn) { triedCdn = true; probe.src = cdnUrl; }
-      };
-      probe.src = localUrl;
-    });
-  } else {
-    /* WeChat: strip the V02 video that ships hard-coded in the HTML and
-       restore the SVG fallback icon on flow-step #1. Multiple <video>
-       elements + the showcase reel = X5 network stack collapse. */
-    document.querySelectorAll(".flow-step.has-video").forEach((step) => {
-      step.querySelectorAll("video").forEach((v) => v.remove());
-      step.classList.remove("has-video");
-      step.querySelectorAll(".flow-icon.fallback").forEach((el) => el.classList.remove("fallback"));
-    });
-  }
+      video.addEventListener("click", tapToPlay);
+      video.addEventListener("touchend", tapToPlay, { passive: true });
+      media.insertBefore(video, media.firstChild);
+      step.classList.add("has-video");
+      // If the user has already activated playback (WeChat overlay
+      // tapped), kick this just-attached video immediately. Outside
+      // WeChat the video is already autoplaying.
+      if (window.__remoVideoUnlocked || !__isWeChatUA) {
+        try { video.play(); } catch (_) {}
+      }
+    };
+    probe.onloadedmetadata = () => onSuccess(probe.src);
+    probe.onerror = () => {
+      if (!triedCdn) { triedCdn = true; probe.src = cdnUrl; }
+    };
+    probe.src = localUrl;
+  });
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
@@ -1384,12 +1390,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const activate = (ev) => {
       ev && ev.preventDefault && ev.preventDefault();
       ev && ev.stopPropagation && ev.stopPropagation();
-      ensureMuted(showcaseVideo);
-      // SYNCHRONOUS play() — must not be wrapped in setTimeout / Promise.
-      try { showcaseVideo.play(); } catch (_) {}
-      // Optimistically hide the inline prompt; if X5 silently refused,
-      // the user can still see and tap the fallback link.
+      // SYNCHRONOUS play() on showcase + every flow video on the page.
+      // Must not be wrapped in setTimeout / Promise — that would lose
+      // the user-gesture context and X5 drops the call. Iterating
+      // synchronously inside the click handler keeps every play() call
+      // on the same gesture stack, which is the only path X5 honors.
+      document.querySelectorAll("video").forEach((v) => {
+        try {
+          v.muted = true;
+          v.setAttribute("muted", "");
+          v.playsInline = true;
+          v.play();
+        } catch (_) {}
+      });
+      // Optimistically hide the inline prompt; if X5 silently refused
+      // showcase, the user can still see and tap the fallback link.
       overlay.classList.add("activated");
+      // Mark playback as unlocked so any flow video that attaches
+      // later (V02-V05 lazy probes finishing after this tap) plays
+      // immediately.
+      window.__remoVideoUnlocked = true;
     };
     inlineBtn.addEventListener("touchend", activate, { passive: false });
     inlineBtn.addEventListener("click", activate);
