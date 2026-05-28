@@ -165,40 +165,10 @@
 
       <a class="feature-card reveal delay-2" href="#flow" data-num="03">
         <div class="feature-eyebrow" data-i18n="features.3.eyebrow">03 / CloudSync</div>
-        <h3 class="feature-title" data-i18n="features.3.title">出水即同步，云端出片</h3>
-        <p class="feature-desc" data-i18n="features.3.desc">出水自动连手机 App，原片后台静默回传；云端深度学习还原水下色彩，开 App 即取片。</p>
+        <h3 class="feature-title" data-i18n="features.3.title">出水即回传，云端自动还原</h3>
+        <p class="feature-desc" data-i18n="features.3.desc">出水后自动连接配套手机应用，原始素材后台静默回传；云端深度学习模型自动还原水下色彩，用户可直接获取成片。</p>
         <div class="feature-cta" data-i18n="features.3.cta">了解工作流 →</div>
       </a>
-    </div>
-  </section>
-
-  <!-- ─────────────────────────────────────────────────────────────
-       PAIN
-       ───────────────────────────────────────────────────────────── -->
-  <section class="pain wrap" id="pain">
-    <div class="section-head reveal">
-      <span class="eyebrow" data-i18n-html="pain.eyebrow"><span class="index">02</span> The Pain</span>
-      <h2 data-i18n-html="pain.heading">三条<em style="font-style:italic;color:var(--accent)">水下摄影者</em>必须独自承担的负担。</h2>
-    </div>
-
-    <div class="pain-list">
-      <article class="pain-row reveal">
-        <span class="num">01</span>
-        <h3 data-i18n="pain.1.title">双手被占用</h3>
-        <p data-i18n-html="pain.1.desc">水下摄影者必须同时管理浮力、呼吸节奏、深度计、构图与跟焦——注意力的"工作记忆"被瓜分到 5 件事以上。最终结果通常不是没拍到，而是<em style="font-style:normal;color:var(--accent)">拍废与隐患同时发生</em>。</p>
-      </article>
-
-      <article class="pain-row reveal">
-        <span class="num">02</span>
-        <h3 data-i18n="pain.2.title">ROV 不属于消费者</h3>
-        <p data-i18n-html="pain.2.desc">传统水下 ROV 是工业巡检工具——脐带线缆、地面控制器、上岸部署流程，让它从未真正属于一次说走就走的旅行潜。重 7–15 kg、起步价 ¥15,000+，"自由"和"ROV"在产品语言上从未相遇。</p>
-      </article>
-
-      <article class="pain-row reveal">
-        <span class="num">03</span>
-        <h3 data-i18n="pain.3.title">视觉会失效</h3>
-        <p data-i18n-html="pain.3.desc">气泡群、悬浮颗粒、逆光、低照度——任何一种都足以让单纯视觉跟踪丢失目标。水下交互必须尊重"水"这件事本身，<em style="font-style:normal;color:var(--accent)">而不是把陆地上的视觉假设原样搬下水</em>。</p>
-      </article>
     </div>
   </section>
 
@@ -266,92 +236,10 @@
             <svg viewBox="0 0 64 64"><rect x="22" y="22" width="20" height="30" rx="3" class="s"/><line x1="29" y1="48" x2="35" y2="48" class="s a"/><path d="M20 18 a6 6 0 0 1 12 -2 a5 5 0 0 1 9 2 a4 4 0 0 1 -1 8 h-19 a4 4 0 0 1 -1 -8 z" class="s a"/></svg>
           </div>
         </div>
-        <h3 data-i18n="flow.4.title">出水无感传输</h3>
-        <p data-i18n="flow.4.desc">出水即与手机 App 自动建立连接，原始素材后台静默回传；云端深度学习模型自动还原水下色彩，开 App 时片子已经准备好。</p>
+        <h3 data-i18n="flow.4.title">出水无感回传</h3>
+        <p data-i18n="flow.4.desc">出水后自动与配套手机应用建立连接，原始素材在后台静默传输；云端深度学习模型对水下色彩进行自动还原，用户在应用中即可查看处理完成的素材。</p>
         <span class="status-badge dev">IN-DEV</span>
       </article>
-    </div>
-  </section>
-
-  <!-- ─────────────────────────────────────────────────────────────
-       ARCHITECTURE
-       ───────────────────────────────────────────────────────────── -->
-  <section class="architecture wrap" id="architecture">
-    <div class="section-head reveal">
-      <span class="eyebrow" data-i18n-html="arch.eyebrow"><span class="index">04</span> Hardware Architecture</span>
-      <h2 data-i18n-html="arch.heading">不追求矢量，<em>追求</em>稳定。</h2>
-    </div>
-
-    <div class="arch-body">
-      <div class="arch-copy reveal">
-        <h3 data-i18n="arch.title">2 水平 + 2 垂直 + 1 横向。</h3>
-        <p data-i18n-html="arch.desc">Remo 摒弃矢量推进（vectored thruster）方案的复杂调参，采用经过 ROV 工业验证的 5 推进器布局——更易于水动力学建模、控制器收敛与外壳工程化。我们并行验证<em style="font-style:normal;color:var(--accent)">两套动力路线</em>：策海科技无刷推进器主打海水可靠性，自研有刷方案主打成本可控；二者共享同一套飞控、声学与传感平台。</p>
-
-        <ul class="specs">
-          <li><span data-i18n="arch.spec.1">推进器架构</span> <strong data-i18n="arch.spec.1.val">2H + 2V + 1L</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.2">动力 A · 无刷</span> <strong data-i18n="arch.spec.2.val">策海 T60-edu-se</strong> <span class="t live">LIVE</span></li>
-          <li class="sub" data-i18n="arch.spec.2.sub">推力 3 kgf · 功率 150 W</li>
-          <li><span data-i18n="arch.spec.3">动力 B · 有刷</span> <strong data-i18n="arch.spec.3.val">自研双向电调</strong> <span class="t dev">IN-DEV</span></li>
-          <li><span data-i18n="arch.spec.4">飞控平台</span> <strong data-i18n="arch.spec.4.val">FlyingRC H7Wlite</strong> <span class="t live">LIVE</span></li>
-          <li class="sub" data-i18n="arch.spec.4.sub">MCU STM32H743VIH6 · 双 IMU + DPS368</li>
-          <li><span data-i18n="arch.spec.5">固件</span> <strong data-i18n="arch.spec.5.val">ArduSub 4.1.2</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.6">无刷电调</span> <strong data-i18n="arch.spec.6.val">AM32 Mini ESC</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.7">深度传感</span> <strong data-i18n="arch.spec.7.val">MS5837-30BA</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.8">避障声呐</span> <strong data-i18n="arch.spec.8.val">DYP-L08</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.9">声学模块</span> <strong data-i18n="arch.spec.9.val">DYP-C01B ×3</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.10">补光系统</span> <strong data-i18n="arch.spec.10.val">12V LED · 环境光平衡</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.11">防水开关</span> <strong data-i18n="arch.spec.11.val">舱外物理通断</strong> <span class="t live">LIVE</span></li>
-          <li><span data-i18n="arch.spec.12">漏水检测</span> <strong data-i18n="arch.spec.12.val">I2C 传感器</strong> <span class="t plan">PLANNED</span></li>
-          <li><span data-i18n="arch.spec.13">水压辅助密封</span> <strong data-i18n="arch.spec.13.val">自研结构</strong> <span class="t dev">IN-DEV</span></li>
-          <li><span data-i18n="arch.spec.14">原型工艺</span> <strong data-i18n="arch.spec.14.val">Bambu Lab P1S</strong> <span class="t live">LIVE</span></li>
-        </ul>
-      </div>
-
-      <div class="arch-diagram reveal delay-1">
-        <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet" aria-label="推进器布局示意">
-          <line class="stroke faint" x1="0" y1="60"  x2="500" y2="60"/>
-          <line class="stroke faint" x1="0" y1="340" x2="500" y2="340"/>
-
-          <rect class="stroke" x="120" y="120" width="260" height="160" rx="68" ry="68"/>
-          <circle class="stroke accent" cx="250" cy="200" r="28"/>
-          <circle class="stroke faint" cx="250" cy="200" r="44"/>
-
-          <g class="pulse">
-            <circle class="stroke accent" cx="90" cy="200" r="18"/>
-            <line class="stroke accent" x1="36" y1="200" x2="72" y2="200"/>
-            <text class="label accent" x="36" y="184">H1 ◄</text>
-          </g>
-          <g class="pulse">
-            <circle class="stroke accent" cx="410" cy="200" r="18"/>
-            <line class="stroke accent" x1="428" y1="200" x2="464" y2="200"/>
-            <text class="label accent" x="416" y="184">► H2</text>
-          </g>
-
-          <g class="pulse">
-            <circle class="stroke accent" cx="190" cy="100" r="14"/>
-            <line class="stroke accent" x1="190" y1="58" x2="190" y2="86"/>
-            <text class="label accent" x="200" y="76">V1 ▲</text>
-          </g>
-          <g class="pulse">
-            <circle class="stroke accent" cx="310" cy="300" r="14"/>
-            <line class="stroke accent" x1="310" y1="314" x2="310" y2="342"/>
-            <text class="label accent" x="320" y="334">V2 ▼</text>
-          </g>
-
-          <g class="pulse">
-            <circle class="stroke" cx="320" cy="140" r="12"/>
-            <text class="label" x="338" y="138">L · LATERAL</text>
-          </g>
-
-          <line class="stroke faint" x1="120" y1="380" x2="380" y2="380"/>
-          <line class="stroke faint" x1="120" y1="376" x2="120" y2="384"/>
-          <line class="stroke faint" x1="380" y1="376" x2="380" y2="384"/>
-          <text class="label" x="240" y="396">260 MM (BODY)</text>
-
-          <text class="label" x="0" y="20">FIG · 01 — THRUSTER MAP · TOP VIEW</text>
-          <text class="label" x="400" y="20">SCALE 1:1.2</text>
-        </svg>
-      </div>
     </div>
   </section>
 
@@ -549,6 +437,90 @@
     <p class="compare-note reveal delay-2" data-i18n="compare.note">
       对比数据基于公开消费类产品参数。Remo 数据基于当前 POC 样机实测与结构设计目标。
     </p>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       ARCHITECTURE — moved to follow the three-camera comparison so the
+       hardware reveal lands after the user already understands "why Remo,
+       not a GoPro or a ROV". This is the engineering credibility chapter.
+       ───────────────────────────────────────────────────────────── -->
+  <section class="architecture wrap" id="architecture">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n-html="arch.eyebrow"><span class="index">04</span> Hardware Architecture</span>
+      <h2 data-i18n-html="arch.heading">不追求矢量，<em>追求</em>稳定。</h2>
+    </div>
+
+    <div class="arch-body">
+      <div class="arch-copy reveal">
+        <h3 data-i18n="arch.title">2 水平 + 2 垂直 + 1 横向。</h3>
+        <p data-i18n-html="arch.desc">Remo 摒弃矢量推进（vectored thruster）方案的复杂调参，采用经过 ROV 工业验证的 5 推进器布局——更易于水动力学建模、控制器收敛与外壳工程化。我们并行验证<em style="font-style:normal;color:var(--accent)">两套动力路线</em>：策海科技无刷推进器主打海水可靠性，自研有刷方案主打成本可控；二者共享同一套飞控、声学与传感平台。</p>
+
+        <ul class="specs">
+          <li><span data-i18n="arch.spec.1">推进器架构</span> <strong data-i18n="arch.spec.1.val">2H + 2V + 1L</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.2">动力 A · 无刷</span> <strong data-i18n="arch.spec.2.val">策海 T60-edu-se</strong> <span class="t live">LIVE</span></li>
+          <li class="sub" data-i18n="arch.spec.2.sub">推力 3 kgf · 功率 150 W</li>
+          <li><span data-i18n="arch.spec.3">动力 B · 有刷</span> <strong data-i18n="arch.spec.3.val">自研双向电调</strong> <span class="t dev">IN-DEV</span></li>
+          <li><span data-i18n="arch.spec.4">飞控平台</span> <strong data-i18n="arch.spec.4.val">FlyingRC H7Wlite</strong> <span class="t live">LIVE</span></li>
+          <li class="sub" data-i18n="arch.spec.4.sub">MCU STM32H743VIH6 · 双 IMU + DPS368</li>
+          <li><span data-i18n="arch.spec.5">固件</span> <strong data-i18n="arch.spec.5.val">ArduSub 4.1.2</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.6">无刷电调</span> <strong data-i18n="arch.spec.6.val">AM32 Mini ESC</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.7">深度传感</span> <strong data-i18n="arch.spec.7.val">MS5837-30BA</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.8">避障声呐</span> <strong data-i18n="arch.spec.8.val">DYP-L08</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.9">声学模块</span> <strong data-i18n="arch.spec.9.val">DYP-C01B ×3</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.10">补光系统</span> <strong data-i18n="arch.spec.10.val">12V LED · 环境光平衡</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.11">防水开关</span> <strong data-i18n="arch.spec.11.val">舱外物理通断</strong> <span class="t live">LIVE</span></li>
+          <li><span data-i18n="arch.spec.12">漏水检测</span> <strong data-i18n="arch.spec.12.val">I2C 传感器</strong> <span class="t plan">PLANNED</span></li>
+          <li><span data-i18n="arch.spec.13">水压辅助密封</span> <strong data-i18n="arch.spec.13.val">自研结构</strong> <span class="t dev">IN-DEV</span></li>
+          <li><span data-i18n="arch.spec.14">原型工艺</span> <strong data-i18n="arch.spec.14.val">Bambu Lab P1S</strong> <span class="t live">LIVE</span></li>
+        </ul>
+      </div>
+
+      <div class="arch-diagram reveal delay-1">
+        <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet" aria-label="推进器布局示意">
+          <line class="stroke faint" x1="0" y1="60"  x2="500" y2="60"/>
+          <line class="stroke faint" x1="0" y1="340" x2="500" y2="340"/>
+
+          <rect class="stroke" x="120" y="120" width="260" height="160" rx="68" ry="68"/>
+          <circle class="stroke accent" cx="250" cy="200" r="28"/>
+          <circle class="stroke faint" cx="250" cy="200" r="44"/>
+
+          <g class="pulse">
+            <circle class="stroke accent" cx="90" cy="200" r="18"/>
+            <line class="stroke accent" x1="36" y1="200" x2="72" y2="200"/>
+            <text class="label accent" x="36" y="184">H1 ◄</text>
+          </g>
+          <g class="pulse">
+            <circle class="stroke accent" cx="410" cy="200" r="18"/>
+            <line class="stroke accent" x1="428" y1="200" x2="464" y2="200"/>
+            <text class="label accent" x="416" y="184">► H2</text>
+          </g>
+
+          <g class="pulse">
+            <circle class="stroke accent" cx="190" cy="100" r="14"/>
+            <line class="stroke accent" x1="190" y1="58" x2="190" y2="86"/>
+            <text class="label accent" x="200" y="76">V1 ▲</text>
+          </g>
+          <g class="pulse">
+            <circle class="stroke accent" cx="310" cy="300" r="14"/>
+            <line class="stroke accent" x1="310" y1="314" x2="310" y2="342"/>
+            <text class="label accent" x="320" y="334">V2 ▼</text>
+          </g>
+
+          <g class="pulse">
+            <circle class="stroke" cx="320" cy="140" r="12"/>
+            <text class="label" x="338" y="138">L · LATERAL</text>
+          </g>
+
+          <line class="stroke faint" x1="120" y1="380" x2="380" y2="380"/>
+          <line class="stroke faint" x1="120" y1="376" x2="120" y2="384"/>
+          <line class="stroke faint" x1="380" y1="376" x2="380" y2="384"/>
+          <text class="label" x="240" y="396">260 MM (BODY)</text>
+
+          <text class="label" x="0" y="20">FIG · 01 — THRUSTER MAP · TOP VIEW</text>
+          <text class="label" x="400" y="20">SCALE 1:1.2</text>
+        </svg>
+      </div>
+    </div>
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────

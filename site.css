@@ -433,7 +433,7 @@ section + section::before {
   opacity: 0;
   animation:
     heroProductIn 1.6s 0.4s cubic-bezier(0.2, 0.7, 0.1, 1) forwards,
-    heroFloat 7s 2s ease-in-out infinite;
+    heroFloat 5.5s 2s ease-in-out infinite;
   will-change: transform, filter;
 }
 
@@ -611,9 +611,26 @@ video.showcase-video {
   to   { opacity: 1; transform: translateY(-50%) translateX(0) scale(1); }
 }
 
+/* Hero product hover — more pronounced. Uses a 4-keyframe loop so the
+   motion reads as a real buoyant drift, not just a 1D bob. Translation
+   range ±28px, plus a subtle ±1.4° rotation lean. Period 5.5s for a
+   visible cadence without feeling jittery. */
 @keyframes heroFloat {
-  0%, 100% { transform: translateY(-50%) translateY(0px); }
-  50%      { transform: translateY(-50%) translateY(-12px); }
+  0%   { transform: translateY(-50%) translate(0px, 0px) rotate(0deg); }
+  25%  { transform: translateY(-50%) translate(6px, -18px) rotate(-1.2deg); }
+  50%  { transform: translateY(-50%) translate(0px, -28px) rotate(0deg); }
+  75%  { transform: translateY(-50%) translate(-6px, -14px) rotate(1.4deg); }
+  100% { transform: translateY(-50%) translate(0px, 0px) rotate(0deg); }
+}
+
+/* Mobile-only hover variant (no translateY(-50%) baseline, since on mobile
+   the product is in normal flow rather than absolutely centered). */
+@keyframes heroFloatMobile {
+  0%   { transform: translate(0px, 0px) rotate(0deg); }
+  25%  { transform: translate(6px, -14px) rotate(-1.4deg); }
+  50%  { transform: translate(0px, -22px) rotate(0deg); }
+  75%  { transform: translate(-6px, -10px) rotate(1.6deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
 }
 
 @keyframes haloPulse {
@@ -1971,38 +1988,59 @@ video.showcase-video {
     letter-spacing: 0.16em;
   }
   .hero-stage {
+    /* Mobile: keep relative positioning so the wordmark can absolutely
+       anchor to top/bottom, sandwiching the product image. The stage
+       height is driven by the hero <section> min-height (100svh). */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 24px;
-    padding-top: 24px;
+    justify-content: center;
+    gap: 0;
+    padding-top: 0;
+    min-height: 78svh;
   }
   .hero-title {
-    font-size: clamp(36px, 9vw, 56px);
+    font-size: clamp(28px, 7vw, 44px);
     max-width: 100%;
-    line-height: 1.0;
+    line-height: 1.05;
+    position: relative;
+    z-index: 3;
+    /* Push the title down so it sits between PROJECT (top wordmark) and
+       the floating product, not stacked on top of PROJECT. */
+    margin-top: clamp(80px, 16vw, 140px);
+    margin-bottom: clamp(16px, 4vw, 24px);
   }
-  /* Mobile: keep the wordmark backdrop, full-bleed and centered behind
-     the product image area. Anton font carries the same visual tension
-     as desktop, just scaled for phone screens. */
+  /* Mobile: wordmark splits — "PROJECT" sticks to the top of the stage,
+     "REMO" sticks to the bottom, and the product image floats in the
+     middle. This creates a massive vertical air gap that reads as the
+     editorial "line-spacing" the design calls for. */
   .hero-wordmark {
     position: absolute !important;
     left: 0 !important;
     right: 0 !important;
-    top: 50% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
     width: 100% !important;
     max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
     align-items: stretch !important;
     text-align: center !important;
-    font-size: clamp(110px, 32vw, 240px) !important;
-    gap: 0.28em !important;
-    line-height: 0.82 !important;
+    /* Big — ~30vw lands "PROJECT" / "REMO" at roughly screen-width on
+       a 6-char word. clamp keeps it sane on edge cases. */
+    font-size: clamp(72px, 30vw, 220px) !important;
+    line-height: 0.85 !important;
+    gap: 0 !important;
     z-index: 1 !important;
     overflow: hidden;
+    pointer-events: none;
   }
-  /* mobile: show product as a centered block under title, no absolute positioning */
+  /* mobile: product floats in the vertical center, between the two
+     wordmark lines. Width capped so it doesn't collide with the giant
+     type. z-index above wordmark so the product reads as the focus. */
   .hero-product {
     display: block !important;
     position: relative !important;
@@ -2010,14 +2048,17 @@ video.showcase-video {
     top: auto !important;
     bottom: auto !important;
     left: auto !important;
-    width: 100% !important;
-    max-width: 420px;
-    margin: 8px auto 0 auto;
+    width: 80% !important;
+    max-width: 360px;
+    margin: 0 auto;
     transform: none !important;
     opacity: 1 !important;
-    animation: none !important;
+    /* Mobile keeps the float animation enabled so the product still
+       feels buoyant. The mobile-specific keyframes below override the
+       desktop transform that includes translateY(-50%). */
+    animation: heroFloatMobile 5.5s ease-in-out infinite !important;
     filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
-    z-index: 1;
+    z-index: 2;
   }
   .hero-product img,
   .hero-product .hero-video {
@@ -2288,7 +2329,11 @@ video.showcase-video {
 
 .flow-step {
   position: relative;
-  padding: 48px 32px 48px 0;
+  /* Symmetric horizontal padding on every column so all four .flow-media
+     boxes have identical computed widths. Earlier the first column had
+     0 left padding while the others had 32px, which made its video
+     visibly larger than the rest. */
+  padding: 48px 16px;
   border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
@@ -2296,7 +2341,6 @@ video.showcase-video {
 }
 
 .flow-step:last-child { border-right: 0; }
-.flow-step:not(:first-child) { padding-left: 32px; }
 
 .flow-step::before {
   content: "";
