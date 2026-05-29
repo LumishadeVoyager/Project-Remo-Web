@@ -460,3 +460,43 @@ X5 唯一允许的：**与 click/touchend 事件 handler 在同一同步 callsta
 - `index.html`：删除 ul.specs；删除 inline SVG 推进器图；新增 img + .arch-pillars 段；team.lead 改回；team-awards 加回 #1
 - `site.js`：双路径 overlay；ZH/EN team.lead 改回；新增 arch.pillars / arch.img.alt zh+en
 - `site.css`：删除旧 specs/SVG 相关规则；新增 .arch-pillars / .arch-diagram img；overlay 双按钮布局 (.showcase-tap-inline + .showcase-tap-fallback)
+
+---
+
+## 2026-05-29 会话增量更新 · 第 5 轮
+
+### 1. 添加创始人肖像照
+- 文件：`Image/杨文俊肖像照.png` → founder-card 顶部新增 `<img class="founder-portrait">`（CDN + 本地双源）
+- CSS：1:1 方形裁切 `object-fit: cover` + 微去色 `grayscale(0.15)` + 微对比 `contrast(1.04)`
+- 位置：在 founder-meta 正上方，与下方角色/姓名/抬头/工具栈构成完整人物卡
+
+### 2. 专利信息精简
+- 合并前每条专利含：申请号 `<code>` / 申请日 / 权利要求项数 / 技术描述段落
+- 合并后每条只显示：**名称 + 类型（发明/实用新型）+ 受理状态（已受理/撰写中）**
+- `site.js` 中 `moat.1-4.desc` zh + en 全部缩减为一句话
+- 删除的申请号细节保留在 CONTENT.md 备注中（内部 BD 材料用）
+
+### 3. 手机端三机对比表改为紧凑表格
+**废弃**：上一版的卡片堆叠（每行一个独立 bordered card + 2-col label/value 子表 + 左侧 accent bar）
+**新方案**：
+- 恢复 4 列 grid 布局：`grid-template-columns: 80px 1fr 1fr 90px`
+- `.ct-row.ct-head` 在手机端显示（sticky 表头，ink 背景）
+- 字体缩小（cell 12px / axis 9px / head 9px）
+- Remo 列 accent 高亮 + 浅底
+- 整表 `overflow-x: auto`，`min-width: 340px`，窄屏横向滚动
+- 与桌面版表格结构一致，只是更紧凑
+
+### 4. Acoustic Intelligence 桌面排版优化
+**旧布局**：左右等宽两列（6fr + 6fr），图在左、文字+手环全在右，align-items: center 使图悬空，右侧内容过密。
+
+**新布局**（三行 grid）：
+1. 第一行：全宽场景图（grid-column: 1 / -1）
+2. 第二行左列 `.acoustic-copy`：H3 大标题 + 主文案 p1
+3. 第二行右列 `.acoustic-side`：副文案 p2 + 8 个能力 badge + 声学手环图
+grid 比例改为 5fr + 7fr（文窄控宽）
+
+### 文档同步
+- `CONTENT.md`：## 14 专利表格去掉申请号/日/权项；## 15 founding team 排版说明加肖像照
+- `index.html`：founder-card 加 img；patent li 去详细 code 段；acoustic-body 三行 grid
+- `site.js`：moat.*.desc 全部精简
+- `site.css`：founder-portrait；acoustic-body 改 grid；mobile compare-table compact table；acoustic-side p

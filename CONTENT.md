@@ -535,7 +535,7 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 
 ## 14 IP & Patent Defense（专利护城河）
 
-**排版：** 左侧文案（kicker + 大标题 + 描述 + 状态说明）；右侧 4 项专利列表（编号 + 标题 + 描述含申请号 + 申请日 + 权项数）。
+**排版：** 左侧文案（kicker + 大标题 + 描述 + 状态说明）；右侧 4 项专利列表（编号 + 标题 + 类型 + 受理状态，不暴露申请号等细节）。
 
 **Kicker：** `14 · IP & Patent Defense`
 
@@ -547,37 +547,21 @@ Let Go / of Your / Hands. / Hand the / Shot to an / <em>Underwater</em> / <em>Ag
 - ZH：围绕产品最难复现的技术节点，已向国家知识产权局完成 4 项专利布局：声学+视觉融合定位、GAN 水下色彩还原、双核控制架构、潜水电脑表交互——构成 EP 与 Kickstarter 阶段的核心壁垒。
 - EN：Four patents covering the product's hardest-to-replicate technical nodes have been filed with the China National Intellectual Property Administration: acoustic-visual fusion positioning, GAN underwater color restoration, dual-core control architecture, and dive-computer interaction — the core competitive barriers for EP and Kickstarter phases.
 
-**状态：** 3 项已受理 · 1 项撰写中 · 申请人 / 发明人 杨文俊 / 3 accepted · 1 in submission · Applicant / Inventor: Yang Wenjun
+**状态：** 3 项已受理 · 1 项撰写中 · 申请人 / 发明人 杨文俊
 
-### 4 项专利
-1. **声学与视觉融合的水下自动定位拍摄系统及控制方法 / Underwater Acoustic-Visual Fusion Positioning & Capture System**
-   - 类型：发明专利 · 国家知识产权局已受理
-   - 申请号：`202610208723.3`
-   - 申请日：2026-02-13
-   - 权利要求：10 项
-   - 申请人/发明人：杨文俊
-2. **基于物理环境元数据约束的水下图像生成式色彩还原方法及系统 / Generative Underwater Color Restoration with Physical Environmental Metadata Constraints**
-   - 类型：发明专利 · 国家知识产权局已受理
-   - 申请号：`202610208686.6`
-   - 申请日：2026-02-12
-   - 权利要求：18 项
-   - 申请人/发明人：杨文俊
-3. **基于视控解耦双核架构的微型水下航行器电子系统 / Vision-Control Decoupled Dual-Core Electronics Architecture for Micro AUV**
-   - 类型：实用新型专利 · 国家知识产权局已受理
-   - 申请号：`202620215579.1`
-   - 申请日：2026-02-13
-   - 权利要求：10 项
-   - 申请人/发明人：杨文俊
-4. **集成轻量化水声模组及震动反馈机制的潜水电脑表 / Dive Computer Watch with Lightweight Acoustic Module & Haptic Feedback**
-   - 类型：实用新型专利 · 交底书已完成，正在提交流程中
-   - 涵盖：手环端 DYP-C01B 集成 · IMU 翻腕+敲击识别 · 震动反馈闭环结构
-   - 申请人/发明人：杨文俊
+> **2026-05-29**：每项只保留名称+类型+受理状态。申请号、申请日、权利要求项数、英文全称等 BOM 级细节已从公开站点移除。完整申请号保留在内部 BD 材料中。
+
+### 4 项专利（精简版）
+1. **声学与视觉融合的水下自动定位拍摄系统及控制方法** — 发明专利 · 已受理
+2. **基于物理环境元数据约束的水下图像生成式色彩还原方法及系统** — 发明专利 · 已受理
+3. **基于视控解耦双核架构的微型水下航行器电子系统** — 实用新型专利 · 已受理
+4. **集成轻量化水声模组及震动反馈机制的潜水电脑表** — 实用新型专利 · 撰写中
 
 ---
 
 ## 15 Founding Team（创始团队）
 
-**排版：** 左上：lead 段（团队来源、双重背书叙事）。下方左侧：创始人 founder-card（角色 + 大名 + 学校信息 + 4 项工具栈）。右侧：5 条获奖时间轴（年份 + 奖项 + 描述 + 高亮 tag）。底部 team-note 收尾。**不展开个人实习经历与在研项目**——这些与 Project Remo 无关，留作冠军班底的整体包装即可。
+**排版：** founder-card 顶部放 1:1 方形肖像照（滤色+对比），下方角色+大名+抬头+工具栈。不展开行业经历。
 
 **素材：** 暂无人像图。可选放在 `Image/founders/` 目录后再补充。
 
