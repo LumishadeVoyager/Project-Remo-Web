@@ -9,6 +9,12 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Warm up the jsDelivr connection early — videos are served from there
+     and the TLS+TCP handshake alone can shave 1–2s off first-frame time
+     on slow mobile networks. -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preload" as="video" href="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="./site.css">
@@ -133,9 +139,9 @@
         x5-video-orientation="landscape"
         preload="auto"
         poster="./Image/Hero主体图.png"
-        data-video-fallback="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4"
+        data-video-fallback="./Video/V01.mp4"
         aria-label="Project Remo 水下跟随相机演示视频">
-        <source src="./Video/V01.mp4" type="video/mp4">
+        <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
       </video>
       <div class="showcase-overlay">
         <div class="showcase-meta" data-i18n="showcase.meta">水测实录 · 2026·04</div>
@@ -197,9 +203,9 @@
             x5-video-player-type="h5"
             x5-video-player-fullscreen="false"
             preload="auto"
-            data-video-fallback="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4"
+            data-video-fallback="./Video/V02.mp4"
             class="flow-video">
-            <source src="./Video/V02.mp4" type="video/mp4">
+            <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4" type="video/mp4">
           </video>
           <div class="flow-icon fallback" aria-hidden="true">
             <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="14" class="s"/><circle cx="32" cy="32" r="22" class="s faint"/><line x1="32" y1="6" x2="32" y2="16" class="s a"/><line x1="32" y1="48" x2="32" y2="58" class="s a"/></svg>

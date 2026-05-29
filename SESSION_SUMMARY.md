@@ -500,3 +500,80 @@ grid 比例改为 5fr + 7fr（文窄控宽）
 - `index.html`：founder-card 加 img；patent li 去详细 code 段；acoustic-body 三行 grid
 - `site.js`：moat.*.desc 全部精简
 - `site.css`：founder-portrait；acoustic-body 改 grid；mobile compare-table compact table；acoustic-side p
+
+---
+
+## 🚨 永久备忘 · 微信视频加载缓慢的根因与最终解决方案（2026-05-29）
+
+> **接下来的所有维护者：在动视频源顺序之前，先读完这一段。**
+
+### 症状
+微信原生浏览器（X5 Android / WKWebView iOS）打开页面后,V01 showcase 的"点击启用视频"按钮虽然能成功唤起播放,但视频实际加载需要 **30 秒以上**。V02–V05 flow 视频也一样慢。其它浏览器（Chrome/Safari/Edge）秒开,只在微信里卡。
+
+### 根因（按贡献度排序）
+
+1. **GitHub Pages 在中国大陆是慢链路 / 经常被运营商限速**。GitHub Pages 用 Fastly CDN，Fastly 在中国大陆没有合规节点,流量被绕到香港或日本,实测 50–200 KB/s,1.5MB 视频要 8–30s。这是**最主要瓶颈**。
+2. **微信 X5 视频解码器对并发下载极敏感**。同时排队 5 个 video 时,V01 没下完前 V2-V5 的请求会被 X5 串行化,雪崩式累积延迟。
+3. **历史遗留的源顺序错误**。HTML `<source>` 写本地路径作为主源、jsDelivr 作为 fallback —— 这个顺序在大陆是反向的：jsDelivr 在大陆有反代节点（jsd.onmicrosoft.cn 等回源点）,实测比 GitHub Pages 快 5–10×,**应该是主源**。
+
+### 最终解决方案（已落地于 commit 见下）
+
+**方案 A：翻转 source 优先级（核心修复）**
+- HTML：`<source src="…cdn.jsdelivr.net…">` 主，`data-video-fallback="./Video/Vxx.mp4"` 备
+- JS（site.js section 6.5）：`probe.src = cdnUrl` 主，onerror 才换 `localUrl`
+- 涉及：V01 showcase（HTML 硬编码）、V02 flow-step 1（HTML 硬编码）、V03–V05（JS lazy attach）
+
+**方案 B：连接预热（次要,但白送 1–2s）**
+在 `<head>` 加：
+```html
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preload" as="video" href="https://cdn.jsdelivr.net/.../V01.mp4" type="video/mp4">
+```
+浏览器在 HTML parse 阶段就开始 TLS+TCP 握手,V01 第一帧能再提前。
+
+### ⛔ 不要做这些（前人踩过的坑）
+
+| ❌ 错误尝试 | 为什么会失败 |
+|---|---|
+| 把 source 顺序改回"本地优先" | 大陆 GitHub Pages 慢，会重蹈 30s 覆辙 |
+| 删掉本地 fallback | jsDelivr 偶有抽风（每年 1–2 次几小时降级），需要兜底 |
+| 进一步压视频码率到 < 720p | 牺牲画质换不来本质提速；瓶颈在网络不在文件大小 |
+| 尝试用 setInterval 心跳触发 X5 重新加载 | X5 不响应非用户手势的 play()，徒劳（已在 Round 3-5 验证过） |
+| 用 `<link rel="prefetch">` 替代 preload | prefetch 优先级低,X5 会推到空闲时再下，等于没做 |
+
+### 📈 进一步提速的选项（若用户后续抱怨）
+
+按工作量从小到大：
+
+1. **增加多 CDN fallback 链**（statically.io / raw.githack）— 在 jsDelivr 偶发抽风时多一道保险
+2. **真正的国内对象存储 + CDN**（腾讯云 COS / 阿里 OSS / 七牛）— 速度最稳,但需 ICP 备案
+3. **改用 HLS 切片流**（`.m3u8` + 720p/360p 双码率）— X5 支持 HLS，可以根据网速自动降级；改造工作量大
+4. **首屏只放 V01,V02-V05 改成"图片占位 + 点击加载"** — 把瓶颈从"全部视频并发下载"变成"按需触发"
+
+### 🔧 验证清单（任何动视频源后必跑）
+
+1. Chrome 桌面端：打开,5 个视频应秒开
+2. 微信扫码（必须真机）：showcase tap → V01 起播应在 5s 内
+3. 微信里下滑到工作流：V02-V05 应在每段视频进入视口后 3-5s 内起播
+4. Quark / UC / QQ 浏览器：自动播放（不需要 tap）
+
+如果有任何一步退化到 30s+，**先检查 source 顺序是否被错误地改回了 local-first**。
+
+---
+
+## 2026-05-29 会话增量更新 · 第 6 轮（视频加载提速）
+
+### 1. HTML source 顺序翻转
+- `index.html` 中的 V01 showcase video 与 V02 flow-step 1 video,主源从 `./Video/Vxx.mp4` 改为 `https://cdn.jsdelivr.net/gh/.../Vxx.mp4`,fallback 改为本地路径。
+
+### 2. site.js lazy attach probe 顺序翻转
+- `probe.src = localUrl` → `probe.src = cdnUrl`
+- `onerror` 由 `triedCdn=true; probe.src=cdnUrl` 变为 `triedLocal=true; probe.src=localUrl`
+- 注释里写明"DO NOT flip back to local-first" + 历史原因
+
+### 3. `<head>` 加 preconnect / preload
+- `preconnect` + `dns-prefetch` 给 jsDelivr 提前握手
+- `preload as=video` 给 V01.mp4 提前发起请求
+
+### 4. 文档：本备忘段落 + 后续维护者验证清单

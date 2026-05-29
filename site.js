@@ -1185,8 +1185,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
      For flow steps that have a `data-video-slot="VNN"` attribute, attempt
-     to load the video. Tries local repo path first (works on GitHub Pages
-     same-origin, no CDN), then jsDelivr CDN as fallback.
+     to load the video.
+
+     SOURCE PRIORITY (the IMPORTANT part for mainland users):
+       1st (probe):    jsDelivr CDN  — has reverse-proxy nodes inside CN
+                       and is 5-10× faster than GitHub Pages for WeChat.
+       2nd (fallback): local GitHub Pages path — used only if jsDelivr is
+                       degraded for that file. Same-origin so it bypasses
+                       any CDN cache miss.
+
+     DO NOT flip this back to "local first" without measuring the
+     mainland network. Local-first was the cause of V01 taking 30s+ to
+     play in WeChat (GitHub Pages goes through Fastly which is slow /
+     intermittently blocked from CN). The historical comment "WeChat
+     browsers are unreliable with jsDelivr in mainland China" is OUT OF
+     DATE — jsDelivr now has CN reverse-proxy nodes and is the fast path.
 
      WeChat note: V01 showcase confirmed that X5 *does* play() inline
      when called from a user gesture, so V02-V05 ride the same path —
@@ -1203,13 +1216,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
     const slot = step.getAttribute("data-video-slot");
     if (!slot) return;
-    const localUrl = `./Video/${slot}.mp4`;
+    // Order matters: CDN first (mainland-friendly), local as fallback.
     const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
+    const localUrl = `./Video/${slot}.mp4`;
     const probe = document.createElement("video");
     probe.preload = "metadata";
     probe.muted = true;
     probe.playsInline = true;
-    let triedCdn = false;
+    let triedLocal = false;
     const onSuccess = (workingUrl) => {
       const media = step.querySelector(".flow-media");
       if (!media) return;
@@ -1226,7 +1240,7 @@ document.addEventListener("DOMContentLoaded", () => {
       video.setAttribute("x5-video-player-type", "h5");
       video.setAttribute("x5-video-player-fullscreen", "false");
       video.src = workingUrl;
-      const otherUrl = workingUrl === localUrl ? cdnUrl : localUrl;
+      const otherUrl = workingUrl === cdnUrl ? localUrl : cdnUrl;
       let swapped = false;
       video.addEventListener("error", () => {
         if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
@@ -1250,9 +1264,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     probe.onloadedmetadata = () => onSuccess(probe.src);
     probe.onerror = () => {
-      if (!triedCdn) { triedCdn = true; probe.src = cdnUrl; }
+      if (!triedLocal) { triedLocal = true; probe.src = localUrl; }
     };
-    probe.src = localUrl;
+    probe.src = cdnUrl;
   });
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
