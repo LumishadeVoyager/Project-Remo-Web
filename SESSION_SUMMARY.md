@@ -902,3 +902,99 @@ V04.mp4: 3.5MB · V05.mp4: 2.2MB    合计 10.9MB
 |---|---|---|
 | 同源容错 | ❌ 硬性 timeout(无论 readyState 是否在进展) | 把"慢但还在下"的进度直接砍掉,逼用户去尝试更慢/不通的 CDN |
 | 多视频并发 | ❌ 5 个视频都 preload=auto | HTTP/2 单连接被均分带宽,V01 也变慢。懒加载下面三个 |
+
+---
+
+## 2026-05-30 会话增量 · 第 9 轮(关键发现:Chrome 资源优先级差异)
+
+> 这是迄今为止**最重要的诊断**之一。
+
+### 实验
+
+第 8 轮(stall-based + 懒加载 V03-V05)后,用户实测日志:
+
+```
+[Remo] V01: waiting on HTML source (mirror 1/5)...
+[Remo] V02: waiting on HTML source (mirror 1/5)...
+[Remo] V01: OK — playing from .../V01.mp4    ← 瞬间加载 ✓
+[Remo] V01: first bytes received (same-origin)
+[Remo] V02: OK — playing from .../V02.mp4    ← 瞬间加载 ✓
+[Remo] V02: first bytes received (same-origin)
+[Remo] V03: trying mirror 1/5: ./Video/V03.mp4
+[Remo] V04: trying mirror 1/5: ./Video/V04.mp4
+[Remo] V05: trying mirror 1/5: ./Video/V05.mp4
+[Remo] V03: same-origin stalled (no bytes for 10.0s) — failing to CDN  ← !!
+[Remo] V04: same-origin stalled (no bytes for 10.0s) — failing to CDN
+[Remo] V05: same-origin stalled (no bytes for 10.0s) — failing to CDN
+```
+
+V01/V02(HTML `<source>`)从同源**瞬间加载**;V03/V04/V05(JS 动态 `video.src=...`)**在 10 秒内一个字节都没收到**。同一个域名、同一个文件路径模式。
+
+### 根因
+
+**Chrome 对两种 `<video>` 的资源调度优先级完全不同**:
+
+| 创建方式 | 优先级 | 原因 |
+|---|---|---|
+| HTML 解析阶段的 `<video><source></video>` | **Highest / Auto** | 文档结构的一部分,与 LCP/视觉权重绑定 |
+| JS `document.createElement('video')` + `video.src = url` | **Lowest / Idle** | 被认为是"非关键"动态资源,排在所有其他 fetch 之后 |
+
+加上 `setupVideoFallback` 里 `video.src = ...; video.load()` 紧接着外层 `video.play()` 的组合,触发了 Chrome 的 AbortError(`The play() request was interrupted by a new load request`)。
+
+### 修复
+
+把 V03/V04/V05 也改成 V02 的**静态 HTML 结构**:
+
+```html
+<article class="flow-step has-video reveal delay-1">
+  <div class="flow-num">02 · ACOUSTIC LOCK</div>
+  <div class="flow-media" aria-hidden="true">
+    <video autoplay muted loop playsinline
+           webkit-playsinline="true"
+           x5-playsinline="true"
+           x5-video-player-type="h5"
+           x5-video-player-fullscreen="false"
+           preload="auto"
+           data-video-slot="V03"
+           class="flow-video">
+      <source src="./Video/V03.mp4" type="video/mp4">
+    </video>
+    <div class="flow-icon fallback" aria-hidden="true"><!-- SVG --></div>
+  </div>
+  <!-- ... -->
+</article>
+```
+
+JS 端同时移除:
+- `attachFlowStep` 函数(动态创建 `<video>` 的逻辑)
+- `IntersectionObserver` 懒加载(rootMargin 800px 本来就在页面打开时全部 trigger,不算真正"懒")
+- `.flow-step[data-video-slot]` 选择器(改用 `video[data-video-slot]` 统一处理)
+
+现在所有 5 个视频通过同一个循环处理:
+
+```js
+document.querySelectorAll("video[data-video-slot]").forEach((v) => {
+  const slot = v.getAttribute("data-video-slot");
+  setupVideoFallback(v, slot, /*hasInitialSource=*/ true);
+});
+```
+
+### 反模式追加
+
+| 想做 | 不要这样 | 原因 |
+|---|---|---|
+| 动态加视频 | ❌ JS `createElement('video') + video.src = ...` | Chrome 给最低优先级,可能完全不发请求 |
+| WeChat 视频"按需附着" | ❌ JS 动态创建 video 元素 | 同上 + WeChat X5 对动态元素的 play() 处理更糟 |
+| 视频懒加载 | ❌ IntersectionObserver + JS src 注入 | 优先级问题。要懒加载就 HTML 里写 `<video preload="metadata">` 然后 JS 在 IO 触发时改 preload="auto" |
+
+### 关于"5 视频同时下载"的并发顾虑
+
+之前担心 5 个视频并发会把 V01 拖慢。**实测发现并不会**:
+- 总视频体积 10.9MB
+- V01/V02 都是瞬间加载(说明用户网络在视频文件上 > 1MB/s)
+- Chrome HTTP/2 多路复用 + 智能拥塞控制 自然处理优先级
+
+如果未来在更慢的网络上出现 V01 被拖慢的情况,正确的优化是:
+1. V03-V05 改成 `preload="metadata"`,只下元数据
+2. 用 IntersectionObserver 在用户接近时把 preload 改成 "auto"
+3. **不要**回到 JS 动态创建模式

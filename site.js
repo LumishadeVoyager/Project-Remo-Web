@@ -1369,69 +1369,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Apply to V01 (showcase) and V02 (flow step 1) — HTML <source> exists.
+  // Apply to ALL videos (V01-V05) — they all have HTML <source> now.
+  //
+  // Why we stopped using JS-driven dynamic <video> creation for V03-V05:
+  // empirical Chrome testing (a79a6c9) showed that <video> elements
+  // created via JS and given `video.src = ...` are given a much lower
+  // priority by Chrome's resource scheduler than HTML-parsed <source>
+  // elements. On the same slow CN network where V01/V02 (HTML source)
+  // loaded instantly, V03/V04/V05 (JS-created src) received ZERO bytes
+  // even after 30+ seconds. The fix was to give them all static HTML
+  // <video><source></video> markup so they all share the same high
+  // priority class.
   document.querySelectorAll("video[data-video-slot]").forEach((v) => {
     const slot = v.getAttribute("data-video-slot");
     setupVideoFallback(v, slot, /*hasInitialSource=*/ true);
   });
-
-  // V03-V05 — flow-step containers, lazy-attached on scroll.
-  // Reason for lazy: on slow CN networks (30-100KB/s), having all 5
-  // videos load simultaneously fights for the same HTTP/2 connection
-  // and starves V01 (the hero showcase). Loading V03-V05 only when
-  // they're about to enter the viewport reduces the contention.
-  // rootMargin gives ~one screen of lead time so the video has a
-  // chance to load before the user actually sees it.
-  const attachFlowStep = (step) => {
-    const slot = step.getAttribute("data-video-slot");
-    if (!slot || step.dataset.videoAttached === "1") return;
-    step.dataset.videoAttached = "1";
-
-    const media = step.querySelector(".flow-media");
-    if (!media) return;
-    media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
-
-    const video = document.createElement("video");
-    video.autoplay = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.preload = "auto";
-    video.className = "flow-video";
-    video.setAttribute("webkit-playsinline", "true");
-    video.setAttribute("x5-playsinline", "true");
-    video.setAttribute("x5-video-player-type", "h5");
-    video.setAttribute("x5-video-player-fullscreen", "false");
-    const tapToPlay = () => {
-      try { video.muted = true; video.play(); } catch (_) {}
-    };
-    video.addEventListener("click", tapToPlay);
-    video.addEventListener("touchend", tapToPlay, { passive: true });
-
-    media.insertBefore(video, media.firstChild);
-    step.classList.add("has-video");
-
-    setupVideoFallback(video, slot, /*hasInitialSource=*/ false);
-
-    if (window.__remoVideoUnlocked || !__isWeChatUA) {
-      try { video.play(); } catch (_) {}
-    }
-  };
-
-  const flowSteps = document.querySelectorAll(".flow-step[data-video-slot]");
-  if ("IntersectionObserver" in window) {
-    const flowIO = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          attachFlowStep(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: "800px 0px" });
-    flowSteps.forEach((step) => flowIO.observe(step));
-  } else {
-    flowSteps.forEach(attachFlowStep);
-  }
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
