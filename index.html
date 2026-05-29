@@ -9,6 +9,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Warm up the jsDelivr connection early — videos are served from there.
+     TLS+TCP handshake alone shaves 1-2s off first-frame time on slow
+     mobile networks. -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <!-- HERO IMAGE is the most critical first-paint asset. Same-origin
      (GitHub Pages) so it benefits from the HTML connection that's
      already warm — no extra TLS handshake. WebP is 90 KB. -->
@@ -141,9 +146,9 @@
         x5-video-orientation="landscape"
         preload="auto"
         poster="./Image/Hero主体图.webp"
-        data-video-slot="V01"
+        data-video-fallback="./Video/V01.mp4"
         aria-label="Project Remo 水下跟随相机演示视频">
-        <source src="./Video/V01.mp4" type="video/mp4">
+        <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
       </video>
       <div class="showcase-overlay">
         <div class="showcase-meta" data-i18n="showcase.meta">水测实录 · 2026·04</div>
@@ -204,10 +209,10 @@
             x5-playsinline="true"
             x5-video-player-type="h5"
             x5-video-player-fullscreen="false"
-            preload="none"
-            data-video-slot="V02"
+            preload="auto"
+            data-video-fallback="./Video/V02.mp4"
             class="flow-video">
-            <source src="./Video/V02.mp4" type="video/mp4">
+            <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4" type="video/mp4">
           </video>
           <div class="flow-icon fallback" aria-hidden="true">
             <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="14" class="s"/><circle cx="32" cy="32" r="22" class="s faint"/><line x1="32" y1="6" x2="32" y2="16" class="s a"/><line x1="32" y1="48" x2="32" y2="58" class="s a"/></svg>

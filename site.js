@@ -1184,102 +1184,47 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
-     Strategy (post-mortem after multiple jsDelivr-only failures):
+     For flow steps that have a `data-video-slot="VNN"` attribute, attempt
+     to load the video.
 
-     We do NOT trust any single CDN to be reliably fast in mainland CN.
-     Different users / networks / time-of-day have wildly different
-     speeds against any one origin. Empirically observed:
-       - GitHub Pages (same-origin): slow (~50-200KB/s) but always works.
-       - jsDelivr CDN: occasionally fast (5MB/s+), occasionally times out
-         entirely (DNS pollution by some ISPs, abuse-quota throttling,
-         cold-cache 404 lock-in).
-       - statically.io: similar profile to jsDelivr, different infra.
+     SOURCE PRIORITY (the IMPORTANT part for mainland users):
+       1st (probe):    jsDelivr CDN  — has reverse-proxy nodes inside CN
+                       and is 5-10× faster than GitHub Pages for WeChat.
+       2nd (fallback): local GitHub Pages path — used only if jsDelivr is
+                       degraded for that file. Same-origin so it bypasses
+                       any CDN cache miss.
 
-     So we RACE up to 3 mirrors in parallel via fetch HEAD with a 4s
-     timeout. Whoever responds 200 first wins, the others are aborted.
-     This gives "best-of-3" latency without committing to one source.
-
-     If ALL 3 mirrors fail/time-out we fall back to same-origin again
-     (slow but works). The user always sees something within ~5s.
-
-     SOURCE ORDER (race candidates):
-       1. ./Video/Vxx.mp4               — GitHub Pages, same-origin
-       2. https://cdn.jsdelivr.net/...  — jsDelivr (CN reverse-proxy)
-       3. https://cdn.statically.io/... — statically.io fallback CDN
-
-     attached video <video> always starts at the winner. If the winner
-     later 5xxs mid-stream, the per-video error handler swaps to the
-     2nd-fastest. This is the "fastest-source race" pattern.
+     This used to be a "multi-CDN race" via fetch HEAD probes against
+     jsDelivr+statically+same-origin. The race added ~500-1500ms of
+     pre-flight latency to EVERY video and the swap-src logic
+     interrupted videos that had already started loading. Reverted to
+     this simpler "single probe with one fallback" because it's what
+     was empirically the fastest and most reliable for our users.
 
      WeChat note: V01 showcase confirmed that X5 *does* play() inline
      when called from a user gesture, so V02-V05 ride the same path —
      the showcase tap will also kick the flow videos awake. */
   const __isWeChatUA = /MicroMessenger/i.test(navigator.userAgent);
+  const CDN_BASE = "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main";
 
   // Set to true the moment the user successfully taps the WeChat
   // showcase overlay. After that point, every newly-attached flow
-  // video should play() immediately on attach.
+  // video should play() immediately on attach (X5 grandfathers the
+  // gesture into subsequent play() calls within the same session).
   window.__remoVideoUnlocked = false;
 
-  // Race multiple URLs via HEAD fetch and resolve to the first that
-  // returns ok. AbortSignal.timeout on each leg, plus a hard outer
-  // timeout. If all fail, returns the first URL anyway (best-effort).
-  const RACE_TIMEOUT_MS = 4000;
-  const raceFastestUrl = (urls) => {
-    if (urls.length === 0) return Promise.resolve(null);
-    if (urls.length === 1) return Promise.resolve(urls[0]);
-    return new Promise((resolve) => {
-      let settled = false;
-      const controllers = urls.map(() => new AbortController());
-      const settle = (winner) => {
-        if (settled) return;
-        settled = true;
-        controllers.forEach((c) => { try { c.abort(); } catch (_) {} });
-        resolve(winner);
-      };
-      let pending = urls.length;
-      urls.forEach((u, i) => {
-        // Range: bytes=0-0 — request only the first byte. Most CDNs
-        // honor this and it makes the race ~100× cheaper than a full
-        // HEAD (which some CDNs refuse for video files anyway).
-        fetch(u, {
-          method: "GET",
-          headers: { "Range": "bytes=0-0" },
-          signal: controllers[i].signal,
-          mode: "cors",
-          cache: "no-store",
-        }).then((r) => {
-          if (r.ok || r.status === 206) settle(u);
-          else if (--pending === 0) settle(urls[0]); // best-effort
-        }).catch(() => {
-          if (--pending === 0) settle(urls[0]);
-        });
-      });
-      // Hard outer timeout — if even the fast wins are slow, accept
-      // same-origin and move on.
-      setTimeout(() => settle(urls[0]), RACE_TIMEOUT_MS);
-    });
-  };
-
-  const buildMirrorUrls = (slot, kind) => {
-    // kind: "Video" | "Image"
-    const path = `${kind}/${slot}`;
-    return [
-      `./${path}`,
-      `https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/${path}`,
-      `https://cdn.statically.io/gh/LumishadeVoyager/Project-Remo-Web/main/${path}`,
-    ];
-  };
-
-  const attachFlowVideo = (step) => {
+  document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
     const slot = step.getAttribute("data-video-slot");
-    if (!slot || step.dataset.videoAttached === "1") return;
-    step.dataset.videoAttached = "1";
-    const filename = `${slot}.mp4`;
-    const mirrors = buildMirrorUrls(filename, "Video");
-
-    raceFastestUrl(mirrors).then((winningUrl) => {
-      const finalUrl = winningUrl || mirrors[0];
+    if (!slot) return;
+    // Order matters: CDN first (mainland-friendly), local as fallback.
+    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
+    const localUrl = `./Video/${slot}.mp4`;
+    const probe = document.createElement("video");
+    probe.preload = "metadata";
+    probe.muted = true;
+    probe.playsInline = true;
+    let triedLocal = false;
+    const onSuccess = (workingUrl) => {
       const media = step.querySelector(".flow-media");
       if (!media) return;
       media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
@@ -1294,73 +1239,35 @@ document.addEventListener("DOMContentLoaded", () => {
       video.setAttribute("x5-playsinline", "true");
       video.setAttribute("x5-video-player-type", "h5");
       video.setAttribute("x5-video-player-fullscreen", "false");
-      video.src = finalUrl;
-      // If the winning URL fails mid-stream, walk the remaining
-      // mirrors in order. Each error swap is one-shot.
-      let mirrorIdx = mirrors.indexOf(finalUrl);
+      video.src = workingUrl;
+      const otherUrl = workingUrl === cdnUrl ? localUrl : cdnUrl;
+      let swapped = false;
       video.addEventListener("error", () => {
-        mirrorIdx++;
-        if (mirrorIdx < mirrors.length) {
-          video.src = mirrors[mirrorIdx];
-          video.load();
-        }
+        if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
       });
-      const tapToPlay = () => {
+      // Per-video click → synchronous play() inside user gesture. This
+      // is the WeChat-safe activation path; harmless on every other
+      // browser (already auto-playing).
+      const tapToPlay = (ev) => {
         try { video.muted = true; video.play(); } catch (_) {}
       };
       video.addEventListener("click", tapToPlay);
       video.addEventListener("touchend", tapToPlay, { passive: true });
       media.insertBefore(video, media.firstChild);
       step.classList.add("has-video");
+      // If the user has already activated playback (WeChat overlay
+      // tapped), kick this just-attached video immediately. Outside
+      // WeChat the video is already autoplaying.
       if (window.__remoVideoUnlocked || !__isWeChatUA) {
         try { video.play(); } catch (_) {}
       }
-    });
-  };
-
-  // Upgrade an existing in-document <video> (V01 showcase, V02 flow-1)
-  // to use the fastest available mirror. The HTML's same-origin source
-  // already starts loading on parse, so this is purely an upgrade —
-  // if a faster CDN responds first, swap the src.
-  const upgradeExistingVideo = (videoEl) => {
-    const slot = videoEl.getAttribute("data-video-slot");
-    if (!slot || videoEl.dataset.upgradedSrc === "1") return;
-    videoEl.dataset.upgradedSrc = "1";
-    const mirrors = buildMirrorUrls(`${slot}.mp4`, "Video");
-    raceFastestUrl(mirrors).then((winner) => {
-      // Only upgrade if we found a non-default winner AND the existing
-      // video has not already started playing meaningfully (readyState
-      // < HAVE_FUTURE_DATA = 3). Avoid mid-playback flickers.
-      if (!winner || winner === mirrors[0]) return;
-      if (videoEl.readyState >= 3) return;
-      try {
-        const sources = videoEl.querySelectorAll("source");
-        sources.forEach((s) => s.remove());
-        videoEl.src = winner;
-        videoEl.load();
-      } catch (_) {}
-    });
-  };
-
-  // Upgrade the showcase + first flow video on document ready.
-  document.querySelectorAll("video[data-video-slot]").forEach(upgradeExistingVideo);
-
-  // Lazy-attach V03-V05 etc. via IntersectionObserver — only start
-  // racing mirrors when the user scrolls within ~half a screen.
-  const flowSteps = document.querySelectorAll(".flow-step[data-video-slot]");
-  if ("IntersectionObserver" in window && flowSteps.length) {
-    const flowIo = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          attachFlowVideo(entry.target);
-          flowIo.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: "500px 0px 500px 0px", threshold: 0.01 });
-    flowSteps.forEach((s) => flowIo.observe(s));
-  } else {
-    flowSteps.forEach(attachFlowVideo);
-  }
+    };
+    probe.onloadedmetadata = () => onSuccess(probe.src);
+    probe.onerror = () => {
+      if (!triedLocal) { triedLocal = true; probe.src = localUrl; }
+    };
+    probe.src = cdnUrl;
+  });
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
