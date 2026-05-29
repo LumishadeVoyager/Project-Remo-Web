@@ -9,19 +9,21 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Video mirror preconnects. After empirical testing, fastly.jsdelivr.net
-     was removed (it 301-redirects to cdn). We preconnect the top 2
-     mirrors so the fallback chain has hot connections ready.
+<!-- Video mirror preconnects. Same-origin (./Video/) is the PRIMARY
+     source — the page already has a hot connection to it, and empirical
+     testing showed jsDelivr/statically can be fully blocked from some
+     CN ISPs while GitHub Pages stays reachable. The CDN mirrors below
+     are FALLBACKS only, used if same-origin times out (3s).
 
      Mirror order (per site.js VIDEO_MIRRORS):
-       1. cdn.jsdelivr.net           — main
-       2. gcore.jsdelivr.net         — Gcore (Asia POPs, usually fastest)
-       3. testingcf.jsdelivr.net     — Cloudflare only
-       4. cdn.statically.io          — different service
-       5. ./Video/                    — same-origin GitHub Pages
+       1. ./Video/                    — same-origin GitHub Pages (PRIMARY)
+       2. cdn.jsdelivr.net           — jsDelivr main
+       3. gcore.jsdelivr.net         — Gcore (Asia POPs)
+       4. testingcf.jsdelivr.net     — Cloudflare-only mirror
+       5. cdn.statically.io          — different service, last resort
 
-     Preconnect the top 3 (TLS+TCP handshake completed before fetch),
-     dns-prefetch the next 1 (just DNS resolved, cheaper). -->
+     Preconnect the top 3 fallback CDNs so handshakes are ready when
+     same-origin fails. dns-prefetch the last one (cheaper). -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://testingcf.jsdelivr.net" crossorigin>
@@ -160,7 +162,7 @@
         poster="./Image/Hero主体图.webp"
         data-video-slot="V01"
         aria-label="Project Remo 水下跟随相机演示视频">
-        <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
+        <source src="./Video/V01.mp4" type="video/mp4">
       </video>
       <div class="showcase-overlay">
         <div class="showcase-meta" data-i18n="showcase.meta">水测实录 · 2026·04</div>
@@ -224,7 +226,7 @@
             preload="auto"
             data-video-slot="V02"
             class="flow-video">
-            <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4" type="video/mp4">
+            <source src="./Video/V02.mp4" type="video/mp4">
           </video>
           <div class="flow-icon fallback" aria-hidden="true">
             <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="14" class="s"/><circle cx="32" cy="32" r="22" class="s faint"/><line x1="32" y1="6" x2="32" y2="16" class="s a"/><line x1="32" y1="48" x2="32" y2="58" class="s a"/></svg>

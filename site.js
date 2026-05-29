@@ -1185,34 +1185,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ─── 6.5 Robust video loading with mirror fallback + prewarm ────────
 
-     CRITICAL CONTEXT: Chinese mobile ISPs DON'T block cdn.jsdelivr.net
-     at the network level (verified by user log showing some V01/V03
-     work on cdn.jsdelivr.net while V02/V04/V05 timeout). The real
-     issue is jsDelivr CDN CACHE MISS — when a PoP node hasn't cached
-     a file yet, it has to back-fetch from GitHub, which is slow from
-     China. Different files have different cache coverage across PoPs.
+     CRITICAL CONTEXT (rev 2): Empirical testing on real CN networks
+     showed that jsDelivr / statically.io domains can be entirely
+     unreachable from some ISPs (all 4 CDN mirrors timing out with
+     ERR_CONNECTION_TIMED_OUT), while same-origin GitHub Pages stays
+     reachable — because the page itself was just loaded from there,
+     so the connection is hot. We previously had same-origin as the
+     LAST fallback, which meant users on those ISPs waited ~25 seconds
+     (5 mirrors × 5s timeout) before the videos finally appeared.
 
-     Strategy: 5 mirror URLs tried in order. Each gets 5 seconds.
-     CRUCIAL OPTIMIZATION: while mirror N is being tried, we ALSO
-     background-fetch the first 100 bytes of mirror N+1. This forces
-     mirror N+1's PoP to back-fetch from GitHub AHEAD of time, so
-     when we actually need to switch to it, it's already cached.
+     New strategy: SAME-ORIGIN FIRST. The HTML's <source> already
+     points at ./Video/V0X.mp4. If same-origin is fast (the common
+     case), users see the video in 1-2 seconds. If it's slow, we fail
+     over to jsDelivr / statically as fallbacks within 3 seconds.
 
-     MIRRORS (ordered by empirical reliability):
-       0. https://cdn.jsdelivr.net/...        ← main
-       1. https://gcore.jsdelivr.net/...      ← Gcore (Asia nodes)
-       2. https://testingcf.jsdelivr.net/...  ← Cloudflare only
-       3. https://cdn.statically.io/...       ← different service
-       4. ./Video/...                          ← same-origin
+     CDN PREWARM: while waiting on mirror N, we background-fetch the
+     first 100 bytes of mirror N+1. This forces that PoP to back-fetch
+     from GitHub now, so the switch is fast if we have to make it.
 
-     NOTE: fastly.jsdelivr.net was REMOVED — it returns HTTP 301
-     redirecting to cdn.jsdelivr.net, so it's not actually a
-     separate mirror, just a wasted hop.
+     MIRRORS (in order, lowest index = first try):
+       0. ./Video/...                          ← same-origin (PRIMARY)
+       1. https://cdn.jsdelivr.net/...        ← jsDelivr main
+       2. https://gcore.jsdelivr.net/...      ← Gcore (Asia POPs)
+       3. https://testingcf.jsdelivr.net/...  ← Cloudflare-only mirror
+       4. https://cdn.statically.io/...       ← different service
 
-     Why 5s timeout (not 8s): when the primary mirror works, it
-     usually starts streaming within 2-3s. 5s leaves enough margin
-     for slow 3G/4G but doesn't waste user time when the mirror is
-     genuinely cache-miss-stuck.
+     Why 3s timeout (not 5s): same-origin is local-ish (GitHub Pages
+     edge) and should respond fast. 3s catches genuinely-broken
+     same-origin loads quickly, and the failover chain is tighter.
+     Total worst-case wait: 3s × 5 = 15s (was 25s).
 
      Console output: every state transition logs with `[Remo]` so
      users can debug in DevTools. */
@@ -1220,13 +1221,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.__remoVideoUnlocked = false;
 
   const VIDEO_MIRRORS = [
+    "./Video/",
     "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
     "https://gcore.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
     "https://testingcf.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
     "https://cdn.statically.io/gh/LumishadeVoyager/Project-Remo-Web/main/Video/",
-    "./Video/",
   ];
-  const MIRROR_TIMEOUT_MS = 5000;
+  const MIRROR_TIMEOUT_MS = 3000;
 
   // Background prewarm: trigger CDN to cache the first 100 bytes of
   // the next mirror's URL. This forces that CDN's PoP to back-fetch

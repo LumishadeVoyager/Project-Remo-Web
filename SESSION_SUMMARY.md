@@ -771,3 +771,62 @@ curl -sI "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Vid
 - `preload as=video` 给 V01.mp4 提前发起请求
 
 ### 4. 文档：本备忘段落 + 后续维护者验证清单
+
+---
+
+## 2026-05-30 会话增量 · 第 7 轮(同源优先翻转 —— 上一轮的修正)
+
+> **本轮废弃了第 6 轮 "HTML source 顺序翻转" 的结论。** 见下方"为什么翻回来"。
+
+### 现象
+
+用户实测控制台日志(关 VPN,5G 网络),所有 5 个视频经历:
+
+```
+mirror 1 (cdn.jsdelivr.net):     timeout 5s
+mirror 2 (gcore.jsdelivr.net):   timeout 5s
+mirror 3 (testingcf.jsdelivr.net): timeout 5s
+mirror 4 (cdn.statically.io):    ERR_CONNECTION_TIMED_OUT
+mirror 5 (./Video/ 同源):         ✓ OK
+```
+
+**所有 4 个 CDN 都不可达,只有同源 GitHub Pages 成功**。每个视频等了 ~25 秒才出现。
+
+### 第 6 轮判断失误的原因
+
+第 6 轮假设 "GitHub Pages 大陆慢,jsDelivr 大陆快" → 把 jsDelivr 设主源,同源做兜底。
+**这个判断只在某些网络下成立。** 在该用户的特定 ISP 环境:
+
+- ISP 把 jsDelivr / statically.io 的全部域名都封了(或 DNS 污染严重)
+- VPN 能用就是因为绕开了这层封锁
+- 而 GitHub Pages(Fastly)反而能正常访问 —— 因为页面本身就是从那里加载的,连接已建立
+
+### 第 7 轮策略:同源 First
+
+| 项 | 第 6 轮 | 第 7 轮 |
+|---|---|---|
+| HTML `<source>` | `cdn.jsdelivr.net/.../V0X.mp4` | **`./Video/V0X.mp4`** |
+| VIDEO_MIRRORS[0] | `cdn.jsdelivr.net/...` | **`./Video/`** |
+| MIRROR_TIMEOUT_MS | 5000ms | **3000ms** |
+| 兜底链 | 4 CDN → 同源(用不到) | 同源 → 4 CDN(几乎用不到) |
+
+### 为什么这次是对的
+
+1. **HTML 已经从 GitHub Pages 加载成功** —— 这是确定性证据,说明同源链路是通的
+2. **TCP 连接已建立** —— 同源视频请求复用现有连接,无 TLS 握手开销
+3. **去掉所有 CDN 不可达的等待时间** —— 用户最坏情况从 25s 降到 3s
+4. **CDN 留作兜底** —— 万一某天 GitHub Pages 自己抽风,还有失败转移
+
+### 反模式总结(累计版)
+
+| 想做 | 不要这样 | 原因 |
+|---|---|---|
+| 多镜像提速 | ❌ Multi-CDN race(pre-flight HEAD) | 增加 500-1500ms 延迟,且 race 完后 src 重置会中断已经在加载的视频 |
+| 多镜像提速 | ❌ 把同源放最后 | 当用户网络封锁所有 CDN 时,需等所有 timeout 才能用同源(实测 25s) |
+| 提升 LCP | ❌ `<link rel="preload" as="video">` 大文件 | 抢带宽影响 hero image 与 CSS,且 X5 浏览器对 preload 不敏感 |
+| WeChat 视频自动播 | ❌ IntersectionObserver / setInterval 心跳 | X5 只在用户手势同步栈里允许 play(),非同步 play() 会被静默吞掉 |
+| 让 jsDelivr 缓存生效 | ❌ 只等 12h TTL | 立即 `curl purge.jsdelivr.net/...` 强制刷新失败缓存 |
+
+### 长期方案(仍待办)
+
+仍然推荐:**ICP 备案 + 国内对象存储 + 国内 CDN**。一旦用户基数起来,这是唯一能稳定百毫秒级首帧的路径。预算几十块每月,但需要 2-3 周走 ICP 备案流程。
