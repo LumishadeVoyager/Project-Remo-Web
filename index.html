@@ -9,11 +9,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Warm up the jsDelivr connection early — videos are served from there.
-     TLS+TCP handshake alone shaves 1-2s off first-frame time on slow
-     mobile networks. -->
+<!-- Video mirror preconnects. We try 6 mirrors in order if any fail:
+     jsdelivr.net → fastly.jsdelivr.net → gcore.jsdelivr.net (Gcore has
+     CN nodes, often the most reliable when others are DNS-polluted) →
+     testingcf.jsdelivr.net → statically.io → same-origin.
+
+     Preconnect the top 2 to keep first-paint fast; the rest are
+     dns-prefetch only (cheaper, just resolves the DNS upfront so the
+     fallback chain doesn't pay another round trip when it kicks in). -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://fastly.jsdelivr.net">
+<link rel="dns-prefetch" href="https://testingcf.jsdelivr.net">
+<link rel="dns-prefetch" href="https://cdn.statically.io">
 <!-- HERO IMAGE is the most critical first-paint asset. Same-origin
      (GitHub Pages) so it benefits from the HTML connection that's
      already warm — no extra TLS handshake. WebP is 90 KB. -->
@@ -146,7 +154,7 @@
         x5-video-orientation="landscape"
         preload="auto"
         poster="./Image/Hero主体图.webp"
-        data-video-fallback="./Video/V01.mp4"
+        data-video-slot="V01"
         aria-label="Project Remo 水下跟随相机演示视频">
         <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
       </video>
@@ -210,7 +218,7 @@
             x5-video-player-type="h5"
             x5-video-player-fullscreen="false"
             preload="auto"
-            data-video-fallback="./Video/V02.mp4"
+            data-video-slot="V02"
             class="flow-video">
             <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4" type="video/mp4">
           </video>

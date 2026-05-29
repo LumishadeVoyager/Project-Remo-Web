@@ -1183,90 +1183,170 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
-     For flow steps that have a `data-video-slot="VNN"` attribute, attempt
-     to load the video.
+  /* ─── 6.5 Robust video loading with 6-mirror fallback ────────────────
 
-     SOURCE PRIORITY (the IMPORTANT part for mainland users):
-       1st (probe):    jsDelivr CDN  — has reverse-proxy nodes inside CN
-                       and is 5-10× faster than GitHub Pages for WeChat.
-       2nd (fallback): local GitHub Pages path — used only if jsDelivr is
-                       degraded for that file. Same-origin so it bypasses
-                       any CDN cache miss.
+     CRITICAL CONTEXT: Chinese mobile ISPs (especially China Mobile 5G
+     and China Unicom) actively block or DNS-pollute cdn.jsdelivr.net.
+     Users on these networks report "VPN on = works, VPN off = stuck
+     forever". This module exists to work around that.
 
-     This used to be a "multi-CDN race" via fetch HEAD probes against
-     jsDelivr+statically+same-origin. The race added ~500-1500ms of
-     pre-flight latency to EVERY video and the swap-src logic
-     interrupted videos that had already started loading. Reverted to
-     this simpler "single probe with one fallback" because it's what
-     was empirically the fastest and most reliable for our users.
+     Strategy: 6 mirror URLs are tried in order. Each gets 8 seconds.
+     If the active mirror's <video> element has readyState < 2 after
+     8s, OR it fires an `error` event, we move to the next mirror.
 
-     WeChat note: V01 showcase confirmed that X5 *does* play() inline
-     when called from a user gesture, so V02-V05 ride the same path —
-     the showcase tap will also kick the flow videos awake. */
+     MIRRORS (ordered by empirical reliability in mainland CN):
+       0. https://cdn.jsdelivr.net/...        ← main, often blocked
+       1. https://gcore.jsdelivr.net/...      ← Gcore has CN nodes
+       2. https://fastly.jsdelivr.net/...     ← Fastly direct
+       3. https://testingcf.jsdelivr.net/...  ← Cloudflare direct
+       4. https://cdn.statically.io/...       ← different CDN entirely
+       5. ./Video/...                          ← same-origin GitHub Pages
+
+     Mirror 0 is also what HTML's <source> uses. The JS just sits and
+     watches; if it works, we never touch the chain. If not, JS picks
+     up at mirror 1.
+
+     Why 8s timeout: gives a slow but working mirror enough time to
+     start streaming on 3G/4G, but doesn't make users wait forever on
+     a blocked mirror.
+
+     Console output: every state transition is logged with `[Remo]`
+     prefix so users can debug their own network in DevTools / Eruda. */
   const __isWeChatUA = /MicroMessenger/i.test(navigator.userAgent);
-  const CDN_BASE = "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main";
-
-  // Set to true the moment the user successfully taps the WeChat
-  // showcase overlay. After that point, every newly-attached flow
-  // video should play() immediately on attach (X5 grandfathers the
-  // gesture into subsequent play() calls within the same session).
   window.__remoVideoUnlocked = false;
 
+  const VIDEO_MIRRORS = [
+    "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
+    "https://gcore.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
+    "https://fastly.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
+    "https://testingcf.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
+    "https://cdn.statically.io/gh/LumishadeVoyager/Project-Remo-Web/main/Video/",
+    "./Video/",
+  ];
+  const MIRROR_TIMEOUT_MS = 8000;
+
+  const setupVideoFallback = (video, slot, hasInitialSource) => {
+    if (!video || !slot || video.dataset.fallbackSetup === "1") return;
+    video.dataset.fallbackSetup = "1";
+
+    // idx is the current mirror index. If the HTML <source> already
+    // exists with mirror 0, we start at 0 (waiting on it). Otherwise
+    // we'll call tryNext() to set the initial src to mirror 0.
+    let idx = hasInitialSource ? 0 : -1;
+    let timeoutId = null;
+
+    const log = (msg) => {
+      try { console.log(`[Remo] ${slot}: ${msg}`); } catch (_) {}
+    };
+
+    const clearTimer = () => {
+      if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+    };
+
+    const startTimer = () => {
+      clearTimer();
+      timeoutId = setTimeout(() => {
+        if (video.readyState < 2) {
+          log(`mirror ${idx + 1}/${VIDEO_MIRRORS.length} timeout after ${MIRROR_TIMEOUT_MS}ms`);
+          tryNext();
+        }
+      }, MIRROR_TIMEOUT_MS);
+    };
+
+    const tryNext = () => {
+      clearTimer();
+      idx++;
+      if (idx >= VIDEO_MIRRORS.length) {
+        log(`ALL ${VIDEO_MIRRORS.length} mirrors failed. Last resort: keep ` +
+            `the broken src; user may try refresh or use a VPN.`);
+        return;
+      }
+      const url = `${VIDEO_MIRRORS[idx]}${slot}.mp4`;
+      log(`trying mirror ${idx + 1}/${VIDEO_MIRRORS.length}: ${url}`);
+      try {
+        video.querySelectorAll("source").forEach((s) => s.remove());
+        video.src = url;
+        video.load();
+      } catch (_) {}
+      startTimer();
+    };
+
+    const onLoadedData = () => {
+      clearTimer();
+      log(`OK — playing from ${video.currentSrc}`);
+    };
+
+    const onError = () => {
+      log(`error event on mirror ${idx + 1}/${VIDEO_MIRRORS.length}`);
+      tryNext();
+    };
+
+    video.addEventListener("error", onError);
+    video.addEventListener("loadeddata", onLoadedData);
+
+    if (hasInitialSource) {
+      // HTML's <source> already started downloading. Check current
+      // state: if it already errored, immediately try next mirror;
+      // if it already loaded, do nothing; otherwise start the timer.
+      if (video.error) {
+        log("HTML source already errored, advancing to next mirror");
+        tryNext();
+      } else if (video.readyState >= 2) {
+        onLoadedData();
+      } else {
+        log(`waiting on HTML source (mirror 1/${VIDEO_MIRRORS.length})...`);
+        startTimer();
+      }
+    } else {
+      // V03-V05 — no HTML source, kick off mirror 0 ourselves.
+      tryNext();
+    }
+  };
+
+  // Apply to V01 (showcase) and V02 (flow step 1) which both have
+  // HTML <source> elements already.
+  document.querySelectorAll("video[data-video-slot]").forEach((v) => {
+    const slot = v.getAttribute("data-video-slot");
+    setupVideoFallback(v, slot, /*hasInitialSource=*/ true);
+  });
+
+  // Apply to V03-V05 — these are flow-step containers without a
+  // <video> child. Create one and let setupVideoFallback drive src.
   document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
     const slot = step.getAttribute("data-video-slot");
-    if (!slot) return;
-    // Order matters: CDN first (mainland-friendly), local as fallback.
-    const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
-    const localUrl = `./Video/${slot}.mp4`;
-    const probe = document.createElement("video");
-    probe.preload = "metadata";
-    probe.muted = true;
-    probe.playsInline = true;
-    let triedLocal = false;
-    const onSuccess = (workingUrl) => {
-      const media = step.querySelector(".flow-media");
-      if (!media) return;
-      media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
-      const video = document.createElement("video");
-      video.autoplay = true;
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.preload = "auto";
-      video.className = "flow-video";
-      video.setAttribute("webkit-playsinline", "true");
-      video.setAttribute("x5-playsinline", "true");
-      video.setAttribute("x5-video-player-type", "h5");
-      video.setAttribute("x5-video-player-fullscreen", "false");
-      video.src = workingUrl;
-      const otherUrl = workingUrl === cdnUrl ? localUrl : cdnUrl;
-      let swapped = false;
-      video.addEventListener("error", () => {
-        if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
-      });
-      // Per-video click → synchronous play() inside user gesture. This
-      // is the WeChat-safe activation path; harmless on every other
-      // browser (already auto-playing).
-      const tapToPlay = (ev) => {
-        try { video.muted = true; video.play(); } catch (_) {}
-      };
-      video.addEventListener("click", tapToPlay);
-      video.addEventListener("touchend", tapToPlay, { passive: true });
-      media.insertBefore(video, media.firstChild);
-      step.classList.add("has-video");
-      // If the user has already activated playback (WeChat overlay
-      // tapped), kick this just-attached video immediately. Outside
-      // WeChat the video is already autoplaying.
-      if (window.__remoVideoUnlocked || !__isWeChatUA) {
-        try { video.play(); } catch (_) {}
-      }
+    if (!slot || step.dataset.videoAttached === "1") return;
+    step.dataset.videoAttached = "1";
+
+    const media = step.querySelector(".flow-media");
+    if (!media) return;
+    media.querySelectorAll(".flow-icon").forEach((el) => el.classList.add("fallback"));
+
+    const video = document.createElement("video");
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = "auto";
+    video.className = "flow-video";
+    video.setAttribute("webkit-playsinline", "true");
+    video.setAttribute("x5-playsinline", "true");
+    video.setAttribute("x5-video-player-type", "h5");
+    video.setAttribute("x5-video-player-fullscreen", "false");
+    // Tap-to-play (WeChat-safe activation)
+    const tapToPlay = () => {
+      try { video.muted = true; video.play(); } catch (_) {}
     };
-    probe.onloadedmetadata = () => onSuccess(probe.src);
-    probe.onerror = () => {
-      if (!triedLocal) { triedLocal = true; probe.src = localUrl; }
-    };
-    probe.src = cdnUrl;
+    video.addEventListener("click", tapToPlay);
+    video.addEventListener("touchend", tapToPlay, { passive: true });
+
+    media.insertBefore(video, media.firstChild);
+    step.classList.add("has-video");
+
+    setupVideoFallback(video, slot, /*hasInitialSource=*/ false);
+
+    if (window.__remoVideoUnlocked || !__isWeChatUA) {
+      try { video.play(); } catch (_) {}
+    }
   });
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */

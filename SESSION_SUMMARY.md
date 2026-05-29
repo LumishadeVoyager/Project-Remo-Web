@@ -503,7 +503,102 @@ grid 比例改为 5fr + 7fr（文窄控宽）
 
 ---
 
-## 🚨 永久备忘修订版 · 视频/图片加载策略最终结论（2026-05-29）
+## 🚨🚨 永久备忘最终版 · 视频加载真相（2026-05-29 用户 VPN 测试后）
+
+> **用户实测：5G 网络下视频完全打不开,VPN 一开就行。**
+>
+> 这个测试结果排除了所有"代码问题"假说。问题在网络层。
+
+### 真正的根因（这次确认了）
+
+中国大陆运营商（中国移动 5G 尤甚,联通也常见）**主动屏蔽 cdn.jsdelivr.net 域名**。屏蔽方式可能是:
+
+1. **DNS 污染** — 查询 `cdn.jsdelivr.net` 时返回错误 IP,浏览器连不上
+2. **SNI 阻断** — TLS 握手时,运营商看到 SNI = `cdn.jsdelivr.net`,直接发 TCP RST 掐断
+3. **IP 黑名单** — Fastly/Cloudflare 的部分 IP 段在大陆被封
+
+**这不是 jsDelivr 本身的问题,也不是我们代码的问题** — 是运营商主动干扰。VPN 把流量绕到境外节点,跳过了运营商的拦截,所以一开就行。
+
+不同地区、不同运营商、不同时段封锁强度不一样,所以"有时能播有时不能"是真实存在的。
+
+### 当前实施的多镜像 fallback 方案
+
+`site.js` 6.5 节实现了一个 6 层镜像 fallback,按顺序尝试:
+
+| # | URL prefix | 后端 | 大陆可达性 |
+|---|---|---|---|
+| 1 | `cdn.jsdelivr.net` | 智能路由 | 经常被封 |
+| 2 | `gcore.jsdelivr.net` | Gcore（**有大陆节点**） | **最可能可达** |
+| 3 | `fastly.jsdelivr.net` | Fastly only | 部分封 |
+| 4 | `testingcf.jsdelivr.net` | Cloudflare only | 部分封 |
+| 5 | `cdn.statically.io` | 完全不同的服务 | 不同 IP 段 |
+| 6 | `./Video/...` | GitHub Pages (Fastly) | 部分封 |
+
+逻辑:
+- 每个镜像 8 秒超时,`readyState < 2` 就切换下一个
+- `error` 事件也立即切换
+- `loadeddata` 事件清掉 timeout,确认加载成功
+- 详细 `console.log("[Remo] ...")` 让用户在 DevTools 看到具体哪个通哪个不通
+
+最差情况:全部 6 个都被封 → 用户必须用 VPN 或者刷新重试。
+
+### 调试用户网络问题的方法
+
+如果用户报告还是看不到视频:
+
+1. **PC 浏览器**:F12 → Console → 看 `[Remo]` 开头的日志
+   - 看到 `OK — playing from ...` = 成功,记下用了哪个镜像
+   - 看到一直 `trying mirror N+1...` = 那个镜像被封了
+2. **手机微信**:用 [eruda](https://github.com/liriliri/eruda) 嵌入式 DevTools。我们可以加一段:
+   ```html
+   <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+   <script>eruda.init();</script>
+   ```
+   但这本身也走 jsDelivr,讽刺。可以放同源。
+3. **直接问用户哪个镜像最后成功了** — 这能帮我们摸清不同 ISP 的封锁模式
+
+### ⛔ 真正 100% 稳定的唯一方案（仍未实施）
+
+**国内对象存储 + ICP 备案域名 CDN**。详细步骤:
+
+1. **ICP 备案**(必须):
+   - 个人备案,材料:身份证、手机、住址证明
+   - 通过阿里云/腾讯云/华为云任一渠道办,免费
+   - 周期 1-2 周
+   - 拿到备案号后绑定到自定义域名
+
+2. **对象存储 + CDN**（任选一家）:
+   - **腾讯云 COS**:免费 50GB/月 + 国内全网 CDN,适合个人项目
+   - **阿里云 OSS**:免费 5GB/月（更省钱但量少）
+   - **七牛云**:10GB 免费,需要绑定备案域名后才能持续用
+   - 月成本 ¥10-30 级别(看带宽)
+
+3. **替换镜像配置**:
+   ```js
+   const VIDEO_MIRRORS = [
+     "https://video.your-domain.com/Video/",  // 国内 CDN 主源,稳定 100MB/s
+     ...(旧的 jsDelivr 镜像作为应急 fallback)
+   ];
+   ```
+
+**为什么必须做**:免费 CDN 都依赖境外节点,大陆 ISP 随时可以封。只有备案的国内 CDN 才能稳定。
+
+### ⛔ 历史踩过的坑（永久不再踩）
+
+| ❌ 错误做法 | 为什么 |
+|---|---|
+| 单 CDN 主源（jsDelivr / statically / 任一个） | 任一被封全站挂 |
+| 用 `fetch + Range` 做主动 race | 增加 pre-flight 延迟,且 swap src 中断已经在加载的视频 |
+| `IntersectionObserver` lazy attach | 用户滑到才开始加载,网络不稳时极其卡 |
+| 让 5 个 video 同时 `preload="auto"` | 并发抢 X5 网络栈 |
+| 在 `<link rel="preload" as=video>` 抢首屏带宽 | Hero 图被挤,首屏几秒空白 |
+| 降低视频码率/分辨率 | 治标不治本,瓶颈在网络不在文件大小 |
+| 用 setInterval / requestAnimationFrame 触发 X5 的 play() | X5 沙箱不接受非用户手势的 play |
+| 信"jsDelivr 在 CN 有反代节点,主源 jsDelivr 没问题" | 反代节点不稳定,运营商封锁随时变化 |
+
+---
+
+## 2026-05-29 会话增量更新 · 第 6 轮（视频加载提速）
 
 > **前几轮记录的"jsDelivr 主源 + GitHub Pages 备源"策略已被废弃。** 实测表明无论顺序怎么排,只要走单一 CDN,就一定有部分用户/网络/时段加载极慢。最终方案是同源 + 多 CDN 并行竞速。
 
