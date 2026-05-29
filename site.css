@@ -2219,6 +2219,125 @@ video.showcase-video {
 
   /* Disable scanning beam on mobile — noisy overlay */
   .hero-stage::after { display: none; }
+
+  /* ── Sections 11–End: compact density on phones ──────────────────
+     Every section from Gallery onwards gets smaller fonts, tighter
+     padding, and reduced gaps so the bottom half of the page doesn't
+     feel like a long scroll. */
+
+  /* Global section padding halved */
+  .gallery,
+  .lineup,
+  .business,
+  .roadmap,
+  .moat,
+  .team,
+  .investors,
+  .outro {
+    padding-block: clamp(40px, 8vh, 64px) !important;
+  }
+
+  /* Section-head h2 font already scaled by the rule above (line ~2215) */
+
+  /* Gallery — compact the mega grid */
+  .gallery-spread {
+    grid-auto-rows: 60px;
+    gap: 8px;
+  }
+  .shot figcaption {
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+  }
+  .shot figcaption strong {
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  /* Business — shrink cols */
+  .biz-col { padding: 28px 0 0 0; }
+  .biz-col .num { font-size: 10px; margin-bottom: 18px; }
+  .biz-col h3 { font-size: clamp(20px, 5vw, 26px); margin-bottom: 12px; }
+  .biz-col p { font-size: 13px; line-height: 1.6; }
+
+  /* Roadmap — tighten timeline items */
+  .tl-item { padding: 24px 0 24px 28px; }
+  .tl-item .when { font-size: 10px; margin-bottom: 14px; }
+  .tl-item h3 { font-size: clamp(18px, 4vw, 24px); margin-bottom: 10px; }
+  .tl-item p { font-size: 13px; line-height: 1.55; }
+
+  /* Moat — shrink card and list */
+  .moat-card {
+    padding: 32px 20px;
+  }
+  .moat-card h3 { font-size: clamp(24px, 6vw, 36px); margin-top: 10px; }
+  .moat-card .muted { font-size: 12px !important; margin-top: 14px !important; }
+  .moat-list li {
+    grid-template-columns: 24px 1fr;
+    gap: 10px;
+    padding: 16px 0;
+  }
+  .moat-list li .idx { font-size: 10px; }
+  .moat-list li strong { font-size: 15px; margin-bottom: 3px; }
+  .moat-list li p { font-size: 12px; line-height: 1.5; }
+
+  /* Team — compact body */
+  .team-lead { font-size: clamp(16px, 3.5vw, 19px); }
+  .founder-card { padding: 20px; }
+  .founder-name { font-size: clamp(36px, 10vw, 52px); }
+  .founder-title { font-size: 12px; line-height: 1.5; }
+  .founder-stack li { padding: 10px 0; font-size: 12px; }
+  .founder-stack li span { font-size: 9px; }
+  .founder-stack li strong { font-size: 11px; }
+  .team-awards li {
+    grid-template-columns: 50px 1fr;
+    gap: 8px;
+    padding: 16px 0;
+  }
+  .team-awards .year { font-size: 10px; }
+  .team-awards .award-body strong { font-size: 14px; margin-bottom: 4px; }
+  .team-awards .award-body p { font-size: 11px; line-height: 1.45; }
+  .award-tag {
+    grid-column: 2;
+    font-size: 9px;
+    padding: 2px 7px;
+    justify-self: start;
+    margin-top: 2px;
+  }
+  .team-note { font-size: 12px; padding-top: 20px; }
+
+  /* Investors — shrink */
+  .inv-lead { font-size: 13px; line-height: 1.55; margin-top: 20px; }
+  .inv-grid { margin-top: 32px; }
+  .inv-col { padding: 28px 0 0 0; }
+  .inv-col .num { font-size: 10px; margin-bottom: 16px; }
+  .inv-col h3 { font-size: clamp(18px, 4vw, 24px); }
+  .inv-col p { font-size: 13px; line-height: 1.55; }
+  .inv-actions { margin-top: 28px; }
+
+  /* Outro — compact the big ending */
+  .outro h2 { font-size: clamp(36px, 10vw, 52px); }
+  .outro .actions { margin-top: 32px; gap: 12px; }
+  .outro .meta { margin-top: 40px; gap: 12px; font-size: 9px; letter-spacing: 0.12em; }
+  .outro .meta div strong { margin-bottom: 2px; }
+
+  /* Footer */
+  .footer { padding: 20px var(--pad-x); font-size: 9px; gap: 12px; }
+  .footer .brand { font-size: 13px; }
+
+  /* Sticky bar — compact */
+  .sticky-bar {
+    padding: 10px var(--pad-x);
+    gap: 10px;
+    font-size: 10px;
+  }
+  .sticky-bar .sb-specs { display: none; }
+  .sticky-bar .sb-cta {
+    font-size: 9px;
+    padding: 6px 12px;
+  }
 }
 
 /* ─── Extra small phones (< 400px) ──────────────────────────────── */
