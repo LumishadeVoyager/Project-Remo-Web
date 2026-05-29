@@ -9,18 +9,22 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Video mirror preconnects. We try 6 mirrors in order if any fail:
-     jsdelivr.net → fastly.jsdelivr.net → gcore.jsdelivr.net (Gcore has
-     CN nodes, often the most reliable when others are DNS-polluted) →
-     testingcf.jsdelivr.net → statically.io → same-origin.
+<!-- Video mirror preconnects. After empirical testing, fastly.jsdelivr.net
+     was removed (it 301-redirects to cdn). We preconnect the top 2
+     mirrors so the fallback chain has hot connections ready.
 
-     Preconnect the top 2 to keep first-paint fast; the rest are
-     dns-prefetch only (cheaper, just resolves the DNS upfront so the
-     fallback chain doesn't pay another round trip when it kicks in). -->
+     Mirror order (per site.js VIDEO_MIRRORS):
+       1. cdn.jsdelivr.net           — main
+       2. gcore.jsdelivr.net         — Gcore (Asia POPs, usually fastest)
+       3. testingcf.jsdelivr.net     — Cloudflare only
+       4. cdn.statically.io          — different service
+       5. ./Video/                    — same-origin GitHub Pages
+
+     Preconnect the top 3 (TLS+TCP handshake completed before fetch),
+     dns-prefetch the next 1 (just DNS resolved, cheaper). -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://fastly.jsdelivr.net">
-<link rel="dns-prefetch" href="https://testingcf.jsdelivr.net">
+<link rel="preconnect" href="https://testingcf.jsdelivr.net" crossorigin>
 <link rel="dns-prefetch" href="https://cdn.statically.io">
 <!-- HERO IMAGE is the most critical first-paint asset. Same-origin
      (GitHub Pages) so it benefits from the HTML connection that's

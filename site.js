@@ -1183,55 +1183,74 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ─── 6.5 Robust video loading with 6-mirror fallback ────────────────
+  /* ─── 6.5 Robust video loading with mirror fallback + prewarm ────────
 
-     CRITICAL CONTEXT: Chinese mobile ISPs (especially China Mobile 5G
-     and China Unicom) actively block or DNS-pollute cdn.jsdelivr.net.
-     Users on these networks report "VPN on = works, VPN off = stuck
-     forever". This module exists to work around that.
+     CRITICAL CONTEXT: Chinese mobile ISPs DON'T block cdn.jsdelivr.net
+     at the network level (verified by user log showing some V01/V03
+     work on cdn.jsdelivr.net while V02/V04/V05 timeout). The real
+     issue is jsDelivr CDN CACHE MISS — when a PoP node hasn't cached
+     a file yet, it has to back-fetch from GitHub, which is slow from
+     China. Different files have different cache coverage across PoPs.
 
-     Strategy: 6 mirror URLs are tried in order. Each gets 8 seconds.
-     If the active mirror's <video> element has readyState < 2 after
-     8s, OR it fires an `error` event, we move to the next mirror.
+     Strategy: 5 mirror URLs tried in order. Each gets 5 seconds.
+     CRUCIAL OPTIMIZATION: while mirror N is being tried, we ALSO
+     background-fetch the first 100 bytes of mirror N+1. This forces
+     mirror N+1's PoP to back-fetch from GitHub AHEAD of time, so
+     when we actually need to switch to it, it's already cached.
 
-     MIRRORS (ordered by empirical reliability in mainland CN):
-       0. https://cdn.jsdelivr.net/...        ← main, often blocked
-       1. https://gcore.jsdelivr.net/...      ← Gcore has CN nodes
-       2. https://fastly.jsdelivr.net/...     ← Fastly direct
-       3. https://testingcf.jsdelivr.net/...  ← Cloudflare direct
-       4. https://cdn.statically.io/...       ← different CDN entirely
-       5. ./Video/...                          ← same-origin GitHub Pages
+     MIRRORS (ordered by empirical reliability):
+       0. https://cdn.jsdelivr.net/...        ← main
+       1. https://gcore.jsdelivr.net/...      ← Gcore (Asia nodes)
+       2. https://testingcf.jsdelivr.net/...  ← Cloudflare only
+       3. https://cdn.statically.io/...       ← different service
+       4. ./Video/...                          ← same-origin
 
-     Mirror 0 is also what HTML's <source> uses. The JS just sits and
-     watches; if it works, we never touch the chain. If not, JS picks
-     up at mirror 1.
+     NOTE: fastly.jsdelivr.net was REMOVED — it returns HTTP 301
+     redirecting to cdn.jsdelivr.net, so it's not actually a
+     separate mirror, just a wasted hop.
 
-     Why 8s timeout: gives a slow but working mirror enough time to
-     start streaming on 3G/4G, but doesn't make users wait forever on
-     a blocked mirror.
+     Why 5s timeout (not 8s): when the primary mirror works, it
+     usually starts streaming within 2-3s. 5s leaves enough margin
+     for slow 3G/4G but doesn't waste user time when the mirror is
+     genuinely cache-miss-stuck.
 
-     Console output: every state transition is logged with `[Remo]`
-     prefix so users can debug their own network in DevTools / Eruda. */
+     Console output: every state transition logs with `[Remo]` so
+     users can debug in DevTools. */
   const __isWeChatUA = /MicroMessenger/i.test(navigator.userAgent);
   window.__remoVideoUnlocked = false;
 
   const VIDEO_MIRRORS = [
     "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
     "https://gcore.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
-    "https://fastly.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
     "https://testingcf.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/",
     "https://cdn.statically.io/gh/LumishadeVoyager/Project-Remo-Web/main/Video/",
     "./Video/",
   ];
-  const MIRROR_TIMEOUT_MS = 8000;
+  const MIRROR_TIMEOUT_MS = 5000;
+
+  // Background prewarm: trigger CDN to cache the first 100 bytes of
+  // the next mirror's URL. This forces that CDN's PoP to back-fetch
+  // from GitHub now, so if we have to switch later, it's already
+  // cached. 100 bytes is too small to noticeably affect bandwidth.
+  const prewarmedUrls = new Set();
+  const prewarmMirror = (url) => {
+    if (prewarmedUrls.has(url)) return;
+    prewarmedUrls.add(url);
+    try {
+      fetch(url, {
+        method: "GET",
+        headers: { "Range": "bytes=0-100" },
+        mode: "no-cors",
+        cache: "no-store",
+        credentials: "omit",
+      }).catch(() => { /* swallow — purely best-effort warming */ });
+    } catch (_) {}
+  };
 
   const setupVideoFallback = (video, slot, hasInitialSource) => {
     if (!video || !slot || video.dataset.fallbackSetup === "1") return;
     video.dataset.fallbackSetup = "1";
 
-    // idx is the current mirror index. If the HTML <source> already
-    // exists with mirror 0, we start at 0 (waiting on it). Otherwise
-    // we'll call tryNext() to set the initial src to mirror 0.
     let idx = hasInitialSource ? 0 : -1;
     let timeoutId = null;
 
@@ -1245,6 +1264,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startTimer = () => {
       clearTimer();
+      // Prewarm the next mirror while we wait on this one. By the time
+      // our timeout fires, the next mirror is likely cache-HIT.
+      if (idx + 1 < VIDEO_MIRRORS.length && idx + 1 < VIDEO_MIRRORS.length - 1) {
+        prewarmMirror(`${VIDEO_MIRRORS[idx + 1]}${slot}.mp4`);
+      }
       timeoutId = setTimeout(() => {
         if (video.readyState < 2) {
           log(`mirror ${idx + 1}/${VIDEO_MIRRORS.length} timeout after ${MIRROR_TIMEOUT_MS}ms`);
@@ -1257,8 +1281,8 @@ document.addEventListener("DOMContentLoaded", () => {
       clearTimer();
       idx++;
       if (idx >= VIDEO_MIRRORS.length) {
-        log(`ALL ${VIDEO_MIRRORS.length} mirrors failed. Last resort: keep ` +
-            `the broken src; user may try refresh or use a VPN.`);
+        log(`ALL ${VIDEO_MIRRORS.length} mirrors exhausted. User may need ` +
+            `to refresh or use a VPN.`);
         return;
       }
       const url = `${VIDEO_MIRRORS[idx]}${slot}.mp4`;
@@ -1285,9 +1309,6 @@ document.addEventListener("DOMContentLoaded", () => {
     video.addEventListener("loadeddata", onLoadedData);
 
     if (hasInitialSource) {
-      // HTML's <source> already started downloading. Check current
-      // state: if it already errored, immediately try next mirror;
-      // if it already loaded, do nothing; otherwise start the timer.
       if (video.error) {
         log("HTML source already errored, advancing to next mirror");
         tryNext();
@@ -1298,20 +1319,17 @@ document.addEventListener("DOMContentLoaded", () => {
         startTimer();
       }
     } else {
-      // V03-V05 — no HTML source, kick off mirror 0 ourselves.
       tryNext();
     }
   };
 
-  // Apply to V01 (showcase) and V02 (flow step 1) which both have
-  // HTML <source> elements already.
+  // Apply to V01 (showcase) and V02 (flow step 1) — HTML <source> exists.
   document.querySelectorAll("video[data-video-slot]").forEach((v) => {
     const slot = v.getAttribute("data-video-slot");
     setupVideoFallback(v, slot, /*hasInitialSource=*/ true);
   });
 
-  // Apply to V03-V05 — these are flow-step containers without a
-  // <video> child. Create one and let setupVideoFallback drive src.
+  // Apply to V03-V05 — flow-step containers without a <video> child.
   document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
     const slot = step.getAttribute("data-video-slot");
     if (!slot || step.dataset.videoAttached === "1") return;
@@ -1332,7 +1350,6 @@ document.addEventListener("DOMContentLoaded", () => {
     video.setAttribute("x5-playsinline", "true");
     video.setAttribute("x5-video-player-type", "h5");
     video.setAttribute("x5-video-player-fullscreen", "false");
-    // Tap-to-play (WeChat-safe activation)
     const tapToPlay = () => {
       try { video.muted = true; video.play(); } catch (_) {}
     };
