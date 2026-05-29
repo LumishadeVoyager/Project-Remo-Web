@@ -830,3 +830,75 @@ mirror 5 (./Video/ 同源):         ✓ OK
 ### 长期方案(仍待办)
 
 仍然推荐:**ICP 备案 + 国内对象存储 + 国内 CDN**。一旦用户基数起来,这是唯一能稳定百毫秒级首帧的路径。预算几十块每月,但需要 2-3 周走 ICP 备案流程。
+
+---
+
+## 2026-05-30 会话增量 · 第 8 轮(stall-based 同源 + 懒加载 V03-V05)
+
+> 第 7 轮(同源优先)思路对了,**但同源也被 3 秒 timeout 误杀了**。这轮修正。
+
+### 第 7 轮的剩余问题
+
+用户实测日志(关 VPN):
+
+```
+mirror 1 (./Video/ 同源):       timeout 3000ms ← !!
+mirror 2-5 (各 CDN):            全部 timeout
+最终:ALL 5 mirrors exhausted
+```
+
+**关键发现**:同源 GitHub Pages **可达但极慢**(估计 30-100KB/s)。3 秒 timeout 把还在下载中的同源砍掉,然后去找全都不通的 CDN —— 总共浪费 15 秒后什么也没出。
+
+### 视频文件实际状态
+
+```
+V01.mp4: 1.4MB · V02.mp4: 2.4MB · V03.mp4: 1.4MB
+V04.mp4: 3.5MB · V05.mp4: 2.2MB    合计 10.9MB
+```
+
+✓ 所有视频已经 faststart(moov 在头部,首帧不用等全文件下载)
+
+5 个视频同时下载,共享同一 HTTP/2 连接的带宽 —— 即便每个文件不大,**并发让 V01 也变慢了**。
+
+### 第 8 轮策略
+
+| 修改 | 旧 | 新 |
+|---|---|---|
+| 同源超时检测 | 硬超时 3 秒 | **Stall-based**: 只要 `progress` 事件还在 fire 就不超时,**只在 10 秒无新字节才放弃** |
+| CDN 超时检测 | 硬超时 3 秒 | **保持 3 秒**(CDN 要么秒通要么死透,不需要耐心) |
+| V01/V02 | 立即加载 | 立即加载(保持) |
+| V03/V04/V05 | 页面打开就加载 | **IntersectionObserver 懒加载**,滚动至 800px 内才下载 |
+
+### 为什么 stall-based 是对的
+
+- `progress` 事件每收到一组字节就 fire 一次
+- 同源很慢但**只要数据在流**,说明请求是活的,等下去能成
+- 真正"卡死"的情况:连接断了/服务器没响应 → 浏览器停止 fire `progress` → 10 秒后放弃
+
+### 懒加载的边界
+
+- IntersectionObserver `rootMargin: "800px 0px"` 给约一屏的提前量
+- V02 没有懒加载(它在 V01 正下方,用户一滚就到,提前量不够)
+- V03-V05 大部分用户停留在 V01 时不会下载,只在滚到 flow 区域时才触发
+
+### 控制台新日志格式
+
+正常加载会看到:
+```
+[Remo] V01: waiting on HTML source (mirror 1/5)...
+[Remo] V01: first bytes received (same-origin)
+[Remo] V01: OK — playing from .../Video/V01.mp4
+```
+
+真出问题会看到:
+```
+[Remo] V01: same-origin stalled (no bytes for 10.0s) — failing to CDN
+[Remo] V01: trying mirror 2/5: https://cdn.jsdelivr.net/...
+```
+
+### 反模式追加(累计版)
+
+| 想做 | 不要这样 | 原因 |
+|---|---|---|
+| 同源容错 | ❌ 硬性 timeout(无论 readyState 是否在进展) | 把"慢但还在下"的进度直接砍掉,逼用户去尝试更慢/不通的 CDN |
+| 多视频并发 | ❌ 5 个视频都 preload=auto | HTTP/2 单连接被均分带宽,V01 也变慢。懒加载下面三个 |

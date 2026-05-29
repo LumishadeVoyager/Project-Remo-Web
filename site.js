@@ -1265,17 +1265,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startTimer = () => {
       clearTimer();
-      // Prewarm the next mirror while we wait on this one. By the time
-      // our timeout fires, the next mirror is likely cache-HIT.
-      if (idx + 1 < VIDEO_MIRRORS.length && idx + 1 < VIDEO_MIRRORS.length - 1) {
+
+      const isLocal = VIDEO_MIRRORS[idx].startsWith("./");
+
+      // Prewarm next CDN mirror (skip if next is local — same-origin
+      // doesn't need PoP cache warming).
+      if (idx + 1 < VIDEO_MIRRORS.length - 1
+          && !VIDEO_MIRRORS[idx + 1].startsWith("./")) {
         prewarmMirror(`${VIDEO_MIRRORS[idx + 1]}${slot}.mp4`);
       }
-      timeoutId = setTimeout(() => {
-        if (video.readyState < 2) {
-          log(`mirror ${idx + 1}/${VIDEO_MIRRORS.length} timeout after ${MIRROR_TIMEOUT_MS}ms`);
-          tryNext();
-        }
-      }, MIRROR_TIMEOUT_MS);
+
+      if (isLocal) {
+        // STALL-BASED detection for same-origin. Some CN ISPs deliver
+        // GitHub Pages at 10-30KB/s — at that throughput a 2MB video
+        // takes 60-200s for full download but the first frame
+        // (readyState=2) typically arrives much sooner. A hard 3s
+        // timeout was killing in-progress downloads, so use the
+        // `progress` event to detect "still receiving bytes" vs
+        // "truly stalled". Only fail over if no bytes for 10s.
+        let lastProgressMs = Date.now();
+        let firstByteLogged = false;
+        const onProgress = () => {
+          lastProgressMs = Date.now();
+          if (!firstByteLogged) {
+            firstByteLogged = true;
+            log(`first bytes received (same-origin)`);
+          }
+        };
+        video.addEventListener("progress", onProgress);
+
+        const STALL_TIMEOUT_MS = 10000;
+        const tick = () => {
+          if (video.readyState >= 2) {
+            video.removeEventListener("progress", onProgress);
+            return; // success — onLoadedData will fire
+          }
+          const stalledFor = Date.now() - lastProgressMs;
+          if (stalledFor > STALL_TIMEOUT_MS) {
+            video.removeEventListener("progress", onProgress);
+            log(`same-origin stalled (no bytes for ` +
+                `${(stalledFor / 1000).toFixed(1)}s) — failing to CDN`);
+            tryNext();
+            return;
+          }
+          timeoutId = setTimeout(tick, 2000);
+        };
+        timeoutId = setTimeout(tick, 2000);
+      } else {
+        // CDN mirrors: hard timeout to avoid getting stuck on
+        // unreachable ones (CN ISPs sometimes block CDN domains).
+        timeoutId = setTimeout(() => {
+          if (video.readyState < 2) {
+            log(`mirror ${idx + 1}/${VIDEO_MIRRORS.length} timeout after ${MIRROR_TIMEOUT_MS}ms`);
+            tryNext();
+          }
+        }, MIRROR_TIMEOUT_MS);
+      }
     };
 
     const tryNext = () => {
@@ -1330,8 +1375,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setupVideoFallback(v, slot, /*hasInitialSource=*/ true);
   });
 
-  // Apply to V03-V05 — flow-step containers without a <video> child.
-  document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
+  // V03-V05 — flow-step containers, lazy-attached on scroll.
+  // Reason for lazy: on slow CN networks (30-100KB/s), having all 5
+  // videos load simultaneously fights for the same HTTP/2 connection
+  // and starves V01 (the hero showcase). Loading V03-V05 only when
+  // they're about to enter the viewport reduces the contention.
+  // rootMargin gives ~one screen of lead time so the video has a
+  // chance to load before the user actually sees it.
+  const attachFlowStep = (step) => {
     const slot = step.getAttribute("data-video-slot");
     if (!slot || step.dataset.videoAttached === "1") return;
     step.dataset.videoAttached = "1";
@@ -1365,7 +1416,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.__remoVideoUnlocked || !__isWeChatUA) {
       try { video.play(); } catch (_) {}
     }
-  });
+  };
+
+  const flowSteps = document.querySelectorAll(".flow-step[data-video-slot]");
+  if ("IntersectionObserver" in window) {
+    const flowIO = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          attachFlowStep(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "800px 0px" });
+    flowSteps.forEach((step) => flowIO.observe(step));
+  } else {
+    flowSteps.forEach(attachFlowStep);
+  }
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
