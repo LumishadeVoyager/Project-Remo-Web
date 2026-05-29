@@ -3171,7 +3171,7 @@ video.showcase-video {
 
 .hero {
   background:
-    url('https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E8%83%8C%E6%99%AF%E7%B4%A0%E6%9D%90.jpg') center / cover no-repeat,
+    url('./Image/背景素材.jpg') center / cover no-repeat,
     radial-gradient(ellipse at 100% 50%, rgba(0, 217, 255, 0.04), transparent 50%),
     radial-gradient(ellipse at 0% 100%, rgba(2, 30, 60, 0.5), transparent 60%);
 }

@@ -9,20 +9,10 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Warm up the jsDelivr connection early — videos and hero image are
-     served from there. TLS+TCP handshake alone shaves 1-2s off first
-     paint on slow mobile networks. -->
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<!-- HERO IMAGE is the most critical first-paint asset. Use type=image/webp
-     so older browsers don't try to fetch this preload. The actual <img>
-     uses <picture> with WebP-first + PNG fallback. -->
-<link rel="preload" as="image" type="image/webp" href="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.webp" fetchpriority="high">
-<!-- Note: V01 video preload was removed intentionally. Pre-loading a
-     1.5MB MP4 in <head> competes with the 90KB hero image for bandwidth
-     on slow networks, making first paint take 5-10 seconds longer. The
-     video starts loading in parallel via its own <video preload=auto>
-     after HTML parsing finishes. -->
+<!-- HERO IMAGE is the most critical first-paint asset. Same-origin
+     (GitHub Pages) so it benefits from the HTML connection that's
+     already warm — no extra TLS handshake. WebP is 90 KB. -->
+<link rel="preload" as="image" type="image/webp" href="./Image/Hero主体图.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="./site.css">
@@ -81,11 +71,9 @@
 
       <div class="hero-product" aria-hidden="true">
         <picture>
-          <source type="image/webp"
-            srcset="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.webp">
+          <source type="image/webp" srcset="./Image/Hero主体图.webp">
           <img
-            src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.png"
-            onerror="this.onerror=null;this.src='./Image/Hero主体图.png'"
+            src="./Image/Hero主体图.png"
             data-i18n-alt="hero.product.alt"
             fetchpriority="high"
             decoding="async"
@@ -152,10 +140,10 @@
         x5-video-player-fullscreen="false"
         x5-video-orientation="landscape"
         preload="auto"
-        poster="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.webp"
-        data-video-fallback="./Video/V01.mp4"
+        poster="./Image/Hero主体图.webp"
+        data-video-slot="V01"
         aria-label="Project Remo 水下跟随相机演示视频">
-        <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
+        <source src="./Video/V01.mp4" type="video/mp4">
       </video>
       <div class="showcase-overlay">
         <div class="showcase-meta" data-i18n="showcase.meta">水测实录 · 2026·04</div>
@@ -217,9 +205,9 @@
             x5-video-player-type="h5"
             x5-video-player-fullscreen="false"
             preload="none"
-            data-video-fallback="./Video/V02.mp4"
+            data-video-slot="V02"
             class="flow-video">
-            <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4" type="video/mp4">
+            <source src="./Video/V02.mp4" type="video/mp4">
           </video>
           <div class="flow-icon fallback" aria-hidden="true">
             <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="14" class="s"/><circle cx="32" cy="32" r="22" class="s faint"/><line x1="32" y1="6" x2="32" y2="16" class="s a"/><line x1="32" y1="48" x2="32" y2="58" class="s a"/></svg>
@@ -279,7 +267,7 @@
 
     <div class="acoustic-body">
       <div class="acoustic-diagram reveal">
-        <img src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E5%A3%B0%E5%AD%A6%E9%93%BE%E8%B7%AF%E6%B0%B4%E4%B8%8B%E5%9C%BA%E6%99%AF%E5%9B%BE.png" onerror="this.onerror=null;this.src='./Image/声学链路水下场景图.png'" data-i18n-alt="acoustic.img.alt" alt="声学链路水下场景 · 潜水员与 Remo 声学通信">
+        <img src="./Image/声学链路水下场景图.png" onerror="this.onerror=null;this.src='./Image/声学链路水下场景图.png'" data-i18n-alt="acoustic.img.alt" alt="声学链路水下场景 · 潜水员与 Remo 声学通信">
         <span class="diagram-label">FIG · 02 — ACOUSTIC LINK · UNDERWATER SCENE</span>
       </div>
 
@@ -303,7 +291,7 @@
         </div>
 
         <figure class="acoustic-bracelet">
-          <img src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E5%A3%B0%E5%AD%A6%E6%89%8B%E7%8E%AF%E4%BA%A7%E5%93%81%E5%9B%BE.png" onerror="this.onerror=null;this.src='./Image/声学手环产品图.png'" data-i18n-alt="bracelet.img.alt" alt="Project Remo 声学手环 · DYP-C01B + ESP32-S3">
+          <img src="./Image/声学手环产品图.png" onerror="this.onerror=null;this.src='./Image/声学手环产品图.png'" data-i18n-alt="bracelet.img.alt" alt="Project Remo 声学手环 · DYP-C01B + ESP32-S3">
           <figcaption data-i18n="acoustic.bracelet">声学手环 · ESP32-S3 · DYP-C01B · IMU 翻腕+敲击</figcaption>
         </figure>
       </div>
@@ -324,8 +312,8 @@
     </p>
 
     <figure class="color-frame reveal delay-1" id="color-frame">
-      <div class="color-layer raw" style="background-image:url('https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/GAN%E8%89%B2%E5%BD%A9%E8%BF%98%E5%8E%9FRAW.png'),url('./Image/GAN色彩还原RAW.png')"></div>
-      <div class="color-layer restored" id="color-restored" style="background-image:url('https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/GAN%E8%89%B2%E5%BD%A9%E8%BF%98%E5%8E%9FRESTORED.png'),url('./Image/GAN色彩还原RESTORED.png')"></div>
+      <div class="color-layer raw" style="background-image:url('./Image/GAN色彩还原RAW.png'),url('./Image/GAN色彩还原RAW.png')"></div>
+      <div class="color-layer restored" id="color-restored" style="background-image:url('./Image/GAN色彩还原RESTORED.png'),url('./Image/GAN色彩还原RESTORED.png')"></div>
       <span class="tag left" data-i18n="color.tag.left">RAW · 18.6 M · 浑浊</span>
       <span class="tag right" data-i18n="color.tag.right">GAN RESTORED · v0.4</span>
       <input class="color-slider" id="color-slider" type="range" min="6" max="94" value="50" aria-label="色彩还原前后对比">
@@ -355,7 +343,7 @@
     </div>
 
     <figure class="compare-visual reveal delay-1">
-      <img src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E4%B8%89%E6%9C%BA%E5%AF%B9%E6%AF%94.png" onerror="this.onerror=null;this.src='./Image/三机对比.png'" data-i18n-alt="compare.img.alt" alt="对比：运动相机 · 有线 ROV · Project Remo">
+      <img src="./Image/三机对比.png" onerror="this.onerror=null;this.src='./Image/三机对比.png'" data-i18n-alt="compare.img.alt" alt="对比：运动相机 · 有线 ROV · Project Remo">
     </figure>
 
     <div class="compare-table reveal delay-1">
@@ -453,7 +441,7 @@
 
       <div class="arch-diagram reveal delay-1">
         <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E5%8A%A8%E5%8A%9B%E6%9E%B6%E6%9E%84%E5%B8%83%E5%B1%80%E7%A4%BA%E6%84%8F%E5%9B%BE.png"
+          src="./Image/动力架构布局示意图.png"
           onerror="this.onerror=null;this.src='./Image/动力架构布局示意图.png'"
           data-i18n-alt="arch.img.alt"
           alt="Project Remo 推进器架构示意 · 2 水平 + 2 垂直 + 1 横向 · 5 自由度">
@@ -636,7 +624,7 @@
     <div class="gallery-spread">
       <figure class="shot shot-hero reveal">
         <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/gallery-prototype.jpg"
+          src="./Image/gallery-prototype.jpg"
           onerror="this.onerror=null;this.src='./Image/gallery-prototype.jpg'"
           alt="Project Remo 实物原型" loading="lazy">
         <figcaption>
@@ -648,7 +636,7 @@
 
       <figure class="shot shot-tall reveal delay-1">
         <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/gallery-id-render.png"
+          src="./Image/gallery-id-render.png"
           onerror="this.onerror=null;this.src='./Image/gallery-id-render.png'"
           alt="Project Remo 渲染" loading="lazy">
         <figcaption>
@@ -660,7 +648,7 @@
 
       <figure class="shot shot-wide reveal">
         <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/gallery-pcb.png"
+          src="./Image/gallery-pcb.png"
           onerror="this.onerror=null;this.src='./Image/gallery-pcb.png'"
           alt="PCB 设计图" loading="lazy">
         <figcaption>
@@ -672,7 +660,7 @@
 
       <figure class="shot shot-square reveal delay-1">
         <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/gallery-watch-sch.png"
+          src="./Image/gallery-watch-sch.png"
           onerror="this.onerror=null;this.src='./Image/gallery-watch-sch.png'"
           alt="声学手环原理图" loading="lazy">
         <figcaption>
@@ -684,7 +672,7 @@
 
       <figure class="shot shot-wide-2 reveal">
         <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/gallery-water-test.png"
+          src="./Image/gallery-water-test.png"
           onerror="this.onerror=null;this.src='./Image/gallery-water-test.png'"
           alt="水下场景" loading="lazy">
         <figcaption>
@@ -816,7 +804,7 @@
       <div class="team-founder reveal delay-1">
         <div class="founder-card">
           <img class="founder-portrait"
-            src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/%E6%9D%A8%E6%96%87%E4%BF%8A%E8%82%96%E5%83%8F%E7%85%A7.png"
+            src="./Image/杨文俊肖像照.png"
             onerror="this.onerror=null;this.src='./Image/杨文俊肖像照.png'"
             alt="杨文俊 · Project Remo 创始人">
           <div class="founder-meta">

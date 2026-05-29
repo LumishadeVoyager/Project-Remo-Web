@@ -503,7 +503,81 @@ grid 比例改为 5fr + 7fr（文窄控宽）
 
 ---
 
-## 🚨 永久备忘 · 微信视频加载缓慢的根因与最终解决方案（2026-05-29）
+## 🚨 永久备忘修订版 · 视频/图片加载策略最终结论（2026-05-29）
+
+> **前几轮记录的"jsDelivr 主源 + GitHub Pages 备源"策略已被废弃。** 实测表明无论顺序怎么排,只要走单一 CDN,就一定有部分用户/网络/时段加载极慢。最终方案是同源 + 多 CDN 并行竞速。
+
+### 单 CDN 都不靠谱的原因（按确定性排序）
+
+1. **jsDelivr 在大陆备案曾被吊销**,目前流量绕港日新加坡,大部分大陆 ISP（特别是联通）有 DNS 污染或限速。**不同用户/网络/时段速度差距可达 50×**。
+2. **GitHub Pages 走 Fastly,大陆无合规节点**。和 jsDelivr 类似,不同节点波动巨大,运营商劫持/限速时有发生。
+3. **CDN 冷缓存 → 回源失败 → 缓存住失败状态** 是真实存在的问题。新加资源后第一次访问可能命中失败缓存,默认 TTL 12h。
+4. **statically.io / raw.githack** 等替代 CDN 也是同一类问题,只是抖动模式不同。
+
+### 最终落地策略：同源主源 + 三 CDN 并行竞速
+
+```
+HTML 直接写：
+  <video data-video-slot="V01">
+    <source src="./Video/V01.mp4">  ← 同源,HTML 解析时就开始下载,慢但稳
+  </video>
+
+JS 启动时（site.js 6.5）：
+  for each <video[data-video-slot]>:
+    raceFastestUrl([
+      "./Video/V01.mp4",                                  ← 同源
+      "https://cdn.jsdelivr.net/gh/.../Video/V01.mp4",    ← jsDelivr
+      "https://cdn.statically.io/gh/.../Video/V01.mp4",   ← statically.io
+    ])
+    用 fetch GET + Range: bytes=0-0 + 4s 超时 探测哪个先 200/206
+    如果非同源胜出 → 替换 video.src（仅在还没起播时）
+    如果都失败 → 保持同源,用户最终能播
+```
+
+### 为什么这个策略是局部最优
+
+- ✅ **保底速度**：始终有同源在跑,最差情况就是 GitHub Pages 慢,不会出现"完全加载不出来"
+- ✅ **加速空间**：当任一 CDN 当前状态良好,其结果会先到,自动切换替换 src
+- ✅ **零成本**：纯前端,无需备案、无需服务器
+- ✅ **可监控**：浏览器 Network 面板能看到三个 fetch 中谁先成功
+
+### 真正的终极方案（暂未实施）
+
+如果产品长期化,**唯一稳定的加速是国内对象存储 + 自有备案域名 CDN**：
+- 腾讯云 COS / 阿里 OSS / 七牛 / Cloudflare R2 + 国内 CNAME
+- 需要 ICP 备案（个人备案 1-2 周）
+- 月成本 ¥几十级别
+- 国内任意网络 100MB/s+ 稳定
+
+未实施的原因：项目还在 POC 阶段,先用免费方案过渡。当用户量上来或拿到融资时再迁。
+
+### ⛔ 历史踩过的坑（不要再踩）
+
+| ❌ 错误做法 | 为什么 |
+|---|---|
+| 单 CDN 主源（jsDelivr 或 statically） | 任一 CDN 抖动时全站挂 |
+| 单 CDN + 错误顺序 fallback | 第一个慢/超时,fallback 已等不及 |
+| 在 `<head>` 用 `<link rel=preload as=video>` 给 V01 | 抢首屏带宽,Hero 图被挤 |
+| 让 5 个 video 全部 `preload="auto"` | 并发 5 个下载,X5 网络栈崩,Hero 被挤 |
+| 视频用大 PNG 当 poster | poster 自身 2MB 又是首屏关键 |
+| 降低视频码率 | 不解决问题,瓶颈是网络不是文件 |
+| 用 setInterval 心跳触发 X5 重新加载 | X5 不响应非用户手势的 play() |
+
+### 🩹 资源 404 / 缓存住失败状态时
+
+依然需要 `purge.jsdelivr.net/...` 主动清缓存（参见上一节的 runbook）。但因为现在是多源竞速,即使 jsDelivr 抽风,同源和 statically 还在跑,用户感知不到。
+
+### 🔧 验证清单
+
+1. **桌面 Chrome**：F12 Network 面板,看 V01 资源是同源的 200 还是 jsDelivr/statically 的 206。如果 jsDelivr 200 比同源快,会看到 `video.src` 被 JS 替换为 jsDelivr URL。
+2. **手机 4G 微信**：Hero WebP（90KB）应在 1-2 秒内显示,V01 在 tap 后 2-5 秒内起播,V02-V05 进入视口后 3-5 秒起播。
+3. **WiFi 极慢场景**：raceFastestUrl 4s 超时,即使三个源都慢也会回退到同源继续等。
+
+如果 Hero 图都加载半分钟以上,问题是 **GitHub Pages 自身在用户网络下不可达**——这是 GitHub 的事不是代码的事,只能靠迁国内对象存储解决。
+
+---
+
+## 2026-05-29 会话增量更新 · 第 6 轮（视频加载提速）
 
 > **接下来的所有维护者：在动视频源顺序之前，先读完这一段。**
 
