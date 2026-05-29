@@ -2147,10 +2147,17 @@ video.showcase-video {
   }
   /* Mobile: product image is laid out AFTER the wordmark in source
      order, then pulled back up by a large negative margin to land in
-     the gap between PROJECT and REMO. Width capped so it never crowds
-     the giant type. No floating animation on mobile — keeps WeChat X5
-     rendering stable (filter + animation combinations have caused
-     concurrent <video> decodes to drop on X5). */
+     the gap between PROJECT and REMO.
+
+     Mobile hero animation policy (learned the hard way):
+     - `filter: drop-shadow` is BANNED — it forces a GPU compositor
+       layer that contends with X5 video decoders. Don't reintroduce.
+     - A pure-transform float animation IS safe — transforms are
+       cheap, do not require layer recomposition, and the X5 video
+       pipeline does not contend with them.
+     The mobile float is intentionally smaller and slower than the
+     desktop one (8px / 7s vs 28px / 5.5s) so phones with weaker GPUs
+     still feel smooth. */
   .hero-product {
     display: block !important;
     position: relative !important;
@@ -2158,18 +2165,15 @@ video.showcase-video {
     top: auto !important;
     bottom: auto !important;
     left: auto !important;
-    width: 70% !important;
-    max-width: 320px;
-    margin: clamp(-260px, -55vw, -180px) auto 0 auto;
-    transform: none !important;
+    width: 90% !important;
+    max-width: 460px;
+    margin: clamp(-280px, -58vw, -200px) auto 0 auto;
     opacity: 1 !important;
-    animation: none !important;
-    /* CRITICAL: no filter on mobile — `filter: drop-shadow` is composited
-       on the GPU and on X5/WKWebView it contends with concurrent <video>
-       decodes, causing videos elsewhere on the page to stall or refuse
-       to play. The shadow effect is intentionally dropped on mobile. */
+    /* DO NOT add filter here — see comment above. */
     filter: none !important;
     z-index: 2;
+    animation: heroFloatMobile 7s 1.2s ease-in-out infinite !important;
+    will-change: transform;
   }
   .hero-product::after { display: none !important; }
   .hero-product img,
@@ -2179,6 +2183,14 @@ video.showcase-video {
     height: auto;
     display: block;
     border-radius: 12px;
+  }
+
+  /* Mobile-specific gentle float — small amplitude, long period.
+     Pure transform-only animation; no opacity, no filter, no
+     box-shadow changes (those would force compositor work). */
+  @keyframes heroFloatMobile {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-8px) rotate(-0.5deg); }
   }
   .hero-bottom {
     margin-top: 32px;
