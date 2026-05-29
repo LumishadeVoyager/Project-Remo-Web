@@ -9,12 +9,20 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Warm up the jsDelivr connection early — videos are served from there
-     and the TLS+TCP handshake alone can shave 1–2s off first-frame time
-     on slow mobile networks. -->
+<!-- Warm up the jsDelivr connection early — videos and hero image are
+     served from there. TLS+TCP handshake alone shaves 1-2s off first
+     paint on slow mobile networks. -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preload" as="video" href="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
+<!-- HERO IMAGE is the most critical first-paint asset. Use type=image/webp
+     so older browsers don't try to fetch this preload. The actual <img>
+     uses <picture> with WebP-first + PNG fallback. -->
+<link rel="preload" as="image" type="image/webp" href="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.webp" fetchpriority="high">
+<!-- Note: V01 video preload was removed intentionally. Pre-loading a
+     1.5MB MP4 in <head> competes with the 90KB hero image for bandwidth
+     on slow networks, making first paint take 5-10 seconds longer. The
+     video starts loading in parallel via its own <video preload=auto>
+     after HTML parsing finishes. -->
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="./site.css">
@@ -72,11 +80,17 @@
       </div>
 
       <div class="hero-product" aria-hidden="true">
-        <img
-          src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.png"
-          onerror="this.onerror=null;this.src='./Image/Hero主体图.png'"
-          data-i18n-alt="hero.product.alt"
-          alt="Project Remo 水下智能跟随相机">
+        <picture>
+          <source type="image/webp"
+            srcset="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.webp">
+          <img
+            src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.png"
+            onerror="this.onerror=null;this.src='./Image/Hero主体图.png'"
+            data-i18n-alt="hero.product.alt"
+            fetchpriority="high"
+            decoding="async"
+            alt="Project Remo 水下智能跟随相机">
+        </picture>
       </div>
     </div>
 
@@ -138,7 +152,7 @@
         x5-video-player-fullscreen="false"
         x5-video-orientation="landscape"
         preload="auto"
-        poster="./Image/Hero主体图.png"
+        poster="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Image/Hero%E4%B8%BB%E4%BD%93%E5%9B%BE.webp"
         data-video-fallback="./Video/V01.mp4"
         aria-label="Project Remo 水下跟随相机演示视频">
         <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V01.mp4" type="video/mp4">
@@ -202,7 +216,7 @@
             x5-playsinline="true"
             x5-video-player-type="h5"
             x5-video-player-fullscreen="false"
-            preload="auto"
+            preload="none"
             data-video-fallback="./Video/V02.mp4"
             class="flow-video">
             <source src="https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V02.mp4" type="video/mp4">

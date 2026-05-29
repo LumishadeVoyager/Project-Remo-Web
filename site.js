@@ -1184,8 +1184,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ─── 6.5 Lazy-attach flow videos when available ─────────────────────
-     For flow steps that have a `data-video-slot="VNN"` attribute, attempt
-     to load the video.
+     For flow steps that have a `data-video-slot="VNN"` attribute,
+     attach a <video> ONLY when the step is about to enter the viewport.
+     This prevents the 5 flow videos from competing with the hero image
+     and showcase video for first-paint bandwidth.
+
+     PERF NOTE: previously this ran eagerly on DOMContentLoaded, which
+     meant all 5 flow videos started downloading metadata simultaneously
+     with the hero image and the V01 showcase. On first visits over slow
+     mobile networks this caused the hero to take 5-10 seconds to paint.
+     Now we use IntersectionObserver with a 500px rootMargin so videos
+     only start loading when the user scrolls within ~half a screen.
 
      SOURCE PRIORITY (the IMPORTANT part for mainland users):
        1st (probe):    jsDelivr CDN  — has reverse-proxy nodes inside CN
@@ -1213,9 +1222,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // gesture into subsequent play() calls within the same session).
   window.__remoVideoUnlocked = false;
 
-  document.querySelectorAll(".flow-step[data-video-slot]").forEach((step) => {
+  const attachFlowVideo = (step) => {
     const slot = step.getAttribute("data-video-slot");
-    if (!slot) return;
+    if (!slot || step.dataset.videoAttached === "1") return;
+    step.dataset.videoAttached = "1";
     // Order matters: CDN first (mainland-friendly), local as fallback.
     const cdnUrl = `${CDN_BASE}/Video/${slot}.mp4`;
     const localUrl = `./Video/${slot}.mp4`;
@@ -1245,9 +1255,6 @@ document.addEventListener("DOMContentLoaded", () => {
       video.addEventListener("error", () => {
         if (!swapped) { swapped = true; video.src = otherUrl; video.load(); }
       });
-      // Per-video click → synchronous play() inside user gesture. This
-      // is the WeChat-safe activation path; harmless on every other
-      // browser (already auto-playing).
       const tapToPlay = (ev) => {
         try { video.muted = true; video.play(); } catch (_) {}
       };
@@ -1255,9 +1262,6 @@ document.addEventListener("DOMContentLoaded", () => {
       video.addEventListener("touchend", tapToPlay, { passive: true });
       media.insertBefore(video, media.firstChild);
       step.classList.add("has-video");
-      // If the user has already activated playback (WeChat overlay
-      // tapped), kick this just-attached video immediately. Outside
-      // WeChat the video is already autoplaying.
       if (window.__remoVideoUnlocked || !__isWeChatUA) {
         try { video.play(); } catch (_) {}
       }
@@ -1267,7 +1271,23 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!triedLocal) { triedLocal = true; probe.src = localUrl; }
     };
     probe.src = cdnUrl;
-  });
+  };
+
+  const flowSteps = document.querySelectorAll(".flow-step[data-video-slot]");
+  if ("IntersectionObserver" in window && flowSteps.length) {
+    const flowIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          attachFlowVideo(entry.target);
+          flowIo.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "500px 0px 500px 0px", threshold: 0.01 });
+    flowSteps.forEach((s) => flowIo.observe(s));
+  } else {
+    // No IntersectionObserver — attach immediately (older browsers).
+    flowSteps.forEach(attachFlowVideo);
+  }
 
   /* ─── 7. Sticky pre-order bar (appear after hero) ──────────────────── */
   const stickyBar = document.getElementById("sticky-bar");
