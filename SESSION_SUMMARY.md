@@ -560,6 +560,31 @@ grid 比例改为 5fr + 7fr（文窄控宽）
 
 如果有任何一步退化到 30s+，**先检查 source 顺序是否被错误地改回了 local-first**。
 
+### 🩹 新视频加进来后必做：**purge jsDelivr 缓存**
+
+> 症状：旧视频（V01-V03）秒开,新加的视频（V04+）页面里完全不加载,显示 SVG 占位 / 一直转圈。
+> 
+> 根因：jsDelivr CDN 第一次回源 GitHub 拉新视频时,如果命中 GitHub Pages 的暂时性 5xx 或大陆慢链路,**CDN 会把失败状态缓存下来,之后所有请求都返回失败,直到 TTL 到期（默认 12h）**。
+
+**修复方法**：每次推送新视频文件后,立即用 `curl` 调用 jsDelivr purge API,强制清空对应 URL 的缓存:
+
+```bash
+# 替换成你的新视频名
+for V in V04 V05; do
+  curl -s "https://purge.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/$V.mp4"
+done
+```
+
+**验证 purge 成功**:返回 JSON 里有 `"status": "finished"` 且 `"providers": {"CF": true, "FY": true}` 即 OK。
+
+**验证视频可拉取**:
+```bash
+curl -sI "https://cdn.jsdelivr.net/gh/LumishadeVoyager/Project-Remo-Web@main/Video/V04.mp4" | grep -iE "HTTP|content-type|content-length"
+```
+应看到 `HTTP/1.1 200 OK` + `Content-Type: video/mp4` + 正确 `Content-Length`。
+
+**注意**：purge 后第一个请求是 `x-cache: MISS`(冷启动),第二个请求开始才是 HIT。建议自己先用浏览器访问一次预热。
+
 ---
 
 ## 2026-05-29 会话增量更新 · 第 6 轮（视频加载提速）
