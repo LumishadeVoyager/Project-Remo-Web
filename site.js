@@ -482,7 +482,7 @@ const I18N = {
 
     /* Sticky */
     "sticky.specs": "5 推进器 · 声学纠偏定位 · 巡航 40–60 min · 4K 海思",
-    "sticky.cta": "加入 Kickstarter 早鸟",
+    "sticky.cta": "联系创始团队",
 
     /* Footer */
     "footer.tagline": "Wireless Underwater Follow-Cam · POC 2026",
@@ -949,7 +949,7 @@ const I18N = {
     "outro.meta.3.val": "Lite · Summer 2027",
 
     "sticky.specs": "5 Thrusters · Acoustic Positioning · Cruise 40–60 min · 4K HiSilicon",
-    "sticky.cta": "Join Kickstarter Early Bird",
+    "sticky.cta": "Talk to the Founding Team",
 
     "footer.tagline": "Wireless Underwater Follow-Cam · POC 2026",
     "footer.copyright": "© Project Remo · All rights reserved",
