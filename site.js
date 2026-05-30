@@ -429,7 +429,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "国家级冠军团队，<br>从<em>赛场</em>走向<em>产品</em>。",
-    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过 <em style=\"font-style:normal;color:var(--accent)\">挑战杯全国大学生一等奖</em>与 <em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛水下机器人冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
+    "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过 <em style=\"font-style:normal;color:var(--accent)\">\"挑战杯\"全国大学生课外学术科技作品竞赛一等奖</em>与 <em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛水下机器人冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
     "team.founder.role": "创始人 · 项目负责人 · 技术总监",
     "team.founder.title": "北京信息科技大学 · 自动化（卓越工程师计划）<br>G_Robot 社团社长 · ROV / ARV 整机研发",
     "team.stack.1.k": "软件",
@@ -899,7 +899,7 @@ const I18N = {
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
     "team.heading": "Champion team —<br>from <em>competition arena</em> to <em>shipping product</em>.",
-    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">Challenge Cup national first prize</em> and the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em>. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
+    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">National First Prize at the \"Challenge Cup\" National College Student Extracurricular Academic Science &amp; Technology Competition</em> and the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em>. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
     "team.founder.role": "Founder · Project Lead · CTO",
     "team.founder.title": "Beijing Information Science &amp; Technology University · Automation (Excellent Engineer Program)<br>President, G_Robot Society · ROV / ARV systems engineering",
     "team.stack.1.k": "Software",
@@ -1610,15 +1610,41 @@ document.addEventListener("DOMContentLoaded", () => {
     v.addEventListener("ended", () => { try { v.currentTime = 0; tryPlay(v); } catch (_) {} });
     v.addEventListener("stalled", () => tryPlay(v));
     v.addEventListener("suspend", () => tryPlay(v));
-    v.addEventListener("pause", () => { setTimeout(() => tryPlay(v), 80); });
+    v.addEventListener("pause", () => {
+      // If we intentionally paused this video (because it scrolled
+      // off-screen via IntersectionObserver), leave it paused.
+      // Otherwise this is an involuntary pause (X5 OS-level interrupt,
+      // tab visibility loss, etc.) — try to resume after a short delay.
+      if (v.dataset.ioOffscreen === "1") return;
+      setTimeout(() => tryPlay(v), 80);
+    });
     try { v.load(); } catch (_) {}
   };
   document.querySelectorAll("video").forEach(setupVideo);
 
   if (typeof IntersectionObserver !== "undefined") {
+    // Play videos that are on/near screen, pause those that aren't.
+    // Reason: 5 looping <video> elements all decoding at once on the
+    // same GPU causes stutter — even Chrome's media stack can't fully
+    // hardware-accelerate 5 concurrent H.264 streams on most laptops/
+    // phones. Pausing off-screen videos frees decoder slots and gives
+    // the visible video full GPU bandwidth.
+    //
+    // rootMargin 200px gives a generous pre-roll so the video is
+    // already playing by the time the user scrolls it into view.
+    // Same margin on the other side means a video stays playing for
+    // 200px past the viewport before pausing — prevents pause/resume
+    // thrashing during slow scrolls near a video boundary.
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) tryPlay(entry.target);
+        const v = entry.target;
+        if (entry.isIntersecting) {
+          v.dataset.ioOffscreen = "";
+          tryPlay(v);
+        } else {
+          v.dataset.ioOffscreen = "1";
+          try { v.pause(); } catch (_) {}
+        }
       });
     }, { threshold: 0.01, rootMargin: "200px 0px 200px 0px" });
     document.querySelectorAll("video").forEach((v) => io.observe(v));
