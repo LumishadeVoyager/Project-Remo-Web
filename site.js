@@ -21,7 +21,7 @@ const I18N = {
     "hero.meta.status": "POC LIVE · 声学定位已验证",
     "hero.meta.depth": "Underwater · 40 m",
     "hero.meta.phase": "POC → EP → Kickstarter",
-    "hero.title": "<span class=\"word\">放开</span><span class=\"word\">双手，</span><span class=\"word\">把镜头</span><span class=\"word\">交给</span><span class=\"word\"><em>水下</em></span><span class=\"word\"><em>智能体</em>。</span>",
+    "hero.title": "<span class=\"word\">放开</span><span class=\"word\">双手，</span><span class=\"word\">把镜头</span><span class=\"word\">交给</span><span class=\"word\"><em>水下</em></span><span class=\"word\"><em>智能体</em>&nbsp;。</span>",
     "hero.summary": "Project Remo 是一款无线、掌上起降的水下跟随相机，位于运动相机与传统 ROV 之间的空白地带。入水自动唤醒，声学定位跟随，出水无感回传，云端自动还原色彩。让潜水员专注于潜水本身。",
     "hero.btn.primary": "探索 Remo",
     "hero.btn.secondary": "观看水测实录",
@@ -35,16 +35,16 @@ const I18N = {
 
     /* Showcase (cinematic V01 between Hero and Features) */
     "showcase.meta": "水测实录 · 2026·04",
-    "showcase.title": "无线，<em>自由</em>。",
+    "showcase.title": "无线，<em>自由</em>&nbsp;。",
 
     /* Manifesto */
     "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
-    "manifesto.text": "水下摄影的真正门槛，<br>不是设备不够好，<br>而是潜水员的注意力<br><em>已经被太多事情分走了</em>。",
+    "manifesto.text": "水下摄影的真正门槛，<br>不是设备不够好，<br>而是潜水员的注意力<br><em>已经被太多事情分走了</em>&nbsp;。",
     "manifesto.sig": "Project Remo · 创始团队",
 
     /* Features (replaces Manifesto in layout) */
     "features.eyebrow": "<span class=\"index\">01</span> Features",
-    "features.heading": "三项核心技术，<br>定义<em>水下跟拍</em>。",
+    "features.heading": "三项核心技术，定义<em>水下跟拍</em>&nbsp;。",
     "features.1.eyebrow": "01 / HydroLock",
     "features.1.title": "声学锁定跟随",
     "features.1.desc": "三枚 DYP-C01B 声学模块组网定位。气泡、浑水、低能见度场景下保持稳定追踪，不依赖视觉。",
@@ -62,15 +62,15 @@ const I18N = {
     "pain.eyebrow": "<span class=\"index\">02</span> The Pain",
     "pain.heading": "潜水拍摄时，<em style=\"font-style:italic;color:var(--accent)\">双手和注意力</em>同时被占用。",
     "pain.1.title": "双手被占用",
-    "pain.1.desc": "潜水员在水下需要同时管理浮力、呼吸、深度、构图与跟焦——五件事抢占同一份注意力。结果往往不是没拍到，<em style=\"font-style:normal;color:var(--accent)\">而是拍到了但拍废了，同时安全冗余在下降</em>。",
+    "pain.1.desc": "潜水员在水下需要同时管理浮力、呼吸、深度、构图与跟焦——五件事抢占同一份注意力。结果往往不是没拍到，<em style=\"font-style:normal;color:var(--accent)\">而是拍到了但拍废了，同时安全冗余在下降</em>&nbsp;。",
     "pain.2.title": "ROV 不属于消费者",
     "pain.2.desc": "传统水下 ROV 面向工业巡检设计——脐带缆、地面站、岸上部署流程，不属于休闲潜水场景。7–15 kg 自重、¥15,000+ 起步，\"消费级\"三个字在 ROV 品类中从未成立。",
     "pain.3.title": "视觉会失效",
-    "pain.3.desc": "气泡群、悬浮颗粒、逆光、低能见度——任一条件都足以让纯视觉跟踪失效。水下定位必须基于\"水\"的物理特性设计，<em style=\"font-style:normal;color:var(--accent)\">不能把陆地视觉方案直接搬到水下</em>。",
+    "pain.3.desc": "气泡群、悬浮颗粒、逆光、低能见度——任一条件都足以让纯视觉跟踪失效。水下定位必须基于\"水\"的物理特性设计，<em style=\"font-style:normal;color:var(--accent)\">不能把陆地视觉方案直接搬到水下</em>&nbsp;。",
 
     /* Flow */
     "flow.eyebrow": "<span class=\"index\">03</span> How It Works",
-    "flow.heading": "60&nbsp;秒，<br>看懂<em>一次水下跟拍</em>。",
+    "flow.heading": "60&nbsp;秒，看懂<em>一次水下跟拍</em>&nbsp;。",
     "flow.1.title": "下水自动唤醒",
     "flow.1.desc": "设备入水即解锁，无需按键。基于水压与导通双重判定，避免误启动。",
     "flow.2.title": "声学锁定潜水员",
@@ -132,7 +132,7 @@ const I18N = {
     /* Acoustic */
     "acoustic.eyebrow": "<span class=\"index\">06</span> Acoustic Intelligence",
     "acoustic.heading": "水变浑，<em>声学定位</em>不停。",
-    "acoustic.title": "水下声学通信模块，<br>非消费级水听器。",
+    "acoustic.title": "水下声学通信模块，非消费级水听器。",
     "acoustic.desc.1": "Remo 系统部署三枚 DYP-C01B 水下声学通信模块——相机端 2 枚、手环端 1 枚。任意两枚入水即可建立低速率声学链路，实现<strong style=\"color:var(--light);font-weight:500\">纠偏定位</strong>。声学定位在气泡、悬浮颗粒等视觉失效场景下保持稳定——这项技术在 ROV 工业领域已成熟应用超过二十年。我们将它缩至掌上尺寸，并与视觉算法进行融合。",
     "acoustic.desc.2": "声学手环通过<strong style=\"color:var(--light);font-weight:500\">敲击</strong>产生超声特征信号，由相机端接收并识别，构成低带宽、高鲁棒的水下指令通道——面向戴面镜、戴手套、无法语音通信的真实潜水环境。",
     "acoustic.badge.1": "DYP-C01B 声学模块 ×3",
@@ -147,15 +147,15 @@ const I18N = {
 
     /* Color */
     "color.eyebrow": "<span class=\"index\">07</span> Image Pipeline",
-    "color.heading": "不只是<em>拍下来</em>，<br>而是直接出片。",
-    "color.lead": "水下色彩失真不是滤镜能解决的——红光在 5 m 深度衰减殆尽，绿光在 15 m 大幅衰减，白平衡校正有其物理极限。Remo 采用<strong style=\"color:var(--light);font-weight:500\">生成对抗网络（GAN）</strong>进行水下色彩还原，结合 MS5837 深度计与声学距离数据做物理级色彩校正。工程化后将以云端 AI 剪辑订阅形式提供服务——<em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>。",
+    "color.heading": "不只是<em>拍下来</em>，而是直接出片。",
+    "color.lead": "水下色彩失真不是滤镜能解决的——红光在 5 m 深度衰减殆尽，绿光在 15 m 大幅衰减，白平衡校正有其物理极限。Remo 采用<strong style=\"color:var(--light);font-weight:500\">生成对抗网络（GAN）</strong>进行水下色彩还原，结合 MS5837 深度计与声学距离数据做物理级色彩校正。工程化后将以云端 AI 剪辑订阅形式提供服务——<em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>&nbsp;。",
     "color.tag.left": "RAW · 18.6 M · 浑浊",
     "color.tag.right": "GAN RESTORED · v0.4",
     "color.disclaimer": "本图为算法 v0.4 离线推理结果。工程化版本计划于 EP 阶段验证，于 Kickstarter 阶段开放云端服务。",
 
     /* Compare */
     "compare.eyebrow": "<span class=\"index\">08</span> vs Traditional",
-    "compare.heading": "填补<em>市场空白</em>，<br>不是再造一台运动相机。",
+    "compare.heading": "填补<em>市场空白</em>，不是再造一台运动相机。",
     "compare.col.1": "手持运动相机",
     "compare.col.2": "有线消费 ROV",
     "compare.row.1.axis": "典型重量",
@@ -202,7 +202,7 @@ const I18N = {
 
     /* Lineup */
     "lineup.eyebrow": "<span class=\"index\">09</span> Product Lineup",
-    "lineup.heading": "一台原型，<br><em>两套产品规划</em>。",
+    "lineup.heading": "一台原型，<em>两套产品规划</em>&nbsp;。",
     "lineup.lite.tag": "01 · 大众与租赁",
     "lineup.lite.desc": "面向浮潜与自由潜用户，以及潜店租赁场景。轻量化出行、一键拍摄、出水无感回传——把操作复杂度降到最低。",
     "lineup.lite.spec.1": "定位",
@@ -231,7 +231,7 @@ const I18N = {
 
     /* Specs */
     "specs.eyebrow": "<span class=\"index\">10</span> Tech Specs",
-    "specs.heading": "看得见的<em>工程细节</em>。",
+    "specs.heading": "看得见的<em>工程细节</em>&nbsp;。",
     "specs.tab.imaging": "影像 IMAGING",
     "specs.tab.underwater": "水下 UNDERWATER",
     "specs.tab.intelligence": "智能 INTELLIGENCE",
@@ -372,7 +372,7 @@ const I18N = {
 
     /* Gallery */
     "gallery.eyebrow": "<span class=\"index\">11</span> Prototype Evidence",
-    "gallery.heading": "不停留<br>在概念图。",
+    "gallery.heading": "不停留在概念图。",
     "gallery.shot.1.cap": "2026·04 · 实验室装配",
     "gallery.shot.1.title": "实物原型",
     "gallery.shot.1.desc": "掌上级水下相机 · 推进器结构装配",
@@ -401,7 +401,7 @@ const I18N = {
 
     /* Roadmap */
     "roadmap.eyebrow": "<span class=\"index\">13</span> Milestones",
-    "roadmap.heading": "三步走，<br>到达&nbsp;Kickstarter。",
+    "roadmap.heading": "三步走，到达&nbsp;Kickstarter。",
     "roadmap.1.when": "Now · 2026",
     "roadmap.1.title": "POC&nbsp;原理样机",
     "roadmap.1.desc": "声学定位 + 自动巡航 + 避障状态机已跑通；PCB 第 3 轮迭代；正在补齐核心团队。",
@@ -414,7 +414,7 @@ const I18N = {
 
     /* Moat */
     "moat.kicker": "14 · IP &amp; Patent Defense",
-    "moat.heading": "专利护城河<em>已落地</em>。",
+    "moat.heading": "专利护城河<em>已落地</em>&nbsp;。",
     "moat.desc": "围绕产品最难复现的技术节点，已向国家知识产权局完成 4 项专利布局：声学+视觉融合定位、GAN 水下色彩还原、双核控制架构、潜水电脑表交互——构成 EP 与 Kickstarter 阶段的核心壁垒。",
     "moat.note": "3 项已受理 · 1 项撰写中 · 申请人 / 发明人 杨文俊",
     "moat.1.title": "声学与视觉融合的水下自动定位拍摄系统及控制方法",
@@ -428,7 +428,7 @@ const I18N = {
 
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
-    "team.heading": "国家级冠军团队，<br>从<em>赛场</em>走向<em>产品</em>。",
+    "team.heading": "国家级冠军团队，从<em>赛场</em>走向<em>产品</em>&nbsp;。",
     "team.lead": "Remo 的核心团队来自 <strong style=\"color:var(--light);font-weight:500\">北京信息科技大学 G_Robot 水下机器人社团</strong>——一支同时拿过 <em style=\"font-style:normal;color:var(--accent)\">\"挑战杯\"全国大学生课外学术科技作品竞赛一等奖</em>与 <em style=\"font-style:normal;color:var(--accent)\">RoboCup 中国赛水下机器人冠军</em>的水下机器人专项团队。竞赛舞台上反复验证过的工程能力，正是 Project Remo 的底座。",
     "team.founder.role": "创始人 · 项目负责人 · 技术总监",
     "team.founder.title": "北京信息科技大学 · 自动化（卓越工程师计划）<br>G_Robot 社团社长 · ROV / ARV 整机研发",
@@ -451,11 +451,11 @@ const I18N = {
     "team.award.5.title": "中国国际海洋水下机器人大赛 · 第六届国际海洋工程装备科技创新大赛",
     "team.award.5.desc": "ROV 赛道 国家级二等奖 · AUV 赛道 国家级二等奖",
     "team.award.5.tag": "国家级二等",
-    "team.note": "这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的<em style=\"font-style:normal;color:var(--accent)\">完整水下机器人工程能力</em>。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。",
+    "team.note": "这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的<em style=\"font-style:normal;color:var(--accent)\">完整水下机器人工程能力</em>&nbsp;。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。",
 
     /* Investors */
     "investors.eyebrow": "<span class=\"index\">17</span> For Investors",
-    "investors.heading": "已验证的，<em>分层呈现</em>。",
+    "investors.heading": "已验证的，<em>分层呈现</em>&nbsp;。",
     "investors.lead": "我们对外仅承诺已通过实测验证的能力，路线图项目以\"进行中 / 规划中\"清晰标注。以下为面向天使轮投资人的关键信息。完整 Deck 与 Tech Snapshot 请联系创始团队。",
     "investors.1.num": "— 01 · 阶段",
     "investors.1.title": "POC · 原理样机已跑通",
@@ -471,7 +471,7 @@ const I18N = {
 
     /* Community Feedback */
     "community.eyebrow": "<span class=\"index\">16</span> Community Feedback",
-    "community.heading": "你的想法，<em>塑造产品</em>。",
+    "community.heading": "你的想法，<em>塑造产品</em>&nbsp;。",
     "community.lead": "POC 阶段我们欢迎所有反馈 —— 无论是功能需求、使用场景还是技术疑问。审核通过的反馈会展示在这里，并直接影响 EP 阶段的设计决策。",
     "community.btn.submit": "提交你的想法",
     "community.btn.view": "查看所有反馈",
@@ -479,7 +479,7 @@ const I18N = {
     "community.note": "反馈通过 GitHub Issues 管理，无需注册账号即可提交。我们会在 48 小时内审核并回复。",
 
     /* Outro */
-    "outro.heading": "放开双手，<br><em>把镜头交给 Remo</em>。",
+    "outro.heading": "放开双手，<em>把镜头交给 Remo</em>&nbsp;。",
     "outro.btn.1": "与创始团队对话",
     "outro.btn.2": "回到顶部",
     "outro.meta.1.label": "阶段",
@@ -522,7 +522,7 @@ const I18N = {
     "hero.meta.status": "POC LIVE · Acoustic Positioning Verified",
     "hero.meta.depth": "Underwater · 40 m",
     "hero.meta.phase": "POC → EP → Kickstarter",
-    "hero.title": "<span class=\"word\">Let Go</span><span class=\"word\">of Your</span><span class=\"word\">Hands.</span><span class=\"word\">Hand the</span><span class=\"word\">Shot to an</span><span class=\"word\"><em>Underwater</em></span><span class=\"word\"><em>Agent</em>.</span>",
+    "hero.title": "<span class=\"word\">Let Go</span><span class=\"word\">of Your</span><span class=\"word\">Hands.</span><span class=\"word\">Hand the</span><span class=\"word\">Shot to an</span><span class=\"word\"><em>Underwater</em></span><span class=\"word\"><em>Agent</em>&nbsp;.</span>",
     "hero.summary": "Project Remo is a wireless, palm-deployable underwater follow-cam that sits between action cameras and tethered ROVs. Auto-wake on entry, acoustic positioning underwater, seamless upload on surfacing, automatic color restoration in the cloud. It handles the shot so the diver doesn't have to.",
     "hero.btn.primary": "Explore Remo",
     "hero.btn.secondary": "Watch Water Tests",
@@ -535,14 +535,14 @@ const I18N = {
     "hero.scroll": "Scroll Down",
 
     "showcase.meta": "Water Test · Apr 2026",
-    "showcase.title": "Wireless.<br><em>Free</em>.",
+    "showcase.title": "Wireless.<br><em>Free</em>&nbsp;.",
 
     "manifesto.eyebrow": "<span class=\"index\">01</span> Manifesto",
-    "manifesto.text": "The real bottleneck in underwater photography<br>isn't the gear —<br>it's that the diver's attention<br><em>is already split across too many tasks</em>.",
+    "manifesto.text": "The real bottleneck in underwater photography<br>isn't the gear —<br>it's that the diver's attention<br><em>is already split across too many tasks</em>&nbsp;.",
     "manifesto.sig": "Project Remo · Founding Team",
 
     "features.eyebrow": "<span class=\"index\">01</span> Features",
-    "features.heading": "Three core technologies<br>that define <em>underwater follow-cam</em>.",
+    "features.heading": "Three core technologies that define <em>underwater follow-cam</em>&nbsp;.",
     "features.1.eyebrow": "01 / HydroLock",
     "features.1.title": "Acoustic Lock & Track",
     "features.1.desc": "Three DYP-C01B acoustic modules form a positioning mesh. Stable tracking through bubbles, turbidity, and low visibility — no vision required.",
@@ -563,10 +563,10 @@ const I18N = {
     "pain.2.title": "ROVs Aren't for Consumers",
     "pain.2.desc": "Traditional ROVs are built for industrial inspection — tethers, ground control stations, shore-deployment workflows. They were never designed for recreational diving. At 7–15 kg and ¥15,000+ entry price, \"consumer-grade\" has never described this category.",
     "pain.3.title": "Vision Fails Underwater",
-    "pain.3.desc": "Bubbles, suspended particles, backlight, low visibility — any one of these breaks a pure visual tracking system. Underwater positioning must be designed for the physics of water, <em style=\"font-style:normal;color:var(--accent)\">not adapted from land-based vision assumptions</em>.",
+    "pain.3.desc": "Bubbles, suspended particles, backlight, low visibility — any one of these breaks a pure visual tracking system. Underwater positioning must be designed for the physics of water, <em style=\"font-style:normal;color:var(--accent)\">not adapted from land-based vision assumptions</em>&nbsp;.",
 
     "flow.eyebrow": "<span class=\"index\">03</span> How It Works",
-    "flow.heading": "60 seconds to<br>understand an <em>underwater follow-shot</em>.",
+    "flow.heading": "60 seconds to understand an <em>underwater follow-shot</em>&nbsp;.",
     "flow.1.title": "Auto-Wake on Entry",
     "flow.1.desc": "The device unlocks the moment it enters the water. No buttons needed. Dual water-pressure and conductivity detection prevents false triggers.",
     "flow.2.title": "Acoustic Diver Lock",
@@ -577,7 +577,7 @@ const I18N = {
     "flow.4.desc": "On surfacing, the unit pairs with the companion mobile app and uploads raw footage in the background. A cloud deep-learning model automatically restores underwater color; users retrieve the processed result directly within the app.",
 
     "arch.eyebrow": "<span class=\"index\">04</span> Hardware Architecture",
-    "arch.heading": "Not chasing vectored thrust.<br><em>Chasing</em> stability.",
+    "arch.heading": "Not chasing vectored thrust. <em>Chasing</em> stability.",
     "arch.title": "2&nbsp;Horizontal +&nbsp;2&nbsp;Vertical +&nbsp;1&nbsp;Lateral.",
     "arch.desc": "Remo uses a fixed 5-thruster layout (2H + 2V + 1L), avoiding the tuning complexity of vectored thrust in favor of an ROV-industry-validated approach — simpler hydrodynamic modeling, easier controller convergence, lower packaging complexity. Two powertrain routes are being validated in parallel: Cehai Technology brushless thrusters for seawater reliability, and an in-house brushed solution for cost control. Both share the same flight controller, acoustics, and sensor platform.",
     "arch.pillars": "<strong style=\"color:var(--light);font-weight:500\">2 horizontal</strong> for cruise &amp; yaw · <strong style=\"color:var(--light);font-weight:500\">2 vertical</strong> for heave &amp; pitch · <strong style=\"color:var(--light);font-weight:500\">1 lateral</strong> for sway framing — a cleanly decoupled 5-DoF control basis.",
@@ -624,8 +624,8 @@ const I18N = {
     "stats.4.note": "Acoustic-assisted vision, multimodal interaction, hydrostatic seal.",
 
     "acoustic.eyebrow": "<span class=\"index\">06</span> Acoustic Intelligence",
-    "acoustic.heading": "When visibility drops,<br><em>acoustic positioning</em> holds.",
-    "acoustic.title": "Underwater acoustic communication —<br>not a consumer-grade hydrophone.",
+    "acoustic.heading": "When visibility drops, <em>acoustic positioning</em> holds.",
+    "acoustic.title": "Underwater acoustic communication — not a consumer-grade hydrophone.",
     "acoustic.desc.1": "Remo deploys three DYP-C01B underwater acoustic communication modules — two on the camera, one on the bracelet. Any two submerged modules establish a low-rate acoustic link for <strong style=\"color:var(--light);font-weight:500\">corrective positioning</strong>. The acoustic link remains stable when vision fails due to bubbles or suspended particles — technology proven over two decades in the ROV industry, now shrunk to palm size and fused with vision algorithms.",
     "acoustic.desc.2": "The acoustic bracelet generates ultrasonic signatures via <strong style=\"color:var(--light);font-weight:500\">tapping</strong>, received and decoded by the camera — a low-bandwidth, high-robustness underwater command channel designed for real dive conditions: mask on, gloves on, no voice comms.",
     "acoustic.badge.1": "DYP-C01B Module ×3",
@@ -639,14 +639,14 @@ const I18N = {
     "acoustic.bracelet": "Acoustic Bracelet · ESP32-S3 · DYP-C01B · IMU Gesture + Tap",
 
     "color.eyebrow": "<span class=\"index\">07</span> Image Pipeline",
-    "color.heading": "Not just <em>recording</em> —<br>delivering a finished shot.",
-    "color.lead": "Underwater color distortion can't be fixed with filters — red light is effectively gone at 5 m, green heavily attenuated at 15 m, and white balance has physical limits. Remo uses a <strong style=\"color:var(--light);font-weight:500\">Generative Adversarial Network (GAN)</strong> for underwater color restoration, combining MS5837 depth sensor and acoustic distance data for physics-level correction. The engineered version will ship as a cloud AI editing subscription — <em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>.",
+    "color.heading": "Not just <em>recording</em> — delivering a finished shot.",
+    "color.lead": "Underwater color distortion can't be fixed with filters — red light is effectively gone at 5 m, green heavily attenuated at 15 m, and white balance has physical limits. Remo uses a <strong style=\"color:var(--light);font-weight:500\">Generative Adversarial Network (GAN)</strong> for underwater color restoration, combining MS5837 depth sensor and acoustic distance data for physics-level correction. The engineered version will ship as a cloud AI editing subscription — <em style=\"font-style:normal;color:var(--accent)\">HaaS: Hardware as a Service</em>&nbsp;.",
     "color.tag.left": "RAW · 18.6 M · Murky",
     "color.tag.right": "GAN RESTORED · v0.4",
     "color.disclaimer": "This image is an offline inference result from algorithm v0.4. The engineered version is planned for EP-stage validation and cloud service launch at Kickstarter.",
 
     "compare.eyebrow": "<span class=\"index\">08</span> vs Traditional",
-    "compare.heading": "Filling a <em>market gap</em> —<br>not building another action cam.",
+    "compare.heading": "Filling a <em>market gap</em> — not building another action cam.",
     "compare.col.1": "Handheld Action Cam",
     "compare.col.2": "Tethered Consumer ROV",
     "compare.row.1.axis": "Typical Weight",
@@ -692,7 +692,7 @@ const I18N = {
     "compare.note": "Comparison data based on publicly available consumer product specs. Remo data based on current POC prototype measurements and structural design targets.",
 
     "lineup.eyebrow": "<span class=\"index\">09</span> Product Lineup",
-    "lineup.heading": "One prototype,<br><em>two product roadmaps</em>.",
+    "lineup.heading": "One prototype, <em>two product roadmaps</em>&nbsp;.",
     "lineup.lite.tag": "01 · Mass Market & Rental",
     "lineup.lite.desc": "For snorkelers, freedivers, and dive shop rentals. Lightweight travel, one-tap shooting, seamless post-dive upload — minimal operational complexity.",
     "lineup.lite.spec.1": "Positioning",
@@ -720,7 +720,7 @@ const I18N = {
     "lineup.note": "Lite / Pro are future product-line plans. The current POC stage uses a single prototype to validate both brushed and brushless powertrain routes in parallel, converging into one unified product platform.",
 
     "specs.eyebrow": "<span class=\"index\">10</span> Tech Specs",
-    "specs.heading": "Engineering details<br>you can <em>actually see</em>.",
+    "specs.heading": "Engineering details you can <em>actually see</em>&nbsp;.",
     "specs.tab.imaging": "成像 IMAGING",
     "specs.tab.underwater": "水下 UNDERWATER",
     "specs.tab.intelligence": "智能 INTELLIGENCE",
@@ -854,7 +854,7 @@ const I18N = {
     "specs.br.11v": "Measured data TBD",
 
     "gallery.eyebrow": "<span class=\"index\">11</span> Prototype Evidence",
-    "gallery.heading": "We don't stop<br>at concept art.",
+    "gallery.heading": "We don't stop at concept art.",
     "gallery.shot.1.cap": "2026·04 · Lab Assembly",
     "gallery.shot.1.title": "Physical Prototype",
     "gallery.shot.1.desc": "Palm-sized underwater camera · thruster structure assembly",
@@ -872,7 +872,7 @@ const I18N = {
     "gallery.shot.5.desc": "Freedive photography · consumer-facing product imagination",
 
     "business.eyebrow": "<span class=\"index\">12</span> Business Model",
-    "business.heading": "Hardware acquires users.<br><em>HaaS</em> builds long-term value.",
+    "business.heading": "Hardware acquires users. <em>HaaS</em> builds long-term value.",
     "business.1.title": "Consumer Hardware",
     "business.1.desc": "Differentiate on wireless following, palm deployment, and one-tap editing — not on camera specs. Product definition and end-to-end experience form the first competitive layer.",
     "business.2.title": "Dive Shop Rental",
@@ -881,7 +881,7 @@ const I18N = {
     "business.3.desc": "GAN color restoration, smart editing, dive logs, production templates — everything requiring compute and asset libraries lives in the cloud, generating recurring subscription revenue. Hardware ASP fluctuates; HaaS delivers steady recurring revenue.",
 
     "roadmap.eyebrow": "<span class=\"index\">13</span> Milestones",
-    "roadmap.heading": "Three steps<br>to Kickstarter.",
+    "roadmap.heading": "Three steps to Kickstarter.",
     "roadmap.1.when": "Now · 2026",
     "roadmap.1.title": "POC · Proof of Concept",
     "roadmap.1.desc": "Acoustic positioning + auto-cruise + obstacle-avoid state machine proven; PCB iteration 3; actively recruiting core team members.",
@@ -893,7 +893,7 @@ const I18N = {
     "roadmap.3.desc": "Launch global early-adopter conversion with real water-test footage, quantifiable metrics, and a dual-product-line narrative.",
 
     "moat.kicker": "14 · IP &amp; Patent Defense",
-    "moat.heading": "Patent moat<br><em>filed and accepted</em>.",
+    "moat.heading": "Patent moat <em>filed and accepted</em>&nbsp;.",
     "moat.desc": "Four patents covering the product's hardest-to-replicate technical nodes have been filed with the China National Intellectual Property Administration: acoustic-visual fusion positioning, GAN underwater color restoration, dual-core control architecture, and dive-computer interaction — the core competitive barriers for EP and Kickstarter phases.",
     "moat.note": "3 accepted · 1 in submission · Applicant / Inventor: Yang Wenjun",
     "moat.1.title": "Underwater Acoustic-Visual Fusion Positioning &amp; Capture System",
@@ -907,8 +907,8 @@ const I18N = {
 
     /* Founding Team */
     "team.eyebrow": "<span class=\"index\">15</span> Founding Team",
-    "team.heading": "Champion team —<br>from <em>competition arena</em> to <em>shipping product</em>.",
-    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">National First Prize at the \"Challenge Cup\" National College Student Extracurricular Academic Science &amp; Technology Competition</em> and the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em>. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
+    "team.heading": "Champion team —<br>from <em>competition arena</em> to <em>shipping product</em>&nbsp;.",
+    "team.lead": "Remo's core team comes from <strong style=\"color:var(--light);font-weight:500\">G_Robot, the underwater-robotics society at Beijing Information Science &amp; Technology University</strong> — a specialist team that holds both a <em style=\"font-style:normal;color:var(--accent)\">National First Prize at the \"Challenge Cup\" National College Student Extracurricular Academic Science &amp; Technology Competition</em> and the <em style=\"font-style:normal;color:var(--accent)\">RoboCup China underwater-robotics champion title</em>&nbsp;. Engineering capability proven repeatedly on the competition floor is the bedrock of Project Remo.",
     "team.founder.role": "Founder · Project Lead · CTO",
     "team.founder.title": "Beijing Information Science &amp; Technology University · Automation (Excellent Engineer Program)<br>President, G_Robot Society · ROV / ARV systems engineering",
     "team.stack.1.k": "Software",
@@ -930,10 +930,10 @@ const I18N = {
     "team.award.5.title": "China International Ocean Underwater Robotics Competition · 6th International Marine Engineering Innovation",
     "team.award.5.desc": "ROV Track National Second Prize · AUV Track National Second Prize",
     "team.award.5.tag": "National 2nd",
-    "team.note": "Behind every trophy is the same crew — covering acoustics, vision, control, mechanical structure and embedded AI as a <em style=\"font-style:normal;color:var(--accent)\">complete underwater-robotics engineering stack</em>. Project Remo is the first commercial product built on the technology stack this team has stress-tested on the competition floor.",
+    "team.note": "Behind every trophy is the same crew — covering acoustics, vision, control, mechanical structure and embedded AI as a <em style=\"font-style:normal;color:var(--accent)\">complete underwater-robotics engineering stack</em>&nbsp;. Project Remo is the first commercial product built on the technology stack this team has stress-tested on the competition floor.",
 
     "community.eyebrow": "<span class=\"index\">16</span> Community Feedback",
-    "community.heading": "Your ideas,<br><em>shape the product</em>.",
+    "community.heading": "Your ideas,<br><em>shape the product</em>&nbsp;.",
     "community.lead": "At the POC stage, we welcome all feedback — feature requests, use cases, or technical questions. Approved feedback is displayed here and directly influences EP-stage design decisions.",
     "community.btn.submit": "Submit Your Idea",
     "community.btn.view": "View All Feedback",
@@ -941,7 +941,7 @@ const I18N = {
     "community.note": "Feedback is managed via GitHub Issues. No account registration required to submit. We review and respond within 48 hours.",
 
     "investors.eyebrow": "<span class=\"index\">17</span> For Investors",
-    "investors.heading": "Verified claims,<br><em>clearly layered</em>.",
+    "investors.heading": "Verified claims,<br><em>clearly layered</em>&nbsp;.",
     "investors.lead": "We only claim what has been verified through testing. Roadmap items are clearly marked \"in development\" or \"planned.\" Below is key information for angel-stage investors. For the full Deck and Tech Snapshot, contact the founding team.",
     "investors.1.num": "— 01 · Stage",
     "investors.1.title": "POC · Working Prototype Proven",
@@ -955,7 +955,7 @@ const I18N = {
     "investors.btn.1": "Request Tech Snapshot",
     "investors.btn.2": "View 90s Evidence Reel",
 
-    "outro.heading": "Let go,<br><em>let Remo take the shot</em>.",
+    "outro.heading": "Let go,<br><em>let Remo take the shot</em>&nbsp;.",
     "outro.btn.1": "Talk to the Founding Team",
     "outro.btn.2": "Back to Top",
     "outro.meta.1.label": "Stage",
@@ -994,10 +994,18 @@ function setLang(lang) {
   const dict = I18N[lang] || I18N["zh"];
   document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
 
-  // Text content
+  // Text content — auto-detect HTML entities. If the translation string
+  // contains &nbsp; or similar HTML entities, use innerHTML so they render
+  // correctly instead of appearing as literal "&nbsp;" text.
   document.querySelectorAll(`[${I18N_ATTR}]`).forEach(el => {
     const key = el.getAttribute(I18N_ATTR);
-    if (dict[key] !== undefined) el.textContent = dict[key];
+    if (dict[key] !== undefined) {
+      if (/&[a-z]+;/.test(dict[key])) {
+        el.innerHTML = dict[key];
+      } else {
+        el.textContent = dict[key];
+      }
+    }
   });
 
   // HTML content
@@ -1035,10 +1043,80 @@ function setLang(lang) {
   }
 
   try { localStorage.setItem("remo-lang", lang); } catch (e) {}
+
+  // Fix orphaned trailing characters after i18n is applied
+  preventHeadingOrphans();
 }
 
 function toggleLang() {
   setLang(getLang() === "zh" ? "en" : "zh");
+}
+
+/* Prevent orphaned trailing characters in headings.
+   On narrow screens (mobile), Chinese headings can split so that the
+   last 1-2 characters — especially periods — appear alone on the
+   final line. This function wraps the last 2-5 characters of every
+   heading's last text node in a <span style="white-space:nowrap">,
+   preventing them from being separated from the preceding text.
+
+   For headings with inline tags (<em>/<br>), we walk the text nodes
+   and only protect the last meaningful one. Punctuation-only trailing
+   text nodes (e.g. "。") are merged with the previous sibling node
+   before wrapping. */
+function preventHeadingOrphans() {
+  const RE_PUNCT = /^[。！？\.\!\?，,、；;：:）\)]+$/;
+  const RE_PUNCT_TAIL = /[。！？\.\!\?，,、；;：:）\)]$/;
+
+  document.querySelectorAll("h1, h2, h3").forEach((h) => {
+    const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    let n;
+    while ((n = walker.nextNode())) {
+      const t = n.textContent || "";
+      if (t.trim()) textNodes.push(n);
+    }
+    if (!textNodes.length) return;
+
+    let last = textNodes[textNodes.length - 1];
+    let tailText = last.textContent || "";
+
+    // If the last text node is purely punctuation (1-2 chars like "。" or
+    // ". "), merge it with the previous text node so we wrap a meaningful
+    // word with its punctuation, not just punctuation alone.
+    if (tailText.length <= 2 && RE_PUNCT.test(tailText.trim()) && textNodes.length >= 2) {
+      const prev = textNodes[textNodes.length - 2];
+      tailText = (prev.textContent || "") + tailText;
+      // Remove the orphaned punctuation-only node, extend the previous node
+      const span = document.createElement("span");
+      span.style.whiteSpace = "nowrap";
+      // Take last 4 chars of prev + all of current punctuation
+      const prevText = prev.textContent || "";
+      const keepLen = Math.min(prevText.length, 4);
+      const prevPrefix = prevText.slice(0, -keepLen);
+      const prevSuffix = prevText.slice(-keepLen) + (last.textContent || "");
+      prev.textContent = prevPrefix;
+      span.textContent = prevSuffix;
+      prev.parentNode.insertBefore(span, prev.nextSibling);
+      if (last !== prev) last.remove();
+      return;
+    }
+
+    // Protect the last 3-5 characters. If the tail ends with punctuation,
+    // protect more chars so the period stays with its word.
+    let protectLen = 3;
+    if (RE_PUNCT_TAIL.test(tailText)) protectLen = Math.min(tailText.length, 5);
+    else if (tailText.length <= 4) protectLen = tailText.length;
+
+    const prefix = tailText.slice(0, -protectLen);
+    const suffix = tailText.slice(-protectLen);
+    if (!prefix || !suffix) return;
+
+    last.textContent = prefix;
+    const span = document.createElement("span");
+    span.style.whiteSpace = "nowrap";
+    span.textContent = suffix;
+    last.parentNode.insertBefore(span, last.nextSibling);
+  });
 }
 
 /* ─── Init ─────────────────────────────────────────────────────────── */
