@@ -1788,8 +1788,10 @@ document.addEventListener("DOMContentLoaded", () => {
    ═══════════════════════════════════════════════════════════════════ */
 
 (function initCommunityFeedback() {
+  console.log("[Community] init starting...");
   const feedbackGrid = document.getElementById("feedback-grid");
-  if (!feedbackGrid) return;
+  if (!feedbackGrid) { console.log("[Community] feedback-grid NOT FOUND, aborting"); return; }
+  console.log("[Community] feedback-grid found, continuing...");
 
   const REPO = "LumishadeVoyager/Project-Remo-Web";
   const API_URL = `https://api.github.com/repos/${REPO}/issues`;
@@ -1903,6 +1905,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch and render
   async function loadFeedback() {
     try {
+      console.log("[Community] fetching approved issues from GitHub API...");
       const response = await fetch(
         `${API_URL}?labels=approved&state=open&sort=created&direction=desc&per_page=6`,
         {
@@ -1912,13 +1915,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
+      console.log("[Community] fetch response:", response.status);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       const issues = await response.json();
+      console.log("[Community] issues received:", issues.length);
 
       feedbackGrid.innerHTML = "";
 
       if (issues.length === 0) {
+        console.log("[Community] no approved issues found");
         feedbackGrid.innerHTML = `
           <div class="feedback-empty">
             <h3>暂无反馈</h3>
@@ -1929,10 +1935,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       issues.forEach((issue, index) => {
+        console.log(`[Community] rendering card #${issue.number}: ${issue.title}`);
         const card = renderCard(issue);
         card.style.animationDelay = `${index * 0.1}s`;
         feedbackGrid.appendChild(card);
       });
+      console.log("[Community] all cards rendered");
 
       // Trigger reveal animation
       if (typeof window.revealOnScroll === "function") {
