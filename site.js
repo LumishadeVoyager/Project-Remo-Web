@@ -1808,12 +1808,29 @@ document.addEventListener("DOMContentLoaded", () => {
     "Other": "💬"
   };
 
-  // Extract type from issue body
+  // Extract type from issue body (handles mixed zh/en like "功能建议 Feature Request")
   function extractType(body) {
     if (!body) return "其他";
     const match = body.match(/### 反馈类型[\s\S]*?\n\n([^\n]+)/);
-    if (match) return match[1].trim();
-    return "其他";
+    if (!match) return "其他";
+    const raw = match[1].trim();
+    // Map common type values to display labels
+    if (/功能建议|Feature Request/i.test(raw)) return "功能建议";
+    if (/使用场景|Use Case/i.test(raw)) return "使用场景";
+    if (/技术问题|Technical Question/i.test(raw)) return "技术问题";
+    if (/购买咨询|Purchase Inquiry/i.test(raw)) return "购买咨询";
+    return raw;
+  }
+
+  // Extract the actual feedback content (详细描述 field)
+  function extractContent(body) {
+    if (!body) return "";
+    const match = body.match(/### 详细描述[\s\S]*?\n\n([\s\S]+?)(?:\n\n###|$)/);
+    if (match) {
+      const text = match[1].trim();
+      if (text && text !== "_No response_") return text;
+    }
+    return "";
   }
 
   // Extract name from issue body
@@ -1860,7 +1877,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderCard(issue) {
     const type = extractType(issue.body);
     const name = extractName(issue.body);
-    const body = cleanBody(issue.body);
+    const content = extractContent(issue.body);
     const emoji = typeEmoji[type] || "💬";
 
     const card = document.createElement("article");
@@ -1870,8 +1887,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="feedback-type">${emoji} ${type}</span>
         <span class="feedback-number">#${issue.number}</span>
       </div>
-      <h3 class="feedback-title">${issue.title.replace(/^\[反馈\]\s*/, "")}</h3>
-      <div class="feedback-body">${body || issue.title}</div>
+      <h3 class="feedback-title">${issue.title.replace(/\[反馈\]/g, "").trim()}</h3>
+      <div class="feedback-body">${content || cleanBody(issue.body)}</div>
       <div class="feedback-footer">
         <span class="feedback-author">${name || "匿名用户"}</span>
         <span class="feedback-date">${formatDate(issue.created_at)}</span>
