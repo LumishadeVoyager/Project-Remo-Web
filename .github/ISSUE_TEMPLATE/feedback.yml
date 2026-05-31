@@ -1,0 +1,60 @@
+name: 💡 产品反馈 Product Feedback
+description: 对 Project Remo 的功能建议、使用场景或技术问题
+title: "[反馈] "
+labels: ["feedback", "pending-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你对 Project Remo 的关注!我们正处于 POC → EP 阶段,你的反馈将直接影响产品设计。
+
+        **审核说明**:提交后会进入待审核队列,通过审核的反馈会展示在官网"社区反馈"区域。
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 反馈类型
+      description: 选择最符合的类型
+      options:
+        - 功能建议 Feature Request
+        - 使用场景 Use Case
+        - 技术问题 Technical Question
+        - 购买咨询 Purchase Inquiry
+        - 其他 Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 详细描述
+      description: 请详细描述你的想法、问题或场景
+      placeholder: |
+        例如:
+        - 我是自由潜教练,希望 Remo 能支持垂直跟拍模式...
+        - 声学定位在泳池环境下会不会受混响影响?
+        - Lite 版本预计售价区间是多少?
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: 称呼(可选)
+      description: 如果你希望我们回复时称呼你
+      placeholder: 张教练 / Alex / 匿名
+
+  - type: input
+    id: email
+    attributes:
+      label: 邮箱(可选)
+      description: 如果需要我们直接回复你
+      placeholder: your@email.com
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认
+      options:
+        - label: 我理解这是公开反馈,审核通过后会展示在官网
+          required: true

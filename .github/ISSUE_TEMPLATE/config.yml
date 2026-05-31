@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 直接联系创始团队
+    url: mailto:lumishadev4yang@gmail.com
+    about: 商务合作、投资意向或紧急技术支持
+  - name: 📄 索取 Tech Snapshot
+    url: mailto:lumishadev4yang@gmail.com?subject=Project%20Remo%20%C2%B7%20Tech%20Snapshot
+    about: 面向投资人的技术快照文档

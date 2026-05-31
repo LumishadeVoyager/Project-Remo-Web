@@ -905,6 +905,41 @@
   </section>
 
   <!-- ─────────────────────────────────────────────────────────────
+       COMMUNITY FEEDBACK — GitHub Issues integration
+       ───────────────────────────────────────────────────────────── -->
+  <section class="community wrap" id="community">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n-html="community.eyebrow"><span class="index">16</span> Community Feedback</span>
+      <h2 data-i18n-html="community.heading">你的想法，<em>塑造产品</em>。</h2>
+    </div>
+
+    <p class="community-lead reveal delay-1" data-i18n="community.lead">
+      POC 阶段我们欢迎所有反馈 —— 无论是功能需求、使用场景还是技术疑问。审核通过的反馈会展示在这里，并直接影响 EP 阶段的设计决策。
+    </p>
+
+    <div class="community-actions reveal delay-2">
+      <a class="btn primary" href="https://github.com/LumishadeVoyager/Project-Remo-Web/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">
+        <span data-i18n="community.btn.submit">提交你的想法</span> <span class="arrow"></span>
+      </a>
+      <a class="btn ghost" href="https://github.com/LumishadeVoyager/Project-Remo-Web/issues?q=is%3Aissue+label%3Aapproved" target="_blank" rel="noopener noreferrer">
+        <span data-i18n="community.btn.view">查看所有反馈</span>
+      </a>
+    </div>
+
+    <!-- 动态加载的反馈卡片容器 -->
+    <div class="feedback-grid" id="feedback-grid">
+      <div class="feedback-loading">
+        <div class="spinner"></div>
+        <p data-i18n="community.loading">正在加载社区反馈...</p>
+      </div>
+    </div>
+
+    <div class="community-note reveal delay-3" data-i18n="community.note">
+      反馈通过 GitHub Issues 管理，无需注册账号即可提交。我们会在 48 小时内审核并回复。
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────
        FOR INVESTORS — paper flip · clearly delimited
        ───────────────────────────────────────────────────────────── -->
   <section class="investors" id="investors">

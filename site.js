@@ -454,7 +454,7 @@ const I18N = {
     "team.note": "这些奖项背后是同一支班底——从声学、视觉、控制、结构到嵌入式 AI 的<em style=\"font-style:normal;color:var(--accent)\">完整水下机器人工程能力</em>。Project Remo 是这支团队把赛场上反复打磨过的技术栈，工程化为消费级产品的第一站。",
 
     /* Investors */
-    "investors.eyebrow": "<span class=\"index\">16</span> For Investors",
+    "investors.eyebrow": "<span class=\"index\">17</span> For Investors",
     "investors.heading": "已验证的，<em>分层呈现</em>。",
     "investors.lead": "我们对外仅承诺已通过实测验证的能力，路线图项目以\"进行中 / 规划中\"清晰标注。以下为面向天使轮投资人的关键信息。完整 Deck 与 Tech Snapshot 请联系创始团队。",
     "investors.1.num": "— 01 · 阶段",
@@ -468,6 +468,15 @@ const I18N = {
     "investors.3.desc": "核心团队补位（嵌入式 / 控制算法 / 结构）、EP 阶段供应链与小批量水测、Kickstarter 视频与传播。每一笔资金对应一个可验证的里程碑。",
     "investors.btn.1": "索取 Tech Snapshot",
     "investors.btn.2": "查看 90 秒实证素材",
+
+    /* Community Feedback */
+    "community.eyebrow": "<span class=\"index\">16</span> Community Feedback",
+    "community.heading": "你的想法，<em>塑造产品</em>。",
+    "community.lead": "POC 阶段我们欢迎所有反馈 —— 无论是功能需求、使用场景还是技术疑问。审核通过的反馈会展示在这里，并直接影响 EP 阶段的设计决策。",
+    "community.btn.submit": "提交你的想法",
+    "community.btn.view": "查看所有反馈",
+    "community.loading": "正在加载社区反馈...",
+    "community.note": "反馈通过 GitHub Issues 管理，无需注册账号即可提交。我们会在 48 小时内审核并回复。",
 
     /* Outro */
     "outro.heading": "放开双手，<br><em>把镜头交给 Remo</em>。",
@@ -923,7 +932,15 @@ const I18N = {
     "team.award.5.tag": "National 2nd",
     "team.note": "Behind every trophy is the same crew — covering acoustics, vision, control, mechanical structure and embedded AI as a <em style=\"font-style:normal;color:var(--accent)\">complete underwater-robotics engineering stack</em>. Project Remo is the first commercial product built on the technology stack this team has stress-tested on the competition floor.",
 
-    "investors.eyebrow": "<span class=\"index\">16</span> For Investors",
+    "community.eyebrow": "<span class=\"index\">16</span> Community Feedback",
+    "community.heading": "Your ideas,<br><em>shape the product</em>.",
+    "community.lead": "At the POC stage, we welcome all feedback — feature requests, use cases, or technical questions. Approved feedback is displayed here and directly influences EP-stage design decisions.",
+    "community.btn.submit": "Submit Your Idea",
+    "community.btn.view": "View All Feedback",
+    "community.loading": "Loading community feedback...",
+    "community.note": "Feedback is managed via GitHub Issues. No account registration required to submit. We review and respond within 48 hours.",
+
+    "investors.eyebrow": "<span class=\"index\">17</span> For Investors",
     "investors.heading": "Verified claims,<br><em>clearly layered</em>.",
     "investors.lead": "We only claim what has been verified through testing. Roadmap items are clearly marked \"in development\" or \"planned.\" Below is key information for angel-stage investors. For the full Deck and Tech Snapshot, contact the founding team.",
     "investors.1.num": "— 01 · Stage",
@@ -1686,4 +1703,168 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("load", tryPlayAll);
 
   setInterval(tryPlayAll, 1500);
+})();
+
+/* ═══════════════════════════════════════════════════════════════════
+   9. COMMUNITY FEEDBACK — GitHub Issues integration
+   ═══════════════════════════════════════════════════════════════════ */
+
+(function initCommunityFeedback() {
+  const feedbackGrid = document.getElementById("feedback-grid");
+  if (!feedbackGrid) return;
+
+  const REPO = "LumishadeVoyager/Project-Remo-Web";
+  const API_URL = `https://api.github.com/repos/${REPO}/issues`;
+
+  // Type emoji mapping
+  const typeEmoji = {
+    "功能建议": "💡",
+    "Feature Request": "💡",
+    "使用场景": "🎯",
+    "Use Case": "🎯",
+    "技术问题": "🔧",
+    "Technical Question": "🔧",
+    "购买咨询": "💰",
+    "Purchase Inquiry": "💰",
+    "其他": "💬",
+    "Other": "💬"
+  };
+
+  // Extract type from issue body
+  function extractType(body) {
+    if (!body) return "其他";
+    const match = body.match(/### 反馈类型[\s\S]*?\n\n([^\n]+)/);
+    if (match) return match[1].trim();
+    return "其他";
+  }
+
+  // Extract name from issue body
+  function extractName(body) {
+    if (!body) return null;
+    const match = body.match(/### 称呼\(可选\)[\s\S]*?\n\n([^\n]+)/);
+    if (match && match[1].trim() && match[1].trim() !== "_No response_") {
+      return match[1].trim();
+    }
+    return null;
+  }
+
+  // Clean body text (remove form fields)
+  function cleanBody(body) {
+    if (!body) return "";
+    // Remove form field headers
+    let cleaned = body.replace(/### [^\n]+\n\n/g, "");
+    // Remove checkbox lines
+    cleaned = cleaned.replace(/- \[.\] [^\n]+\n/g, "");
+    // Get first paragraph only
+    const firstPara = cleaned.split("\n\n")[0];
+    return firstPara.trim();
+  }
+
+  // Format date
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return "今天";
+    if (diffDays === 1) return "昨天";
+    if (diffDays < 7) return `${diffDays} 天前`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} 周前`;
+
+    return date.toLocaleDateString("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+  }
+
+  // Render feedback card
+  function renderCard(issue) {
+    const type = extractType(issue.body);
+    const name = extractName(issue.body);
+    const body = cleanBody(issue.body);
+    const emoji = typeEmoji[type] || "💬";
+
+    const card = document.createElement("article");
+    card.className = "feedback-card reveal";
+    card.innerHTML = `
+      <div class="feedback-header">
+        <span class="feedback-type">${emoji} ${type}</span>
+        <span class="feedback-number">#${issue.number}</span>
+      </div>
+      <h3 class="feedback-title">${issue.title.replace(/^\[反馈\]\s*/, "")}</h3>
+      <div class="feedback-body">${body || issue.title}</div>
+      <div class="feedback-footer">
+        <span class="feedback-author">${name || "匿名用户"}</span>
+        <span class="feedback-date">${formatDate(issue.created_at)}</span>
+      </div>
+      <a class="feedback-link" href="${issue.html_url}" target="_blank" rel="noopener noreferrer">
+        查看详情
+      </a>
+    `;
+    return card;
+  }
+
+  // Fetch and render
+  async function loadFeedback() {
+    try {
+      const response = await fetch(
+        `${API_URL}?labels=approved&state=open&sort=created&direction=desc&per_page=6`,
+        {
+          headers: {
+            "Accept": "application/vnd.github.v3+json"
+          }
+        }
+      );
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const issues = await response.json();
+
+      feedbackGrid.innerHTML = "";
+
+      if (issues.length === 0) {
+        feedbackGrid.innerHTML = `
+          <div class="feedback-empty">
+            <h3>暂无反馈</h3>
+            <p>成为第一个分享想法的人!你的反馈将直接影响 Project Remo 的产品设计。</p>
+          </div>
+        `;
+        return;
+      }
+
+      issues.forEach((issue, index) => {
+        const card = renderCard(issue);
+        card.style.animationDelay = `${index * 0.1}s`;
+        feedbackGrid.appendChild(card);
+      });
+
+      // Trigger reveal animation
+      if (typeof window.revealOnScroll === "function") {
+        window.revealOnScroll();
+      }
+
+    } catch (error) {
+      console.error("[Community] Failed to load feedback:", error);
+      feedbackGrid.innerHTML = `
+        <div class="feedback-empty">
+          <h3>加载失败</h3>
+          <p>无法连接到 GitHub API。请稍后再试或直接访问
+            <a href="https://github.com/${REPO}/issues?q=is%3Aissue+label%3Aapproved"
+               target="_blank"
+               style="color:var(--accent);text-decoration:underline">
+              GitHub Issues
+            </a>
+          </p>
+        </div>
+      `;
+    }
+  }
+
+  // Load on page ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadFeedback);
+  } else {
+    loadFeedback();
+  }
 })();
