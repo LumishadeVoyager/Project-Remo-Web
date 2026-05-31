@@ -57,6 +57,33 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   TYPOGRAPHY — Chinese text wrapping optimization
+   ═══════════════════════════════════════════════════════════════════
+   Prevent orphaned characters (孤字悬挂) in headings.
+
+   Strategy:
+   1. text-wrap: balance — modern browsers auto-balance line breaks
+   2. word-break: keep-all — prevent breaking within Chinese words
+   3. Manual &nbsp; in HTML for critical 2-4 char phrases
+
+   Result: headings break at natural phrase boundaries, no single
+   character dangling on the last line. */
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* For browsers without text-wrap support, use hanging-punctuation
+   as a progressive enhancement */
+@supports not (text-wrap: balance) {
+  h1, h2, h3 {
+    hanging-punctuation: first last;
+  }
+}
+
 img {
   max-width: 100%;
   height: auto;
