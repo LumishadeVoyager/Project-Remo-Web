@@ -1,9 +1,9 @@
 /* =========================================================================
    Project Remo — i18n + interaction
-   BUILD: bfaf644 · 2026-05-31
+   BUILD: v9 · 2026-05-31-community-fix
    ========================================================================= */
 
-console.log("[Remo] site.js BUILD bfaf644 loaded");
+console.log("[Remo] site.js v9 loaded");
 
 /* ─── I18N Translation Dictionary ──────────────────────────────────── */
 const I18N = {
@@ -1942,13 +1942,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = renderCard(issue);
         card.style.animationDelay = `${index * 0.1}s`;
         feedbackGrid.appendChild(card);
+        // Cards are added dynamically after the initial IntersectionObserver
+        // scan. Without manual reveal they stay opacity:0 forever.
+        requestAnimationFrame(() => card.classList.add("in-view"));
       });
       console.log("[Community] all cards rendered");
-
-      // Trigger reveal animation
-      if (typeof window.revealOnScroll === "function") {
-        window.revealOnScroll();
-      }
 
     } catch (error) {
       console.error("[Community] Failed to load feedback:", error);
