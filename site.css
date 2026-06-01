@@ -76,6 +76,15 @@ h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
 }
 
+/* <br class="desktop-only"> visible on desktop, hidden on mobile.
+   Chinese editorial copy reads more elegantly with explicit line breaks
+   on wide screens, but on narrow screens the browser's natural wrapping
+   produces fewer awkward dangling words. */
+br.desktop-only { display: inline; }
+@media (max-width: 680px) {
+  br.desktop-only { display: none; }
+}
+
 /* For browsers without text-wrap support, use hanging-punctuation
    as a progressive enhancement */
 @supports not (text-wrap: balance) {
@@ -270,12 +279,13 @@ section + section::before {
   gap: 32px;
   padding: 20px var(--pad-x);
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--light-2);
+  color: var(--light);
   background: linear-gradient(to bottom, var(--ink) 30%, rgba(5, 10, 20, 0));
-  transition: background 320ms ease, border-color 320ms ease;
+  transition: background 200ms ease, border-color 200ms ease;
 }
 
 .topbar.scrolled {
@@ -429,8 +439,8 @@ section + section::before {
 .hero-title .word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 900ms cubic-bezier(0.2, 0.7, 0.1, 1), transform 900ms cubic-bezier(0.2, 0.7, 0.1, 1);
+  transform: translateY(24px);
+  transition: opacity 480ms cubic-bezier(0.2, 0.7, 0.1, 1), transform 480ms cubic-bezier(0.2, 0.7, 0.1, 1);
 }
 
 .hero-title.in .word {
@@ -438,13 +448,13 @@ section + section::before {
   transform: translateY(0);
 }
 
-.hero-title.in .word:nth-child(1) { transition-delay: 0.05s; }
-.hero-title.in .word:nth-child(2) { transition-delay: 0.12s; }
-.hero-title.in .word:nth-child(3) { transition-delay: 0.19s; }
-.hero-title.in .word:nth-child(4) { transition-delay: 0.26s; }
-.hero-title.in .word:nth-child(5) { transition-delay: 0.33s; }
-.hero-title.in .word:nth-child(6) { transition-delay: 0.40s; }
-.hero-title.in .word:nth-child(7) { transition-delay: 0.47s; }
+.hero-title.in .word:nth-child(1) { transition-delay: 0.02s; }
+.hero-title.in .word:nth-child(2) { transition-delay: 0.06s; }
+.hero-title.in .word:nth-child(3) { transition-delay: 0.10s; }
+.hero-title.in .word:nth-child(4) { transition-delay: 0.14s; }
+.hero-title.in .word:nth-child(5) { transition-delay: 0.18s; }
+.hero-title.in .word:nth-child(6) { transition-delay: 0.22s; }
+.hero-title.in .word:nth-child(7) { transition-delay: 0.26s; }
 
 .hero-product {
   position: absolute;
@@ -1292,7 +1302,7 @@ video.showcase-video {
 
 .acoustic-diagram {
   position: relative;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--line);
 }
@@ -2030,8 +2040,8 @@ video.showcase-video {
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 900ms cubic-bezier(0.2, 0.7, 0.1, 1), transform 900ms cubic-bezier(0.2, 0.7, 0.1, 1);
+  transform: translateY(20px);
+  transition: opacity 500ms cubic-bezier(0.2, 0.7, 0.1, 1), transform 500ms cubic-bezier(0.2, 0.7, 0.1, 1);
 }
 
 .reveal.in-view {
@@ -2039,10 +2049,10 @@ video.showcase-video {
   transform: none;
 }
 
-.reveal.delay-1 { transition-delay: 0.08s; }
-.reveal.delay-2 { transition-delay: 0.16s; }
-.reveal.delay-3 { transition-delay: 0.24s; }
-.reveal.delay-4 { transition-delay: 0.32s; }
+.reveal.delay-1 { transition-delay: 0.04s; }
+.reveal.delay-2 { transition-delay: 0.08s; }
+.reveal.delay-3 { transition-delay: 0.12s; }
+.reveal.delay-4 { transition-delay: 0.16s; }
 
 /* =========================================================================
    responsive
