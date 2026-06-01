@@ -1,9 +1,9 @@
 /* =========================================================================
    Project Remo — i18n + interaction
-   BUILD: v11 · 2026-05-31-feedback-batch
+   BUILD: v12 · 2026-05-31-sticky-and-fonts
    ========================================================================= */
 
-console.log("[Remo] site.js v11 loaded");
+console.log("[Remo] site.js v12 loaded");
 
 /* ─── I18N Translation Dictionary ──────────────────────────────────── */
 const I18N = {
