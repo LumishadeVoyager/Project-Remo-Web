@@ -348,7 +348,7 @@ section + section::before {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 32px;
-  padding: 14px var(--pad-x);
+  padding: 8px var(--pad-x);
   font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
@@ -378,16 +378,16 @@ section + section::before {
 }
 
 /* Brand lockup image (replaces text "Remo/02" placeholder).
-   Sized to be prominent and clearly readable from arm's length.
-   Desktop: 64px tall · Mobile: 48px tall. */
+   Sized to be a major visual anchor in the navbar.
+   Desktop: 120px tall · Mobile: 72px tall. */
 .brand-logo {
   display: block;
-  height: 64px;
+  height: 120px;
   width: auto;
   object-fit: contain;
-  max-width: 320px;
+  max-width: 560px;
   /* Drop shadow makes the white logo pop on dark hero gradient */
-  filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55));
 }
 
 .brand .dot {
@@ -2116,10 +2116,10 @@ video.showcase-video {
 
 .footer-brand-logo {
   display: block;
-  height: 52px;
+  height: 78px;
   width: auto;
   object-fit: contain;
-  max-width: 240px;
+  max-width: 360px;
   opacity: 0.95;
 }
 
@@ -3261,10 +3261,10 @@ video.showcase-video {
 
 .sb-brand-logo {
   display: block;
-  height: 40px;
+  height: 60px;
   width: auto;
   object-fit: contain;
-  max-width: 180px;
+  max-width: 280px;
 }
 
 .sticky-bar .sb-brand .dot {
@@ -3523,9 +3523,9 @@ video.showcase-video {
 
 @media (max-width: 680px) {
   /* Brand logos — slightly smaller on mobile, still prominent */
-  .brand-logo { height: 48px; max-width: 220px; }
-  .footer-brand-logo { height: 40px; max-width: 200px; }
-  .sb-brand-logo { height: 28px; max-width: 140px; }
+  .brand-logo { height: 72px; max-width: 320px; }
+  .footer-brand-logo { height: 60px; max-width: 280px; }
+  .sb-brand-logo { height: 42px; max-width: 200px; }
 
   .hero-keyspecs { grid-template-columns: 1fr 1fr; }
   .hero-keyspecs .ks { border-right: 1px solid var(--line); padding: 18px 14px 18px 0; }
@@ -4092,26 +4092,25 @@ video.showcase-video {
 
 .showcase-watermark {
   position: absolute;
-  bottom: clamp(20px, 3vw, 36px);
-  right: clamp(20px, 3vw, 36px);
-  height: clamp(40px, 5vw, 64px);
+  bottom: clamp(24px, 3.5vw, 44px);
+  right: clamp(24px, 3.5vw, 44px);
+  height: clamp(60px, 7vw, 96px);
   width: auto;
-  opacity: 0.75;
+  opacity: 0.78;
   pointer-events: none;
-  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.65));
   z-index: 3;
 }
 
-/* Outro logo — large headline-anchor before the final tagline.
-   Reveals via .reveal class. Margin-bottom links it visually to the
-   h2 below without competing for the same eyeline. */
+/* Outro logo — hero-sized headline anchor before the final tagline.
+   2x the previous size for maximum brand recall at the end of the page. */
 .outro-logo {
   display: block;
-  margin: 0 auto clamp(32px, 5vw, 56px);
-  height: clamp(64px, 9vw, 120px);
+  margin: 0 auto clamp(48px, 7vw, 80px);
+  height: clamp(128px, 18vw, 240px);
   width: auto;
-  max-width: 80%;
-  filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.45));
+  max-width: 90%;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.5));
 }
 
 /* Section stamps — inline logos above key section eyebrows
@@ -4119,20 +4118,103 @@ video.showcase-video {
    "this part is brand-stamped". */
 .section-stamp {
   display: block;
-  height: 44px;
+  height: 66px;
   width: auto;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   opacity: 0.85;
 }
 
 /* Mobile sizing */
 @media (max-width: 680px) {
-  .outro-logo { height: clamp(64px, 22vw, 120px); margin-bottom: 28px; }
+  .outro-logo { height: clamp(120px, 36vw, 220px); margin-bottom: 36px; }
   .showcase-watermark {
-    height: 32px;
-    bottom: 14px;
-    right: 14px;
-    opacity: 0.7;
+    height: 48px;
+    bottom: 16px;
+    right: 16px;
+    opacity: 0.72;
   }
-  .section-stamp { height: 32px; margin-bottom: 14px; }
+  .section-stamp { height: 48px; margin-bottom: 16px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   IMAGE WATERMARKS — every content image gets a corner brand stamp
+   ═══════════════════════════════════════════════════════════════════
+   Auto-applied to known image containers across the site. CSS pseudo-
+   element overlay (no JS, no DOM changes). Uses the white lockup SVG
+   loaded via the url() in background-image — same asset as the rest
+   of the brand surfaces. */
+
+.hero-product,
+.acoustic-diagram,
+.acoustic-bracelet,
+.color-frame,
+.arch-diagram,
+.gallery-spread .shot,
+.compare-visual,
+.founder-card {
+  position: relative;
+}
+
+.hero-product::after,
+.acoustic-diagram::after,
+.acoustic-bracelet::after,
+.color-frame::after,
+.arch-diagram::after,
+.gallery-spread .shot::after,
+.compare-visual::after,
+.founder-portrait-frame::after,
+.team-portrait::after {
+  content: "";
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: clamp(60px, 8vw, 100px);
+  height: clamp(20px, 2.5vw, 32px);
+  background-image: url("./Logo/SVG/03-lockup-white.svg");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: contain;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 4;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.7));
+}
+
+/* Smaller / less obtrusive watermark in tight cells like gallery */
+.gallery-spread .shot::after {
+  bottom: 8px;
+  right: 8px;
+  width: clamp(48px, 6vw, 80px);
+  height: clamp(16px, 2vw, 24px);
+  opacity: 0.5;
+}
+
+/* Hero product image is on a transparent bg — watermark needs more
+   contrast there, position bottom-left to avoid the floating animation */
+.hero-product::after {
+  bottom: 8px;
+  right: auto;
+  left: 8px;
+  background-position: left bottom;
+  width: clamp(70px, 9vw, 110px);
+  height: clamp(22px, 2.8vw, 34px);
+  opacity: 0.6;
+}
+
+@media (max-width: 680px) {
+  .hero-product::after,
+  .acoustic-diagram::after,
+  .acoustic-bracelet::after,
+  .color-frame::after,
+  .arch-diagram::after,
+  .gallery-spread .shot::after,
+  .compare-visual::after,
+  .founder-portrait-frame::after,
+  .team-portrait::after {
+    bottom: 8px;
+    right: 8px;
+    width: 56px;
+    height: 18px;
+    opacity: 0.5;
+  }
 }
