@@ -4144,83 +4144,106 @@ video.showcase-video {
    loaded via the url() in background-image — same asset as the rest
    of the brand surfaces. */
 
-.hero-product,
+/* IMPORTANT: Several containers are intentionally EXCLUDED from ::after
+   watermarks because their ::after pseudo-elements are already in use:
+     • .hero-product::after — halo glow animation (line 561)
+     • .founder-card::after — accent corner stroke (line 3636)
+   For these we use a real <img class="brand-watermark"> in the DOM.
+   .arch-diagram is excluded per user request (diagram is already busy). */
 .acoustic-diagram,
 .acoustic-bracelet,
 .color-frame,
-.arch-diagram,
 .gallery-spread .shot,
-.compare-visual,
-.founder-card {
+.compare-visual {
   position: relative;
 }
 
-.hero-product::after,
 .acoustic-diagram::after,
 .acoustic-bracelet::after,
 .color-frame::after,
-.arch-diagram::after,
 .gallery-spread .shot::after,
-.compare-visual::after,
-.founder-card::after {
+.compare-visual::after {
   content: "";
   position: absolute;
-  bottom: clamp(20px, 3vw, 36px);
-  right: clamp(20px, 3vw, 36px);
-  /* Match showcase-watermark sizing — same prominence as the V02
-     hero video watermark. Height clamps 60-96px, width auto-fits. */
-  width: clamp(180px, 22vw, 300px);
-  height: clamp(60px, 7vw, 96px);
+  bottom: 14px;
+  right: 14px;
+  /* Moderate watermark — visible but doesn't compete with content.
+     Significantly smaller than V01 showcase watermark; this is an
+     image badge, not a hero overlay. */
+  width: clamp(90px, 12vw, 140px);
+  height: clamp(28px, 3.6vw, 44px);
   background-image: url("./Logo/SVG/03-lockup-white.svg");
   background-repeat: no-repeat;
   background-position: right bottom;
   background-size: contain;
-  opacity: 0.78;
+  opacity: 0.72;
   pointer-events: none;
   z-index: 4;
-  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.65));
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.55));
 }
 
-/* Hero product image is on a transparent bg — watermark on bottom-left
-   to stay clear of the floating product animation */
-.hero-product::after {
-  right: auto;
-  left: clamp(20px, 3vw, 36px);
-  background-position: left bottom;
+/* Figures with figcaptions — watermark must clear the caption strip
+   (~40-56px). Push it up so it sits in the image's bottom-right, not
+   over the caption text. */
+.acoustic-bracelet::after,
+.gallery-spread .shot::after,
+.color-frame::after {
+  bottom: 56px;
 }
 
-/* Compare-visual image — light/paper background. Use black lockup
-   via filter invert so it reads on the bright comparison render. */
+/* Compare-visual sits on a light/paper area → use COLOR lockup so
+   the brand is clearly visible (white would disappear on bright bg). */
 .compare-visual::after {
-  filter: brightness(0) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
-  opacity: 0.78;
+  background-image: url("./Logo/SVG/01-lockup-color.svg");
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.18));
+  opacity: 0.9;
 }
 
-/* Investors section is on --paper (warm bone #f4f1ea) background.
-   The inline <img class="section-stamp"> currently uses the white
-   lockup which is invisible there. Invert to black via filter. */
-.investors .section-stamp {
-  filter: brightness(0);
-  opacity: 0.85;
+/* Founder portrait watermark — uses a real <img class="founder-watermark">
+   element (NOT ::after) because .founder-card::after is already used
+   by the accent corner stroke decoration. */
+.founder-watermark {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  height: clamp(24px, 3vw, 36px);
+  width: auto;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 4;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
 }
 
+/* Investors section uses --paper warm-bone background — the inline
+   <img> here uses the COLOR lockup (set in HTML), so just polish opacity. */
+.investors .section-stamp-color {
+  opacity: 0.95;
+}
+
+/* MOBILE — shrink watermarks substantially so they don't crowd
+   captions or description text below on narrow screens. */
 @media (max-width: 680px) {
-  .hero-product::after,
   .acoustic-diagram::after,
   .acoustic-bracelet::after,
   .color-frame::after,
-  .arch-diagram::after,
   .gallery-spread .shot::after,
-  .compare-visual::after,
-  .founder-card::after {
-    bottom: 14px;
-    right: 14px;
-    width: 160px;
-    height: 48px;
-    opacity: 0.72;
+  .compare-visual::after {
+    bottom: 10px;
+    right: 10px;
+    width: 60px;
+    height: 20px;
+    opacity: 0.6;
   }
-  .hero-product::after {
-    left: 14px;
-    right: auto;
+  /* Figures with figcaption: push up just enough to clear small mobile
+     caption (~28px) without growing watermark itself */
+  .acoustic-bracelet::after,
+  .gallery-spread .shot::after,
+  .color-frame::after {
+    bottom: 38px;
+  }
+  .founder-watermark {
+    height: 20px;
+    bottom: 10px;
+    right: 10px;
   }
 }
