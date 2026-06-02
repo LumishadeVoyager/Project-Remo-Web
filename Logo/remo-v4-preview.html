@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project REMO Logo V4 Variants</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #111;
+      background: #f4f4f4;
+      font-family: Arial, "Noto Sans SC", sans-serif;
+    }
+    main {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 48px 0 84px;
+    }
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #d9d9d9;
+      padding-bottom: 24px;
+    }
+    .kicker {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #009ce8;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(36px, 7vw, 86px);
+      line-height: .94;
+      letter-spacing: -.05em;
+      font-weight: 900;
+    }
+    p {
+      margin: 0;
+      max-width: 78ch;
+      line-height: 1.7;
+      color: #444;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 18px;
+    }
+    .frame {
+      display: grid;
+      place-items: center;
+      min-height: 260px;
+      background: #fff;
+      border: 1px solid #eee;
+      overflow: hidden;
+    }
+    .dark .frame { background: #050a14; }
+    img {
+      display: block;
+      width: 100%;
+      max-height: 440px;
+      object-fit: contain;
+    }
+    .symbol img {
+      width: auto;
+      max-width: 100%;
+      max-height: 390px;
+    }
+    h2 {
+      margin: 14px 0 6px;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .note {
+      font-size: 14px;
+      color: #555;
+    }
+    @media (min-width: 860px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .wide { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="kicker">Project REMO · Logo V4 · Based On Provided PNG</div>
+      <h1>Brand Logo Variants</h1>
+      <p>这一组以原始 `Project REMO logo v1.png` 为基础，只优化矢量几何、比例、对齐和应用版本。核心识别保持为“快门叶片 + 水波 + Project/REMO”。</p>
+    </header>
+
+    <section class="grid">
+      <article class="card wide">
+        <div class="frame"><img src="./remo-v4-primary-optimized.svg" alt="Project REMO optimized primary logo"></div>
+        <h2>Primary Optimized</h2>
+        <p class="note">白底主标，用于网站、PPT、商业计划书封面和品牌露出。</p>
+      </article>
+      <article class="card wide">
+        <div class="frame"><img src="./remo-v4-primary-transparent.svg" alt="Project REMO transparent primary logo"></div>
+        <h2>Transparent</h2>
+        <p class="note">透明背景版，便于贴到图片、视频、网页和演示材料中。</p>
+      </article>
+      <article class="card symbol">
+        <div class="frame"><img src="./remo-v4-symbol-color.svg" alt="Project REMO color symbol"></div>
+        <h2>Symbol Color</h2>
+        <p class="note">图形单独版，用于头像、App 图标、favicon、贴纸和产品标识。</p>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="./remo-v4-stacked.svg" alt="Project REMO stacked logo"></div>
+        <h2>Stacked</h2>
+        <p class="note">上下堆叠版本，用于竖版海报、方形封面和社媒头像扩展。</p>
+      </article>
+      <article class="card dark wide">
+        <div class="frame"><img src="./remo-v4-reverse-dark.svg" alt="Project REMO reverse dark logo"></div>
+        <h2>Reverse Dark</h2>
+        <p class="note">深色背景反白版，适配当前网站的深海黑蓝视觉体系。</p>
+      </article>
+      <article class="card wide">
+        <div class="frame"><img src="./remo-v4-mono-black.svg" alt="Project REMO monochrome black logo"></div>
+        <h2>Mono Black</h2>
+        <p class="note">单色版本，用于丝印、镭雕、低成本印刷和法律文件。</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

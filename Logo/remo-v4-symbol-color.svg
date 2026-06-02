@@ -1,0 +1,25 @@
+<svg width="760" height="760" viewBox="0 0 760 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Project REMO shutter and wave symbol</title>
+  <desc id="desc">Standalone color symbol based on the Project REMO shutter aperture and underwater wave.</desc>
+  <rect width="760" height="760" fill="#ffffff"/>
+  <defs>
+    <clipPath id="markClip">
+      <circle cx="380" cy="380" r="270"/>
+    </clipPath>
+    <linearGradient id="water" x1="155" y1="456" x2="602" y2="642" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16C6FF"/>
+      <stop offset="1" stop-color="#009CE8"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#markClip)">
+    <rect x="110" y="110" width="540" height="540" fill="#ffffff"/>
+    <path d="M135 326C162 231 230 158 322 128L330 313L225 416L135 326Z" fill="#050505"/>
+    <path d="M345 116C452 102 538 137 606 201L421 318L344 374L345 116Z" fill="#050505"/>
+    <path d="M630 217C691 294 713 382 692 474L497 381L424 342L630 217Z" fill="#050505"/>
+    <path d="M690 502C669 574 626 633 563 673L464 466L489 404L690 502Z" fill="#050505"/>
+    <path d="M127 349L298 458L317 480L123 452C118 416 119 381 127 349Z" fill="#050505"/>
+    <path d="M112 490C181 440 247 442 309 497C371 552 434 554 499 506C551 468 607 466 660 497L660 690H112V490Z" fill="url(#water)"/>
+    <path d="M137 575C217 617 299 614 384 565C487 505 585 509 676 577" stroke="#ffffff" stroke-width="32" stroke-linecap="round"/>
+    <path d="M195 678C270 711 351 714 435 690C519 666 589 629 644 576L679 700H195V678Z" fill="url(#water)"/>
+  </g>
+</svg>
