@@ -348,7 +348,7 @@ section + section::before {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 32px;
-  padding: 20px var(--pad-x);
+  padding: 14px var(--pad-x);
   font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
@@ -378,17 +378,16 @@ section + section::before {
 }
 
 /* Brand lockup image (replaces text "Remo/02" placeholder).
-   Sized to be prominent without overpowering the nav. height-only
-   sizing lets the image keep its natural aspect ratio.
-   Desktop: 44px tall · Mobile: 36px tall (still readable at glance). */
+   Sized to be prominent and clearly readable from arm's length.
+   Desktop: 64px tall · Mobile: 48px tall. */
 .brand-logo {
   display: block;
-  height: 44px;
+  height: 64px;
   width: auto;
   object-fit: contain;
-  max-width: 220px;
-  /* Subtle drop shadow makes the white logo pop on dark hero gradient */
-  filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.4));
+  max-width: 320px;
+  /* Drop shadow makes the white logo pop on dark hero gradient */
+  filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.5));
 }
 
 .brand .dot {
@@ -2117,11 +2116,11 @@ video.showcase-video {
 
 .footer-brand-logo {
   display: block;
-  height: 36px;
+  height: 52px;
   width: auto;
   object-fit: contain;
-  max-width: 180px;
-  opacity: 0.92;
+  max-width: 240px;
+  opacity: 0.95;
 }
 
 .footer .center {
@@ -3230,7 +3229,7 @@ video.showcase-video {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
-  padding: 12px 16px 12px 18px;
+  padding: 8px 12px 8px 16px;
   max-width: calc(100vw - 40px);
   background: rgba(5, 10, 20, 0.86);
   backdrop-filter: blur(20px);
@@ -3262,10 +3261,10 @@ video.showcase-video {
 
 .sb-brand-logo {
   display: block;
-  height: 24px;
+  height: 40px;
   width: auto;
   object-fit: contain;
-  max-width: 120px;
+  max-width: 180px;
 }
 
 .sticky-bar .sb-brand .dot {
@@ -3524,9 +3523,9 @@ video.showcase-video {
 
 @media (max-width: 680px) {
   /* Brand logos — slightly smaller on mobile, still prominent */
-  .brand-logo { height: 36px; max-width: 160px; }
-  .footer-brand-logo { height: 30px; max-width: 140px; }
-  .sb-brand-logo { height: 20px; max-width: 100px; }
+  .brand-logo { height: 48px; max-width: 220px; }
+  .footer-brand-logo { height: 40px; max-width: 200px; }
+  .sb-brand-logo { height: 28px; max-width: 140px; }
 
   .hero-keyspecs { grid-template-columns: 1fr 1fr; }
   .hero-keyspecs .ks { border-right: 1px solid var(--line); padding: 18px 14px 18px 0; }
@@ -4093,13 +4092,13 @@ video.showcase-video {
 
 .showcase-watermark {
   position: absolute;
-  bottom: clamp(16px, 2.5vw, 28px);
-  right: clamp(16px, 2.5vw, 28px);
-  height: clamp(28px, 3.2vw, 40px);
+  bottom: clamp(20px, 3vw, 36px);
+  right: clamp(20px, 3vw, 36px);
+  height: clamp(40px, 5vw, 64px);
   width: auto;
-  opacity: 0.65;
+  opacity: 0.75;
   pointer-events: none;
-  filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
   z-index: 3;
 }
 
@@ -4115,25 +4114,25 @@ video.showcase-video {
   filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.45));
 }
 
-/* Section stamps — small inline logos above key section eyebrows
-   (specs, team, investors). Acts as a "mini chapter mark" that says
-   "this part is brand-stamped". Subtle, never competes with eyebrow. */
+/* Section stamps — inline logos above key section eyebrows
+   (specs, team, investors). Acts as a "chapter mark" that says
+   "this part is brand-stamped". */
 .section-stamp {
   display: block;
-  height: 28px;
+  height: 44px;
   width: auto;
-  margin-bottom: 16px;
-  opacity: 0.7;
+  margin-bottom: 20px;
+  opacity: 0.85;
 }
 
 /* Mobile sizing */
 @media (max-width: 680px) {
-  .outro-logo { height: clamp(48px, 18vw, 96px); margin-bottom: 24px; }
+  .outro-logo { height: clamp(64px, 22vw, 120px); margin-bottom: 28px; }
   .showcase-watermark {
-    height: 22px;
-    bottom: 12px;
-    right: 12px;
-    opacity: 0.55;
+    height: 32px;
+    bottom: 14px;
+    right: 14px;
+    opacity: 0.7;
   }
-  .section-stamp { height: 22px; margin-bottom: 12px; }
+  .section-stamp { height: 32px; margin-bottom: 14px; }
 }
