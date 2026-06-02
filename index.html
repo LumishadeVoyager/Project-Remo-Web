@@ -43,8 +43,14 @@
      ───────────────────────────────────────────────────────────── -->
 <header class="topbar" id="topbar">
   <a class="brand" href="#top" aria-label="Project Remo">
-    <span class="dot"></span>
-    Remo<em>/02</em>
+    <img src="./Logo/remo-lockup-white.png"
+         alt="Project Remo"
+         class="brand-logo"
+         decoding="async"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+    <span class="brand-fallback" style="display:none;align-items:baseline;gap:10px;">
+      <span class="dot"></span>Remo<em>/02</em>
+    </span>
   </a>
   <nav class="nav" aria-label="primary">
     <a href="#flow" data-i18n="nav.flow">工作流</a>
@@ -1013,7 +1019,16 @@
      STICKY PRE-ORDER BAR
      ───────────────────────────────────────────────────────────── -->
 <aside class="sticky-bar" id="sticky-bar" aria-hidden="true">
-  <span class="sb-brand"><span class="dot"></span> Project Remo</span>
+  <span class="sb-brand">
+    <img src="./Logo/remo-lockup-white.png"
+         alt="Project Remo"
+         class="sb-brand-logo"
+         decoding="async"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+    <span class="sb-brand-fallback" style="display:none;align-items:center;gap:8px;">
+      <span class="dot"></span>Project Remo
+    </span>
+  </span>
   <span class="sb-specs" data-i18n="sticky.specs">5 推进器 · 声学纠偏定位 · 巡航 40–60 min · 4K 海思</span>
   <a class="sb-cta" href="mailto:lumishadev4yang@gmail.com?subject=Project%20Remo%20%C2%B7%20%E5%88%9B%E5%A7%8B%E5%9B%A2%E9%98%9F%E8%81%94%E7%B3%BB">
     <span data-i18n="sticky.cta">联系创始团队</span> <span class="arrow"></span>
@@ -1024,11 +1039,20 @@
      FOOTER
      ───────────────────────────────────────────────────────────── -->
 <footer class="footer">
-  <span class="brand"><span class="dot"></span> Remo<em>/02</em></span>
+  <span class="brand">
+    <img src="./Logo/remo-lockup-white.png"
+         alt="Project Remo"
+         class="footer-brand-logo"
+         decoding="async"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+    <span class="footer-brand-fallback" style="display:none;align-items:baseline;gap:10px;">
+      <span class="dot"></span>Remo<em>/02</em>
+    </span>
+  </span>
   <span class="center" data-i18n="footer.tagline">Wireless Underwater Follow-Cam · POC 2026</span>
   <span data-i18n="footer.copyright">© Project Remo · All rights reserved</span>
 </footer>
 
-<script src="./site.js?v=v12"></script>
+<script src="./site.js?v=v13"></script>
 </body>
 </html>

@@ -367,7 +367,7 @@ section + section::before {
 
 .brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   font-family: var(--display);
   font-weight: 400;
@@ -375,6 +375,20 @@ section + section::before {
   letter-spacing: -0.01em;
   text-transform: none;
   color: var(--light);
+}
+
+/* Brand lockup image (replaces text "Remo/02" placeholder).
+   Sized to be prominent without overpowering the nav. height-only
+   sizing lets the image keep its natural aspect ratio.
+   Desktop: 44px tall · Mobile: 36px tall (still readable at glance). */
+.brand-logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  max-width: 220px;
+  /* Subtle drop shadow makes the white logo pop on dark hero gradient */
+  filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.4));
 }
 
 .brand .dot {
@@ -2101,6 +2115,15 @@ video.showcase-video {
   font-size: 16px;
 }
 
+.footer-brand-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  max-width: 180px;
+  opacity: 0.92;
+}
+
 .footer .center {
   text-align: center;
 }
@@ -3237,6 +3260,14 @@ video.showcase-video {
   letter-spacing: 0.12em;
 }
 
+.sb-brand-logo {
+  display: block;
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  max-width: 120px;
+}
+
 .sticky-bar .sb-brand .dot {
   width: 6px;
   height: 6px;
@@ -3492,6 +3523,11 @@ video.showcase-video {
 }
 
 @media (max-width: 680px) {
+  /* Brand logos — slightly smaller on mobile, still prominent */
+  .brand-logo { height: 36px; max-width: 160px; }
+  .footer-brand-logo { height: 30px; max-width: 140px; }
+  .sb-brand-logo { height: 20px; max-width: 100px; }
+
   .hero-keyspecs { grid-template-columns: 1fr 1fr; }
   .hero-keyspecs .ks { border-right: 1px solid var(--line); padding: 18px 14px 18px 0; }
   .hero-keyspecs .ks:nth-child(2n) { border-right: 0; }
