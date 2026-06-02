@@ -7,10 +7,12 @@
 <title>Project Remo — 水下智能跟随相机</title>
 <meta name="description" content="Project Remo 是一款无线、掌上起降的水下智能跟随相机。填补消费级运动相机与传统有线 ROV 之间的空白，让潜水员只剩下呼吸。">
 
-<!-- Brand favicon. mark-white SVG renders sharp at any size in the
-     browser tab. PNG fallback for legacy browsers (Safari < 14, IE). -->
-<link rel="icon" type="image/svg+xml" href="./Logo/SVG/04-mark-white.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="./Logo/3x/04-mark-white@3x.png">
+<!-- Brand favicon. Black mark — most browser tabs use a light background,
+     and the black version reads sharpest there. sizes="any" lets browsers
+     scale the SVG to their preferred max (typically 32px or 64px retina). -->
+<link rel="icon" type="image/svg+xml" sizes="any" href="./Logo/SVG/05-mark-black.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="./Logo/3x/05-mark-black@3x.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./Logo/3x/05-mark-black@3x.png">
 <link rel="apple-touch-icon" href="./Logo/3x/02-mark-color@3x.png">
 
 <!-- Open Graph / Twitter card (social sharing previews). Uses the
@@ -50,7 +52,7 @@
 <link rel="preload" as="image" type="image/webp" href="./Image/Hero主体图.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="./site.css">
+<link rel="stylesheet" href="./site.css?v=v17">
 </head>
 <body>
 
@@ -1083,6 +1085,6 @@
   <span data-i18n="footer.copyright">© Project Remo · All rights reserved</span>
 </footer>
 
-<script src="./site.js?v=v16"></script>
+<script src="./site.js?v=v17"></script>
 </body>
 </html>

@@ -4162,43 +4162,46 @@ video.showcase-video {
 .arch-diagram::after,
 .gallery-spread .shot::after,
 .compare-visual::after,
-.founder-portrait-frame::after,
-.team-portrait::after {
+.founder-card::after {
   content: "";
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  width: clamp(60px, 8vw, 100px);
-  height: clamp(20px, 2.5vw, 32px);
+  bottom: clamp(20px, 3vw, 36px);
+  right: clamp(20px, 3vw, 36px);
+  /* Match showcase-watermark sizing — same prominence as the V02
+     hero video watermark. Height clamps 60-96px, width auto-fits. */
+  width: clamp(180px, 22vw, 300px);
+  height: clamp(60px, 7vw, 96px);
   background-image: url("./Logo/SVG/03-lockup-white.svg");
   background-repeat: no-repeat;
   background-position: right bottom;
   background-size: contain;
-  opacity: 0.55;
+  opacity: 0.78;
   pointer-events: none;
   z-index: 4;
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.65));
 }
 
-/* Smaller / less obtrusive watermark in tight cells like gallery */
-.gallery-spread .shot::after {
-  bottom: 8px;
-  right: 8px;
-  width: clamp(48px, 6vw, 80px);
-  height: clamp(16px, 2vw, 24px);
-  opacity: 0.5;
-}
-
-/* Hero product image is on a transparent bg — watermark needs more
-   contrast there, position bottom-left to avoid the floating animation */
+/* Hero product image is on a transparent bg — watermark on bottom-left
+   to stay clear of the floating product animation */
 .hero-product::after {
-  bottom: 8px;
   right: auto;
-  left: 8px;
+  left: clamp(20px, 3vw, 36px);
   background-position: left bottom;
-  width: clamp(70px, 9vw, 110px);
-  height: clamp(22px, 2.8vw, 34px);
-  opacity: 0.6;
+}
+
+/* Compare-visual image — light/paper background. Use black lockup
+   via filter invert so it reads on the bright comparison render. */
+.compare-visual::after {
+  filter: brightness(0) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  opacity: 0.78;
+}
+
+/* Investors section is on --paper (warm bone #f4f1ea) background.
+   The inline <img class="section-stamp"> currently uses the white
+   lockup which is invisible there. Invert to black via filter. */
+.investors .section-stamp {
+  filter: brightness(0);
+  opacity: 0.85;
 }
 
 @media (max-width: 680px) {
@@ -4209,12 +4212,15 @@ video.showcase-video {
   .arch-diagram::after,
   .gallery-spread .shot::after,
   .compare-visual::after,
-  .founder-portrait-frame::after,
-  .team-portrait::after {
-    bottom: 8px;
-    right: 8px;
-    width: 56px;
-    height: 18px;
-    opacity: 0.5;
+  .founder-card::after {
+    bottom: 14px;
+    right: 14px;
+    width: 160px;
+    height: 48px;
+    opacity: 0.72;
+  }
+  .hero-product::after {
+    left: 14px;
+    right: auto;
   }
 }
