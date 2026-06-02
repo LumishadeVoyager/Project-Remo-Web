@@ -4080,3 +4080,60 @@ video.showcase-video {
   .feedback-card { padding: 12px; }
   .feedback-footer { flex-wrap: wrap; gap: 6px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BRAND LOGO TOUCHPOINTS — outro / showcase watermark / section stamps
+   ═══════════════════════════════════════════════════════════════════
+   In addition to topbar/footer/sticky-bar already in place, we sprinkle
+   the lockup across high-attention surfaces to reinforce brand recall. */
+
+/* Showcase video watermark — bottom-right corner, semi-transparent,
+   reads like an editorial film slug. Position relative to .showcase-frame. */
+.showcase-frame { position: relative; }
+
+.showcase-watermark {
+  position: absolute;
+  bottom: clamp(16px, 2.5vw, 28px);
+  right: clamp(16px, 2.5vw, 28px);
+  height: clamp(28px, 3.2vw, 40px);
+  width: auto;
+  opacity: 0.65;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 8px rgba(0, 0, 0, 0.5));
+  z-index: 3;
+}
+
+/* Outro logo — large headline-anchor before the final tagline.
+   Reveals via .reveal class. Margin-bottom links it visually to the
+   h2 below without competing for the same eyeline. */
+.outro-logo {
+  display: block;
+  margin: 0 auto clamp(32px, 5vw, 56px);
+  height: clamp(64px, 9vw, 120px);
+  width: auto;
+  max-width: 80%;
+  filter: drop-shadow(0 2px 16px rgba(0, 0, 0, 0.45));
+}
+
+/* Section stamps — small inline logos above key section eyebrows
+   (specs, team, investors). Acts as a "mini chapter mark" that says
+   "this part is brand-stamped". Subtle, never competes with eyebrow. */
+.section-stamp {
+  display: block;
+  height: 28px;
+  width: auto;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+/* Mobile sizing */
+@media (max-width: 680px) {
+  .outro-logo { height: clamp(48px, 18vw, 96px); margin-bottom: 24px; }
+  .showcase-watermark {
+    height: 22px;
+    bottom: 12px;
+    right: 12px;
+    opacity: 0.55;
+  }
+  .section-stamp { height: 22px; margin-bottom: 12px; }
+}

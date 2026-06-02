@@ -7,6 +7,20 @@
 <title>Project Remo — 水下智能跟随相机</title>
 <meta name="description" content="Project Remo 是一款无线、掌上起降的水下智能跟随相机。填补消费级运动相机与传统有线 ROV 之间的空白，让潜水员只剩下呼吸。">
 
+<!-- Brand favicon + apple-touch-icon. SVG is sharp at any size. -->
+<link rel="icon" type="image/svg+xml" href="./Logo/remo-icon-white.svg">
+<link rel="icon" type="image/png" href="./Logo/remo-icon-white.png">
+<link rel="apple-touch-icon" href="./Logo/remo-icon-white.png">
+
+<!-- Open Graph (social sharing card) -->
+<meta property="og:title" content="Project Remo · Wireless Underwater Follow-Cam">
+<meta property="og:description" content="水下智能跟随相机 · POC LIVE · 声学定位已验证 · 2026">
+<meta property="og:image" content="./Logo/remo-og-card.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lumishadevoyager.github.io/Project-Remo-Web/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="./Logo/remo-og-card.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Video mirror preconnects. Same-origin (./Video/) is the PRIMARY
@@ -43,7 +57,7 @@
      ───────────────────────────────────────────────────────────── -->
 <header class="topbar" id="topbar">
   <a class="brand" href="#top" aria-label="Project Remo">
-    <img src="./Logo/remo-lockup-white.png"
+    <img src="./Logo/remo-lockup-white.svg"
          alt="Project Remo"
          class="brand-logo"
          decoding="async"
@@ -174,6 +188,12 @@
         <div class="showcase-meta" data-i18n="showcase.meta">水测实录 · 2026·04</div>
         <h2 class="showcase-title" data-i18n-html="showcase.title">无线，<em>自由</em>。</h2>
       </div>
+      <img src="./Logo/remo-lockup-white.svg"
+           alt=""
+           class="showcase-watermark"
+           aria-hidden="true"
+           decoding="async"
+           onerror="this.style.display='none';">
     </div>
   </section>
 
@@ -565,6 +585,7 @@
        ───────────────────────────────────────────────────────────── -->
   <section class="specs-full wrap" id="specs">
     <div class="section-head reveal">
+      <img src="./Logo/remo-lockup-white.svg" alt="" class="section-stamp" aria-hidden="true" decoding="async" onerror="this.style.display='none';">
       <span class="eyebrow" data-i18n-html="specs.eyebrow"><span class="index">10</span> Tech Specs</span>
       <h2 data-i18n-html="specs.heading">看得见的<em>工程细节</em>。</h2>
     </div>
@@ -850,6 +871,7 @@
        ───────────────────────────────────────────────────────────── -->
   <section class="team wrap" id="team">
     <div class="section-head reveal">
+      <img src="./Logo/remo-lockup-white.svg" alt="" class="section-stamp" aria-hidden="true" decoding="async" onerror="this.style.display='none';">
       <span class="eyebrow" data-i18n-html="team.eyebrow"><span class="index">15</span> Founding Team</span>
       <h2 data-i18n-html="team.heading">国家级冠军团队，<br>从<em>赛场</em>走向<em>产品</em>。</h2>
     </div>
@@ -951,6 +973,7 @@
   <section class="investors" id="investors">
     <div class="wrap">
       <div class="section-head reveal">
+        <img src="./Logo/remo-lockup-white.svg" alt="" class="section-stamp" aria-hidden="true" decoding="async" onerror="this.style.display='none';">
         <span class="eyebrow" data-i18n-html="investors.eyebrow"><span class="index">16</span> For Investors</span>
         <h2 data-i18n-html="investors.heading">实物证据，<em>分层表达</em>。</h2>
       </div>
@@ -992,7 +1015,12 @@
        OUTRO
        ───────────────────────────────────────────────────────────── -->
   <section class="outro wrap">
-    <h2 class="reveal" data-i18n-html="outro.heading">
+    <img src="./Logo/remo-lockup-white.svg"
+         alt="Project Remo"
+         class="outro-logo reveal"
+         decoding="async"
+         onerror="this.style.display='none';">
+    <h2 class="reveal delay-1" data-i18n-html="outro.heading">
       让<em>水下</em>，<br>
       只剩下<em>呼吸</em>。
     </h2>
@@ -1020,7 +1048,7 @@
      ───────────────────────────────────────────────────────────── -->
 <aside class="sticky-bar" id="sticky-bar" aria-hidden="true">
   <span class="sb-brand">
-    <img src="./Logo/remo-lockup-white.png"
+    <img src="./Logo/remo-lockup-white.svg"
          alt="Project Remo"
          class="sb-brand-logo"
          decoding="async"
@@ -1040,7 +1068,7 @@
      ───────────────────────────────────────────────────────────── -->
 <footer class="footer">
   <span class="brand">
-    <img src="./Logo/remo-lockup-white.png"
+    <img src="./Logo/remo-lockup-white.svg"
          alt="Project Remo"
          class="footer-brand-logo"
          decoding="async"
@@ -1053,6 +1081,6 @@
   <span data-i18n="footer.copyright">© Project Remo · All rights reserved</span>
 </footer>
 
-<script src="./site.js?v=v13"></script>
+<script src="./site.js?v=v14"></script>
 </body>
 </html>
