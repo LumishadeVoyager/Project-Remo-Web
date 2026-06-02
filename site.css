@@ -367,14 +367,31 @@ section + section::before {
 
 .brand {
   display: flex;
-  align-items: center;
-  text-decoration: none;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--light);
 }
 
-.brand-logo {
-  display: block;
-  height: 34px;
-  width: auto;
+.brand .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  display: inline-block;
+  align-self: center;
+  animation: dotPulse 2.4s ease-in-out infinite;
+}
+
+.brand em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--mute);
 }
 
 .nav {
@@ -549,39 +566,65 @@ section + section::before {
   transform: rotate(-6deg);
 }
 
-/* Hero wordmark — the actual Project Remo logo lockup as a subtle
-   brand watermark behind the product image. White lockup sits on the
-   dark hero background with restrained opacity so it reinforces the
-   brand without competing with the product hero shot. */
+/* Hero wordmark — full-bleed "PROJECT / REMO" lockup behind the product
+   image. Uses Anton (a tall narrow display sans, the same family used in
+   DJI/Insta360 posters) for editorial-grade visual tension. Fills the
+   viewport width; line gap is generous and intentional. */
 .hero-wordmark {
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.32em;
+  line-height: 0.82;
+  letter-spacing: -0.025em;
+  font-family: "Anton", "Impact", "Helvetica Neue", "Arial Narrow", sans-serif;
+  font-weight: 400;
+  font-size: clamp(180px, 26vw, 460px);
+  text-transform: uppercase;
   user-select: none;
-  width: min(520px, 70vw);
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
   opacity: 0;
   animation: heroWordmarkIn 1.8s 0.6s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
 }
 
-.hero-wordmark-logo {
+.hero-wordmark-line {
   display: block;
-  width: 100%;
-  height: auto;
-  opacity: 0.22;
-  filter: drop-shadow(0 0 60px rgba(0, 217, 255, 0.18));
+  color: rgba(255, 255, 255, 0.36);
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(0, 217, 255, 0.18);
+}
+
+.hero-wordmark-line:nth-child(2) {
+  /* "REMO" — accent color, brand emphasis */
+  color: rgba(0, 217, 255, 0.6);
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(0, 217, 255, 0.55);
 }
 
 @keyframes heroWordmarkIn {
-  0%   { opacity: 0; transform: translate(-50%, calc(-50% + 20px)); }
-  100% { opacity: 1; transform: translate(-50%, -50%); }
+  0%   { opacity: 0; transform: translate(20px, -50%); }
+  100% { opacity: 1; transform: translate(0, -50%); }
 }
 
+/* Portrait: extra-tall screens (phones upright, tablets portrait) need
+   more breathing room between the two wordmark rows. The narrow width
+   pushes the type to more lines of expressive whitespace. */
 @media (orientation: portrait) {
   .hero-wordmark {
-    width: min(380px, 85vw);
+    gap: 0.55em !important;
+    line-height: 0.78 !important;
+    font-size: clamp(120px, 35vw, 260px) !important;
   }
 }
 
@@ -2055,13 +2098,7 @@ video.showcase-video {
 }
 
 .footer .brand {
-  display: flex;
-  align-items: center;
-}
-
-.footer .brand-logo {
-  height: 18px;
-  width: auto;
+  font-size: 16px;
 }
 
 .footer .center {
@@ -2181,8 +2218,11 @@ video.showcase-video {
     z-index: 3;
     margin-bottom: 16px;
   }
-  /* Mobile: logo sits centered above the product image as a simple
-     brand anchor. */
+  /* Mobile: wordmark is a fixed-height flex column. PROJECT lives at the
+     top of the box, REMO at the bottom. The hero-product image is laid
+     out underneath the wordmark BUT is pulled visually into the middle
+     by negative margin (see below) so it appears sandwiched between the
+     two lines without using absolute positioning. */
   .hero-wordmark {
     position: relative !important;
     left: auto !important;
@@ -2190,16 +2230,28 @@ video.showcase-video {
     top: auto !important;
     bottom: auto !important;
     transform: none !important;
-    width: min(320px, 75vw) !important;
+    width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto 16px auto;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    text-align: center !important;
+    /* Big — but the line-height is tight so the actual rendered box
+       height is roughly 2 × font-size. clamp keeps it sane on edge
+       cases. ~26vw on a 390-wide phone = ~100px per line. */
+    font-size: clamp(64px, 26vw, 200px) !important;
+    line-height: 0.85 !important;
+    /* Total wordmark column height — enough to fit two lines plus an
+       intentional gap. The product image is then pulled up into the
+       gap via negative margin (see .hero-product). */
+    min-height: clamp(280px, 70vw, 520px);
+    gap: 0 !important;
     z-index: 1 !important;
+    overflow: hidden;
     pointer-events: none;
     opacity: 1 !important;
     animation: none !important;
-  }
-  .hero-wordmark-logo {
-    opacity: 0.28;
   }
   /* Mobile: product image is laid out AFTER the wordmark in source
      order, then pulled back up by a large negative margin to land in
@@ -2503,7 +2555,7 @@ video.showcase-video {
   }
   .reveal, .hero-title .word { opacity: 1 !important; transform: none !important; }
   .hero-product { opacity: 1 !important; transform: translateY(-50%) !important; }
-  .hero-wordmark { opacity: 1 !important; transform: translate(-50%, -50%) !important; animation: none !important; }
+  .hero-wordmark { opacity: 1 !important; transform: translateY(-50%) !important; animation: none !important; }
 }
 
 /* Override: mobile hero-product is position:relative, don't translateY */
@@ -3185,10 +3237,13 @@ video.showcase-video {
   letter-spacing: 0.12em;
 }
 
-.sticky-bar .sb-brand-mark {
-  display: block;
-  height: 18px;
-  width: auto;
+.sticky-bar .sb-brand .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: dotPulse 2.4s ease-in-out infinite;
 }
 
 .sticky-bar .sb-specs {
